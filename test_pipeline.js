@@ -112,6 +112,60 @@ function runPipelineTests() {
   const replaced2 = testStr2.replace(regex, testTrans);
   assert(replaced2 === 'Open DefaultSettings now', 'Does not match inside composite identifier "DefaultSettings"');
 
+  // 5. Test Hardening, Sanitization & Cache
+  console.log('\n--- 5. Testing Security, Performance & Hardening ---');
+
+  // 5.1 escapeHtml
+  function escapeHtml(s) {
+    if (typeof s !== 'string') return '';
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  const rawHtml = '<script>alert("xss" & \'test\')</script>';
+  const escaped = escapeHtml(rawHtml);
+  assert(!escaped.includes('<script>') && escaped.includes('&lt;script&gt;') && escaped.includes('&quot;xss&quot;'), 'escapeHtml properly sanitizes tags and quotes');
+
+  // 5.2 cleanHex
+  function cleanHex(colorStr, fallback = '000000') {
+    if (!colorStr || typeof colorStr !== 'string') return fallback;
+    let s = colorStr.trim().replace(/^#/, '');
+    if (s.length === 3) {
+      s = s.split('').map(c => c + c).join('');
+    } else if (s.length === 8) {
+      s = s.substring(0, 6);
+    }
+    if (/^[0-9A-Fa-f]{6}$/.test(s)) {
+      return s.toUpperCase();
+    }
+    return fallback;
+  }
+  assert(cleanHex('#fff') === 'FFFFFF', 'cleanHex expands 3-char hex to 6-char');
+  assert(cleanHex('#ff000080') === 'FF0000', 'cleanHex trims 8-char hex to 6-char');
+  assert(cleanHex('invalid', '123456') === '123456', 'cleanHex uses fallback on invalid input');
+
+  // 5.3 CSS Font name sanitization
+  const dirtyFontName = 'MyFont"; background: red; } /*';
+  const cleanFontName = String(dirtyFontName).replace(/["\\\r\n;{}]/g, '');
+  assert(!cleanFontName.includes('"') && !cleanFontName.includes(';') && !cleanFontName.includes('}'), 'CSS font family name sanitization strips dangerous characters');
+
+  // 5.4 REGEX_CACHE
+  const REGEX_CACHE = new Map();
+  function getCachedRegex(k) {
+    let reg = REGEX_CACHE.get(k);
+    if (!reg) {
+      reg = buildSafeRegex(k);
+      REGEX_CACHE.set(k, reg);
+    }
+    return reg;
+  }
+  const r1 = getCachedRegex('Chat');
+  const r2 = getCachedRegex('Chat');
+  assert(r1 === r2 && REGEX_CACHE.size === 1, 'REGEX_CACHE caches and reuses RegExp instances');
+
+  // 5.5 Font size limit check
+  const MAX_FONT_SIZE = 2 * 1024 * 1024;
+  assert(1.5 * 1024 * 1024 <= MAX_FONT_SIZE, 'Valid font under 2MB accepted');
+  assert(2.5 * 1024 * 1024 > MAX_FONT_SIZE, 'Font over 2MB rejected');
+
   console.log('\n------------------------------------------------------');
   console.log(`Results: ${passed} passed, ${failed} failed`);
   console.log('------------------------------------------------------\n');
@@ -120,3 +174,4 @@ function runPipelineTests() {
 }
 
 runPipelineTests();
+

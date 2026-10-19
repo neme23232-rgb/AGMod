@@ -191,7 +191,7 @@ async function main() {
   if (exePath) {
     console.log(`\n[*] Relaunching Google Antigravity (${exePath})...`);
     try {
-      const child = spawn(exePath, ['--remote-debugging-port=53049'], { detached: true, stdio: 'ignore' });
+      const child = spawn(exePath, [], { detached: true, stdio: 'ignore' });
       child.unref();
       console.log('[*] Google Antigravity relaunched with AGMod active!\n');
     } catch (e) {

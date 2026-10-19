@@ -785,10 +785,10 @@ div[role="dialog"] {
 
     let activeFontFamily = '';
     if (currentFontId === 'custom' && customFontFamily) {
-      const safeCustom = String(customFontFamily).replace(/["\\]/g, '');
+      const safeCustom = String(customFontFamily).replace(/["\\\r\n;{}]/g, '');
       activeFontFamily = `"${safeCustom}", sans-serif`;
     } else if (currentFontId.startsWith('sys-')) {
-      const sysName = String(currentFontId.replace('sys-', '')).replace(/["\\]/g, '');
+      const sysName = String(currentFontId.replace('sys-', '')).replace(/["\\\r\n;{}]/g, '');
       activeFontFamily = `"${sysName}", sans-serif`;
     } else {
       const selectedFont = DEFAULT_FONTS.find(f => f.id === currentFontId);
@@ -1171,7 +1171,7 @@ code, pre, .font-mono {
                       <select id="ag-theme-select" style="height: 28px; width: 180px; padding-left: 10px; padding-right: 28px; -webkit-appearance: none; appearance: none; font-size: 13px;" class="bg-secondary text-secondary-foreground hover:text-foreground rounded-md border-none cursor-pointer font-medium outline-none">
                         ${Object.keys(allThemes).map(id => {
                           const t = allThemes[id];
-                          return `<option value="${id}" ${id === currentThemeId ? 'selected' : ''}>${t.name}</option>`;
+                          return `<option value="${escapeHtml(id)}" ${id === currentThemeId ? 'selected' : ''}>${escapeHtml(t.name)}</option>`;
                         }).join('')}
                       </select>
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 -960 960 960" fill="currentColor" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.7; width: 14px; height: 14px;"><path d="M480-357.85L253.85-584L296-626.15l184,184l184-184L706.15-584L480-357.85Z"></path></svg>
@@ -1404,7 +1404,7 @@ code, pre, .font-mono {
                   </div>
                   <div class="shrink-0 flex items-center justify-end gap-2">
                     <input type="file" id="ag-font-file-input" accept=".woff2,.woff,.ttf,.otf" class="hidden" />
-                    ${customFontFamily ? `<span class="text-xs font-mono text-primary font-medium truncate max-w-[130px]">✓ ${customFontFamily}</span>` : ''}
+                    ${customFontFamily ? `<span class="text-xs font-mono text-primary font-medium truncate max-w-[130px]">✓ ${escapeHtml(customFontFamily)}</span>` : ''}
                     <button id="ag-btn-upload-font" style="height: 28px; padding: 0 12px; font-size: 12px;" class="inline-flex items-center gap-1.5 font-medium transition-colors select-none outline-none cursor-pointer justify-center bg-secondary text-secondary-foreground hover:text-foreground border-none rounded-md">
                       ${TG_ICONS.folder}
                       <span>${i18n.browseFile}</span>
@@ -2015,18 +2015,17 @@ code, pre, .font-mono {
 
         if (forceFull) {
           translateNode(document.body);
-          pendingAddedNodes.clear();
         } else if (pendingAddedNodes.size > 0 && currentLang !== 'en') {
           for (const node of pendingAddedNodes) {
             if (node && node.isConnected) {
               translateNode(node);
             }
           }
-          pendingAddedNodes.clear();
         }
       } catch (e) {
         console.error('[AGMod] Update error:', e);
       } finally {
+        pendingAddedNodes.clear();
         isUpdating = false;
         setTimeout(() => { isSelfMutating = false; }, 30);
       }
@@ -2052,7 +2051,7 @@ code, pre, .font-mono {
         const m = mutations[i];
         for (let j = 0; j < m.addedNodes.length; j++) {
           const n = m.addedNodes[j];
-          if (n.nodeType === 1 || n.nodeType === 3) {
+          if ((n.nodeType === 1 || n.nodeType === 3) && currentLang !== 'en') {
             pendingAddedNodes.add(n);
           }
           if (n.nodeType === 1) {
