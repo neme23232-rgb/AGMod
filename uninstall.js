@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execSync, spawn } = require('child_process');
 
 function getAppResourcesDir() {
   if (process.env.ANTIGRAVITY_RESOURCES && fs.existsSync(process.env.ANTIGRAVITY_RESOURCES)) {
@@ -128,7 +128,8 @@ async function main() {
     if (exePath) {
       console.log(`[*] Relaunching Google Antigravity (${exePath})...\n`);
       try {
-        execSync(`powershell -NoProfile -Command "Start-Process -FilePath '${exePath}'"`);
+        const child = spawn(exePath, [], { detached: true, stdio: 'ignore' });
+        child.unref();
       } catch (e) {}
     }
   } catch (err) {

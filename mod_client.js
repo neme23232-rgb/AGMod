@@ -626,15 +626,23 @@
     } catch (e) {}
 
     // 3. LocalStorage
-    try {
-      localStorage.setItem('ag_user_lang', currentLang);
-      localStorage.setItem('ag_active_theme', currentThemeId);
-      localStorage.setItem('ag_compact_mode', String(isCompact));
-      localStorage.setItem('ag_active_font', currentFontId);
-      localStorage.setItem('ag_custom_font_family', customFontFamily);
-      localStorage.setItem('ag_custom_font_css', customFontCSS);
-      localStorage.setItem('ag_custom_user_theme', JSON.stringify(customThemeConfig));
-    } catch (e) {}
+    const safeSet = (key, val) => {
+      try {
+        if (val !== undefined && val !== null) {
+          localStorage.setItem(key, typeof val === 'string' ? val : JSON.stringify(val));
+        }
+      } catch (e) {
+        console.warn(`[AGMod] Failed to save ${key} to localStorage:`, e.message);
+      }
+    };
+
+    safeSet('ag_user_lang', currentLang);
+    safeSet('ag_active_theme', currentThemeId);
+    safeSet('ag_compact_mode', String(isCompact));
+    safeSet('ag_active_font', currentFontId);
+    safeSet('ag_custom_font_family', customFontFamily);
+    safeSet('ag_custom_font_css', customFontCSS);
+    safeSet('ag_custom_user_theme', customThemeConfig);
   }
 
   function getAllThemes() {
@@ -777,9 +785,10 @@ div[role="dialog"] {
 
     let activeFontFamily = '';
     if (currentFontId === 'custom' && customFontFamily) {
-      activeFontFamily = `"${customFontFamily}", sans-serif`;
+      const safeCustom = String(customFontFamily).replace(/["\\]/g, '');
+      activeFontFamily = `"${safeCustom}", sans-serif`;
     } else if (currentFontId.startsWith('sys-')) {
-      const sysName = currentFontId.replace('sys-', '');
+      const sysName = String(currentFontId.replace('sys-', '')).replace(/["\\]/g, '');
       activeFontFamily = `"${sysName}", sans-serif`;
     } else {
       const selectedFont = DEFAULT_FONTS.find(f => f.id === currentFontId);
@@ -846,12 +855,18 @@ code, pre, .font-mono {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
-  function buildSafeRegex(k) {
-    const startsWithWord = /^\w/.test(k);
-    const endsWithWord = /\w$/.test(k);
-    const prefix = startsWithWord ? '(?<![a-zA-Z0-9_])' : '';
-    const suffix = endsWithWord ? '(?![a-zA-Z0-9_])' : '';
-    return new RegExp(prefix + escapeRegExp(k) + suffix, 'g');
+  const REGEX_CACHE = new Map();
+  function getSafeRegex(k) {
+    let reg = REGEX_CACHE.get(k);
+    if (!reg) {
+      const startsWithWord = /^\w/.test(k);
+      const endsWithWord = /\w$/.test(k);
+      const prefix = startsWithWord ? '(?<![a-zA-Z0-9_])' : '';
+      const suffix = endsWithWord ? '(?![a-zA-Z0-9_])' : '';
+      reg = new RegExp(prefix + escapeRegExp(k) + suffix, 'g');
+      REGEX_CACHE.set(k, reg);
+    }
+    return reg;
   }
 
   function getTranslation(str) {
@@ -869,7 +884,7 @@ code, pre, .font-mono {
     for (let i = 0; i < sortedKeys.length; i++) {
       const k = sortedKeys[i];
       if (k.length >= 2 && result.includes(k)) {
-        const regex = buildSafeRegex(k);
+        const regex = getSafeRegex(k);
         const replaced = result.replace(regex, () => activeDict[k]);
         if (replaced !== result) {
           result = replaced;
@@ -1055,11 +1070,23 @@ code, pre, .font-mono {
     const currentTheme = allThemes[currentThemeId] || allThemes['catppuccin-mocha'] || allThemes['default'] || { name: 'Default', accent: '#1a73e8' };
     const langInfo = LANG_CONFIG[currentLang] || { name: 'Русский', short: 'RU' };
 
+    function escapeHtml(s) {
+      if (typeof s !== 'string') return '';
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
     function cleanHex(colorStr, fallback = '000000') {
-      if (!colorStr) return fallback;
-      let s = colorStr.trim();
-      if (s.startsWith('#')) s = s.slice(1);
-      return s.toUpperCase();
+      if (!colorStr || typeof colorStr !== 'string') return fallback;
+      let s = colorStr.trim().replace(/^#/, '');
+      if (s.length === 3) {
+        s = s.split('').map(c => c + c).join('');
+      } else if (s.length === 8) {
+        s = s.substring(0, 6);
+      }
+      if (/^[0-9A-Fa-f]{6}$/.test(s)) {
+        return s.toUpperCase();
+      }
+      return fallback;
     }
 
     const curBg = (currentTheme.variables && currentTheme.variables['--background']) || (currentTheme.preview && currentTheme.preview.bg) || '#1e1e2e';
@@ -1068,26 +1095,29 @@ code, pre, .font-mono {
     const curSidebar = (currentTheme.variables && currentTheme.variables['--sidebar']) || (currentTheme.preview && currentTheme.preview.sidebar) || '#181825';
 
     function buildFontOptionsHTML() {
-      let optHtml = `<optgroup label="${i18n.recommendedGroup}">`;
+      let optHtml = `<optgroup label="${escapeHtml(i18n.recommendedGroup)}">`;
       DEFAULT_FONTS.forEach(f => {
-        optHtml += `<option value="${f.id}" ${f.id === currentFontId ? 'selected' : ''}>${f.name}</option>`;
+        optHtml += `<option value="${escapeHtml(f.id)}" ${f.id === currentFontId ? 'selected' : ''}>${escapeHtml(f.name)}</option>`;
       });
       optHtml += `</optgroup>`;
 
       if (customFontFamily) {
-        optHtml += `<option value="custom" ${currentFontId === 'custom' ? 'selected' : ''}>${customFontFamily} (${i18n.loaded})</option>`;
+        const safeCustom = escapeHtml(customFontFamily);
+        optHtml += `<option value="custom" ${currentFontId === 'custom' ? 'selected' : ''}>${safeCustom} (${escapeHtml(i18n.loaded)})</option>`;
       }
 
       if (discoveredSystemFonts && discoveredSystemFonts.length > 0) {
-        optHtml += `<optgroup label="${i18n.systemFontsGroup} (${discoveredSystemFonts.length})">`;
+        optHtml += `<optgroup label="${escapeHtml(i18n.systemFontsGroup)} (${discoveredSystemFonts.length})">`;
         discoveredSystemFonts.forEach(fontName => {
-          optHtml += `<option value="sys-${fontName}" ${currentFontId === 'sys-' + fontName ? 'selected' : ''}>${fontName}</option>`;
+          const safeName = escapeHtml(fontName);
+          optHtml += `<option value="sys-${safeName}" ${currentFontId === 'sys-' + fontName ? 'selected' : ''}>${safeName}</option>`;
         });
         optHtml += `</optgroup>`;
       } else if (currentFontId.startsWith('sys-')) {
         const fontName = currentFontId.replace('sys-', '');
-        optHtml += `<optgroup label="${i18n.systemFontsGroup}">`;
-        optHtml += `<option value="${currentFontId}" selected>${fontName}</option>`;
+        const safeName = escapeHtml(fontName);
+        optHtml += `<optgroup label="${escapeHtml(i18n.systemFontsGroup)}">`;
+        optHtml += `<option value="${escapeHtml(currentFontId)}" selected>${safeName}</option>`;
         optHtml += `</optgroup>`;
       }
       return optHtml;
@@ -1487,14 +1517,23 @@ code, pre, .font-mono {
       themeResetBtn.onclick = () => setTheme('catppuccin-mocha');
     }
 
-    // 3. Color Picker & Hex Sync helper
+    // 3. Color Picker & Hex Sync helper with 60 FPS live preview & debounced disk persistence
+    let colorDebounceTimer = null;
+    const debouncedSaveTheme = () => {
+      if (colorDebounceTimer) clearTimeout(colorDebounceTimer);
+      colorDebounceTimer = setTimeout(() => {
+        persistSettings();
+        applyThemeStyles();
+      }, 250);
+    };
+
     function setupColorSync(prefix, varName, previewKey) {
       const picker = content.querySelector(`#ag-picker-${prefix}`);
       const swatch = content.querySelector(`#ag-swatch-${prefix}`);
       const hexInput = content.querySelector(`#ag-hex-${prefix}`);
       if (!picker || !hexInput || !swatch) return;
 
-      const applyColor = (hexValue) => {
+      const applyColor = (hexValue, immediate = false) => {
         let clean = hexValue.replace(/^#/, '').toUpperCase();
         if (clean.length === 3) {
           clean = clean.split('').map(c => c + c).join('');
@@ -1542,17 +1581,28 @@ code, pre, .font-mono {
           }
 
           currentThemeId = 'custom-theme';
-          persistSettings();
-          applyThemeStyles();
           if (themeSelect) themeSelect.value = 'custom-theme';
+
+          // Live visual update on document root for immediate feedback
+          document.documentElement.style.setProperty(varName, formatted);
+
+          if (immediate) {
+            if (colorDebounceTimer) clearTimeout(colorDebounceTimer);
+            persistSettings();
+            applyThemeStyles();
+          } else {
+            debouncedSaveTheme();
+          }
         }
       };
 
-      picker.oninput = (e) => applyColor(e.target.value);
-      hexInput.oninput = (e) => applyColor(e.target.value);
+      picker.oninput = (e) => applyColor(e.target.value, false);
+      picker.onchange = (e) => applyColor(e.target.value, true);
+      hexInput.oninput = (e) => applyColor(e.target.value, false);
       hexInput.onblur = () => {
         const cur = (customThemeConfig.variables && customThemeConfig.variables[varName]) || picker.value;
         hexInput.value = cleanHex(cur, 'FFFFFF');
+        applyColor(hexInput.value, true);
       };
     }
 
@@ -1631,7 +1681,18 @@ code, pre, .font-mono {
         const file = e.target.files[0];
         if (!file) return;
 
+        // Ensure font does not exceed 2MB to prevent localStorage QuotaExceededError
+        if (file.size > 2 * 1024 * 1024) {
+          alert('AGMod: Selected font exceeds 2MB limit. Please choose a smaller font file.');
+          fontFileInput.value = '';
+          return;
+        }
+
         const reader = new FileReader();
+        reader.onerror = () => {
+          console.error('[AGMod] Failed to read font file:', reader.error);
+          alert('AGMod: Could not read selected font file.');
+        };
         reader.onload = (event) => {
           const dataUrl = event.target.result;
           const cleanName = file.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_\-]/g, '_');
@@ -1937,9 +1998,12 @@ code, pre, .font-mono {
   let isUpdating = false;
   let isSelfMutating = false;
   let updateTimer = null;
+  const pendingAddedNodes = new Set();
 
-  function scheduleBatchUpdate() {
-    if (isUpdating || isSelfMutating || updateTimer) return;
+  function scheduleBatchUpdate(forceFull = false) {
+    if (isUpdating || isSelfMutating) return;
+    if (updateTimer) clearTimeout(updateTimer);
+
     updateTimer = setTimeout(() => {
       updateTimer = null;
       if (isUpdating || isSelfMutating) return;
@@ -1948,14 +2012,25 @@ code, pre, .font-mono {
       try {
         cleanupSidebarButtons();
         checkAndInjectSettingsTab();
-        translateNode(document.body);
+
+        if (forceFull) {
+          translateNode(document.body);
+          pendingAddedNodes.clear();
+        } else if (pendingAddedNodes.size > 0 && currentLang !== 'en') {
+          for (const node of pendingAddedNodes) {
+            if (node && node.isConnected) {
+              translateNode(node);
+            }
+          }
+          pendingAddedNodes.clear();
+        }
       } catch (e) {
         console.error('[AGMod] Update error:', e);
       } finally {
         isUpdating = false;
         setTimeout(() => { isSelfMutating = false; }, 30);
       }
-    }, 150);
+    }, 100);
   }
 
   function onReady() {
@@ -1977,20 +2052,18 @@ code, pre, .font-mono {
         const m = mutations[i];
         for (let j = 0; j < m.addedNodes.length; j++) {
           const n = m.addedNodes[j];
+          if (n.nodeType === 1 || n.nodeType === 3) {
+            pendingAddedNodes.add(n);
+          }
           if (n.nodeType === 1) {
             if (n.getAttribute && (n.getAttribute('role') === 'dialog' || n.getAttribute('role') === 'menu')) {
               newDialogNode = n;
-              break;
             } else if (n.querySelector) {
               const d = n.querySelector('[role="dialog"], [role="menu"]');
-              if (d) {
-                newDialogNode = d;
-                break;
-              }
+              if (d) newDialogNode = d;
             }
           }
         }
-        if (newDialogNode) break;
       }
 
       if (newDialogNode) {
@@ -2011,7 +2084,7 @@ code, pre, .font-mono {
         }
       }
 
-      scheduleBatchUpdate();
+      scheduleBatchUpdate(false);
     });
 
     observer.observe(document.body, {

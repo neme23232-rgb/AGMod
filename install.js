@@ -137,13 +137,26 @@ async function main() {
 
   // 3. Safe backup of original clean asar if not already backed up
   if (!fs.existsSync(BACKUP_ASAR)) {
-    console.log(`[1/3] Creating safe backup of original app.asar...`);
-    await copyWithRetry(TARGET_ASAR, BACKUP_ASAR);
-    if (fs.existsSync(TARGET_UNPACKED) && !fs.existsSync(BACKUP_UNPACKED)) {
-      console.log(`      Backing up app.asar.unpacked directory...`);
-      fs.cpSync(TARGET_UNPACKED, BACKUP_UNPACKED, { recursive: true });
+    let isAlreadyPatched = false;
+    try {
+      const asar = getAsarModule();
+      const preload = asar.extractFile(TARGET_ASAR, 'dist/preload.js').toString();
+      if (preload.includes('AGMod: Unified Themes')) {
+        isAlreadyPatched = true;
+      }
+    } catch (e) {}
+
+    if (isAlreadyPatched) {
+      console.warn('      [WARN] Existing app.asar is already modified. Skipping backup to avoid corrupting clean baseline.');
+    } else {
+      console.log(`[1/3] Creating safe backup of original app.asar...`);
+      await copyWithRetry(TARGET_ASAR, BACKUP_ASAR);
+      if (fs.existsSync(TARGET_UNPACKED) && !fs.existsSync(BACKUP_UNPACKED)) {
+        console.log(`      Backing up app.asar.unpacked directory...`);
+        fs.cpSync(TARGET_UNPACKED, BACKUP_UNPACKED, { recursive: true });
+      }
+      console.log(`      Backup successfully created at: ${BACKUP_ASAR}`);
     }
-    console.log(`      Backup successfully created at: ${BACKUP_ASAR}`);
   } else {
     console.log(`[1/3] Safe backup already exists at: ${BACKUP_ASAR}`);
   }
@@ -178,12 +191,8 @@ async function main() {
   if (exePath) {
     console.log(`\n[*] Relaunching Google Antigravity (${exePath})...`);
     try {
-      if (process.platform === 'win32') {
-        execSync(`powershell -NoProfile -Command "Start-Process -FilePath '${exePath}' -ArgumentList '--remote-debugging-port=53049'"`);
-      } else {
-        const child = spawn(exePath, [], { detached: true, stdio: 'ignore' });
-        child.unref();
-      }
+      const child = spawn(exePath, ['--remote-debugging-port=53049'], { detached: true, stdio: 'ignore' });
+      child.unref();
       console.log('[*] Google Antigravity relaunched with AGMod active!\n');
     } catch (e) {
       console.log(`Notice: Please start Antigravity manually (${e.message})\n`);
