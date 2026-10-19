@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#1e2030"/>
+      <stop offset="55%" stop-color="#12131d"/>
+      <stop offset="100%" stop-color="#090a0f"/>
+    </radialGradient>
+
+    <!-- Cosmic Cyberpunk Gradient -->
+    <linearGradient id="cyberArch" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="30%" stop-color="#4f46e5"/>
+      <stop offset="65%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#ff007f"/>
+    </linearGradient>
+
+    <!-- Subtle Glow Gradient -->
+    <radialGradient id="ambientGlow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.35"/>
+      <stop offset="70%" stop-color="#00f0ff" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Squircle rounded background -->
+  <rect x="24" y="24" width="464" height="464" rx="104" fill="url(#bgGrad)" stroke="#2b2d42" stroke-width="2.5"/>
+
+  <!-- Ambient background glow behind the arch -->
+  <circle cx="256" cy="256" r="170" fill="url(#ambientGlow)"/>
+
+  <!-- Antigravity Official Inverted Curve / Flying Arch Shape -->
+  <path d="M 124 380 C 146 380 174 322 210 238 C 238 174 250 128 256 128 C 262 128 274 174 302 238 C 338 322 366 380 388 380 C 398 380 404 372 396 358 C 368 308 328 196 292 128 C 274 94 264 80 256 80 C 248 80 238 94 220 128 C 184 196 144 308 116 358 C 108 372 114 380 124 380 Z"
+        fill="url(#cyberArch)"/>
+
+  <!-- Upper specular glass highlight on the arch apex -->
+  <path d="M 230 140 C 240 110 248 95 256 95 C 264 95 272 110 282 140 C 274 130 266 125 256 125 C 246 125 238 130 230 140 Z"
+        fill="#ffffff" opacity="0.55"/>
+</svg>

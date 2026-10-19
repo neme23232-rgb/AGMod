@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build and temporary artifacts
+temp_build/
+extracted_clean/
+app.asar.patched.unpacked/
+*.log
+.DS_Store
+Thumbs.db

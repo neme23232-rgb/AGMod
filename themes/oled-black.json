@@ -1,0 +1,36 @@
+{
+  "id": "oled-black",
+  "name": "OLED Pure Black",
+  "author": "AGThemes",
+  "accent": "#e0e0e0",
+  "preview": {
+    "bg": "#000000",
+    "sidebar": "#000000",
+    "accent": "#ffffff",
+    "text": "#ffffff"
+  },
+  "variables": {
+    "--background": "#000000",
+    "--foreground": "#ffffff",
+    "--sidebar": "#000000",
+    "--sidebar-secondary": "#161616",
+    "--sidebar-muted": "#666666",
+    "--card": "#080808",
+    "--card-border": "#222222",
+    "--border": "#1c1c1c",
+    "--primary": "#ffffff",
+    "--primary-foreground": "#000000",
+    "--secondary": "#161616",
+    "--secondary-foreground": "#ffffff",
+    "--muted": "#121212",
+    "--muted-foreground": "#888888",
+    "--accent": "#cccccc",
+    "--accent-foreground": "#000000",
+    "--success": "#22c55e",
+    "--error": "#ef4444",
+    "--link": "#60a5fa",
+    "--scrollbar-color": "#282828",
+    "--vscode-editor-background": "#000000",
+    "--vscode-foreground": "#ffffff"
+  }
+}

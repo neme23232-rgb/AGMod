@@ -1,0 +1,36 @@
+{
+  "id": "github-light",
+  "name": "GitHub Light",
+  "author": "GitHub",
+  "accent": "#0969da",
+  "preview": {
+    "bg": "#ffffff",
+    "sidebar": "#f6f8fa",
+    "accent": "#0969da",
+    "text": "#1f2328"
+  },
+  "variables": {
+    "--background": "#ffffff",
+    "--foreground": "#1f2328",
+    "--sidebar": "#f6f8fa",
+    "--sidebar-secondary": "#eaeef2",
+    "--sidebar-muted": "rgba(0, 0, 0, 0.06)",
+    "--card": "#ffffff",
+    "--card-border": "#d0d7de",
+    "--border": "#d0d7de",
+    "--primary": "#0969da",
+    "--primary-foreground": "#ffffff",
+    "--secondary": "#f6f8fa",
+    "--secondary-foreground": "#1f2328",
+    "--muted": "#f6f8fa",
+    "--muted-foreground": "#656d76",
+    "--accent": "#0969da",
+    "--accent-foreground": "#ffffff",
+    "--success": "#1a7f37",
+    "--error": "#cf222e",
+    "--link": "#0969da",
+    "--scrollbar-color": "#d0d7de",
+    "--vscode-editor-background": "#ffffff",
+    "--vscode-foreground": "#1f2328"
+  }
+}

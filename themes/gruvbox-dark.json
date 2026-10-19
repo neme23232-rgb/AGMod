@@ -1,0 +1,36 @@
+{
+  "id": "gruvbox-dark",
+  "name": "Gruvbox Dark",
+  "author": "morhetz",
+  "accent": "#fabd2f",
+  "preview": {
+    "bg": "#282828",
+    "sidebar": "#1d2021",
+    "accent": "#fabd2f",
+    "text": "#ebdbb2"
+  },
+  "variables": {
+    "--background": "#282828",
+    "--foreground": "#ebdbb2",
+    "--sidebar": "#1d2021",
+    "--sidebar-secondary": "#3c3836",
+    "--sidebar-muted": "#7c6f64",
+    "--card": "#32302f",
+    "--card-border": "#504945",
+    "--border": "#504945",
+    "--primary": "#fabd2f",
+    "--primary-foreground": "#1d2021",
+    "--secondary": "#3c3836",
+    "--secondary-foreground": "#ebdbb2",
+    "--muted": "#3c3836",
+    "--muted-foreground": "#a89984",
+    "--accent": "#fe8019",
+    "--accent-foreground": "#1d2021",
+    "--success": "#b8bb26",
+    "--error": "#fb4934",
+    "--link": "#83a598",
+    "--scrollbar-color": "#504945",
+    "--vscode-editor-background": "#1d2021",
+    "--vscode-foreground": "#ebdbb2"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "rose-pine",
+  "name": "Rosé Pine",
+  "author": "Rosé Pine",
+  "accent": "#ebbcba",
+  "preview": {
+    "bg": "#191724",
+    "sidebar": "#1f1d2e",
+    "accent": "#ebbcba",
+    "text": "#e0def4"
+  },
+  "variables": {
+    "--background": "#191724",
+    "--foreground": "#e0def4",
+    "--sidebar": "#1f1d2e",
+    "--sidebar-secondary": "#26233a",
+    "--sidebar-muted": "#6e6a86",
+    "--card": "#1f1d2e",
+    "--card-border": "#26233a",
+    "--border": "#26233a",
+    "--primary": "#ebbcba",
+    "--primary-foreground": "#191724",
+    "--secondary": "#26233a",
+    "--secondary-foreground": "#e0def4",
+    "--muted": "#26233a",
+    "--muted-foreground": "#908caa",
+    "--accent": "#c4a7e7",
+    "--accent-foreground": "#191724",
+    "--success": "#9ccfd8",
+    "--error": "#eb6f92",
+    "--link": "#31748f",
+    "--scrollbar-color": "#403d52",
+    "--vscode-editor-background": "#191724",
+    "--vscode-foreground": "#e0def4"
+  }
+}

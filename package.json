@@ -1,0 +1,28 @@
+{
+  "name": "ag-mod",
+  "version": "2.24.0",
+  "description": "Unified Themes, Custom Styling & Localization Mod for Google Antigravity 2.0 with dedicated Settings tab",
+  "main": "mod_client.js",
+  "scripts": {
+    "build": "node build.js",
+    "install-mod": "node install.js",
+    "uninstall-mod": "node uninstall.js",
+    "test": "node test_pipeline.js && node test_locales.js && node test_live.js",
+    "test-live": "node test_live.js"
+  },
+  "keywords": [
+    "antigravity",
+    "mod",
+    "themes",
+    "localization",
+    "russian",
+    "ukrainian",
+    "settings-tab"
+  ],
+  "author": "Google Antigravity Community",
+  "license": "MIT",
+  "dependencies": {
+    "asar": "^3.2.0",
+    "ws": "^8.18.0"
+  }
+}

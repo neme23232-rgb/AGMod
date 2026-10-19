@@ -1,0 +1,36 @@
+{
+  "id": "tokyo-night",
+  "name": "Tokyo Night",
+  "author": "Tokyo Night",
+  "accent": "#7aa2f7",
+  "preview": {
+    "bg": "#1a1b26",
+    "sidebar": "#16161e",
+    "accent": "#7aa2f7",
+    "text": "#c0caf5"
+  },
+  "variables": {
+    "--background": "#1a1b26",
+    "--foreground": "#c0caf5",
+    "--sidebar": "#16161e",
+    "--sidebar-secondary": "#283457",
+    "--sidebar-muted": "#565f89",
+    "--card": "#1f2335",
+    "--card-border": "#292e42",
+    "--border": "#292e42",
+    "--primary": "#7aa2f7",
+    "--primary-foreground": "#15161e",
+    "--secondary": "#283457",
+    "--secondary-foreground": "#c0caf5",
+    "--muted": "#24283b",
+    "--muted-foreground": "#787c99",
+    "--accent": "#bb9af7",
+    "--accent-foreground": "#15161e",
+    "--success": "#9ece6a",
+    "--error": "#f7768e",
+    "--link": "#7dcfff",
+    "--scrollbar-color": "#414868",
+    "--vscode-editor-background": "#16161e",
+    "--vscode-foreground": "#c0caf5"
+  }
+}

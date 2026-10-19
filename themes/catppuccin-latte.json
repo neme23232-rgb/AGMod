@@ -1,0 +1,36 @@
+{
+  "id": "catppuccin-latte",
+  "name": "Catppuccin Latte",
+  "author": "Catppuccin Org",
+  "accent": "#1e66f5",
+  "preview": {
+    "bg": "#eff1f5",
+    "sidebar": "#e6e9ef",
+    "accent": "#1e66f5",
+    "text": "#4c4f69"
+  },
+  "variables": {
+    "--background": "#eff1f5",
+    "--foreground": "#4c4f69",
+    "--sidebar": "#e6e9ef",
+    "--sidebar-secondary": "#dce0e8",
+    "--sidebar-muted": "rgba(76, 79, 105, 0.08)",
+    "--card": "#ffffff",
+    "--card-border": "#bcc0cc",
+    "--border": "#ccd0da",
+    "--primary": "#1e66f5",
+    "--primary-foreground": "#ffffff",
+    "--secondary": "#e6e9ef",
+    "--secondary-foreground": "#4c4f69",
+    "--muted": "#e6e9ef",
+    "--muted-foreground": "#6c6f85",
+    "--accent": "#1e66f5",
+    "--accent-foreground": "#ffffff",
+    "--success": "#40a02b",
+    "--error": "#d20f39",
+    "--link": "#1e66f5",
+    "--scrollbar-color": "#bcc0cc",
+    "--vscode-editor-background": "#eff1f5",
+    "--vscode-foreground": "#4c4f69"
+  }
+}

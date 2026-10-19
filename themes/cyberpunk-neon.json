@@ -1,0 +1,36 @@
+{
+  "id": "cyberpunk-neon",
+  "name": "Cyberpunk Neon",
+  "author": "AGThemes",
+  "accent": "#00f0ff",
+  "preview": {
+    "bg": "#0c0e14",
+    "sidebar": "#07080c",
+    "accent": "#00f0ff",
+    "text": "#f0f4fc"
+  },
+  "variables": {
+    "--background": "#0c0e14",
+    "--foreground": "#f0f4fc",
+    "--sidebar": "#07080c",
+    "--sidebar-secondary": "#171b26",
+    "--sidebar-muted": "#525b75",
+    "--card": "#10131d",
+    "--card-border": "#1f2638",
+    "--border": "#1f2638",
+    "--primary": "#00f0ff",
+    "--primary-foreground": "#000000",
+    "--secondary": "#1c2233",
+    "--secondary-foreground": "#00f0ff",
+    "--muted": "#171b26",
+    "--muted-foreground": "#7887ab",
+    "--accent": "#fcee0a",
+    "--accent-foreground": "#000000",
+    "--success": "#00ff9f",
+    "--error": "#ff0055",
+    "--link": "#00f0ff",
+    "--scrollbar-color": "#28324a",
+    "--vscode-editor-background": "#07080c",
+    "--vscode-foreground": "#f0f4fc"
+  }
+}

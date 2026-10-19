@@ -1,0 +1,36 @@
+{
+  "id": "catppuccin-mocha",
+  "name": "Catppuccin Mocha",
+  "author": "Catppuccin Org",
+  "accent": "#cba6f7",
+  "preview": {
+    "bg": "#1e1e2e",
+    "sidebar": "#181825",
+    "accent": "#cba6f7",
+    "text": "#cdd6f4"
+  },
+  "variables": {
+    "--background": "#1e1e2e",
+    "--foreground": "#cdd6f4",
+    "--sidebar": "#181825",
+    "--sidebar-secondary": "#313244",
+    "--sidebar-muted": "#6c7086",
+    "--card": "#181825",
+    "--card-border": "#313244",
+    "--border": "#313244",
+    "--primary": "#cba6f7",
+    "--primary-foreground": "#11111b",
+    "--secondary": "#313244",
+    "--secondary-foreground": "#cdd6f4",
+    "--muted": "#313244",
+    "--muted-foreground": "#a6adc8",
+    "--accent": "#cba6f7",
+    "--accent-foreground": "#11111b",
+    "--success": "#a6e3a1",
+    "--error": "#f38ba8",
+    "--link": "#89b4fa",
+    "--scrollbar-color": "#45475a",
+    "--vscode-editor-background": "#181825",
+    "--vscode-foreground": "#cdd6f4"
+  }
+}

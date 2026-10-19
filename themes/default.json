@@ -1,0 +1,13 @@
+{
+  "id": "default",
+  "name": "Antigravity Default",
+  "author": "Google",
+  "accent": "#1a73e8",
+  "preview": {
+    "bg": "#121316",
+    "sidebar": "#0d0e11",
+    "accent": "#1a73e8",
+    "text": "#e3e3e3"
+  },
+  "variables": {}
+}

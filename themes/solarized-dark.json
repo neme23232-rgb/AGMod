@@ -1,0 +1,36 @@
+{
+  "id": "solarized-dark",
+  "name": "Solarized Dark",
+  "author": "Ethan Schoonover",
+  "accent": "#268bd2",
+  "preview": {
+    "bg": "#002b36",
+    "sidebar": "#00212b",
+    "accent": "#268bd2",
+    "text": "#839496"
+  },
+  "variables": {
+    "--background": "#002b36",
+    "--foreground": "#839496",
+    "--sidebar": "#00212b",
+    "--sidebar-secondary": "#073642",
+    "--sidebar-muted": "#586e75",
+    "--card": "#073642",
+    "--card-border": "#094352",
+    "--border": "#094352",
+    "--primary": "#268bd2",
+    "--primary-foreground": "#002b36",
+    "--secondary": "#073642",
+    "--secondary-foreground": "#93a1a1",
+    "--muted": "#073642",
+    "--muted-foreground": "#657b83",
+    "--accent": "#2aa198",
+    "--accent-foreground": "#002b36",
+    "--success": "#859900",
+    "--error": "#dc322f",
+    "--link": "#2aa198",
+    "--scrollbar-color": "#073642",
+    "--vscode-editor-background": "#00212b",
+    "--vscode-foreground": "#839496"
+  }
+}

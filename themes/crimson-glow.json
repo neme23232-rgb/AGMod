@@ -1,0 +1,36 @@
+{
+  "id": "crimson-glow",
+  "name": "Crimson Glow",
+  "author": "AGMod",
+  "accent": "#ff2a5f",
+  "preview": {
+    "bg": "#12080c",
+    "sidebar": "#0b0407",
+    "accent": "#ff2a5f",
+    "text": "#ffe5ec"
+  },
+  "variables": {
+    "--background": "#12080c",
+    "--foreground": "#ffe5ec",
+    "--sidebar": "#0b0407",
+    "--sidebar-secondary": "#260e18",
+    "--sidebar-muted": "#521d33",
+    "--card": "#1a0b12",
+    "--card-border": "#3b1526",
+    "--border": "#3b1526",
+    "--primary": "#ff2a5f",
+    "--primary-foreground": "#ffffff",
+    "--secondary": "#260e18",
+    "--secondary-foreground": "#ffb3c6",
+    "--muted": "#260e18",
+    "--muted-foreground": "#c97a95",
+    "--accent": "#ff758f",
+    "--accent-foreground": "#ffffff",
+    "--success": "#00ff9f",
+    "--error": "#ff2a5f",
+    "--link": "#ff758f",
+    "--scrollbar-color": "#521d33",
+    "--vscode-editor-background": "#0b0407",
+    "--vscode-foreground": "#ffe5ec"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "emerald-matrix",
+  "name": "Emerald Matrix",
+  "author": "AGMod",
+  "accent": "#00ff66",
+  "preview": {
+    "bg": "#0a100d",
+    "sidebar": "#050807",
+    "accent": "#00ff66",
+    "text": "#d8f3dc"
+  },
+  "variables": {
+    "--background": "#0a100d",
+    "--foreground": "#d8f3dc",
+    "--sidebar": "#050807",
+    "--sidebar-secondary": "#14251d",
+    "--sidebar-muted": "#2d5a44",
+    "--card": "#0f1c16",
+    "--card-border": "#1b3a2b",
+    "--border": "#1b3a2b",
+    "--primary": "#00ff66",
+    "--primary-foreground": "#05100a",
+    "--secondary": "#14251d",
+    "--secondary-foreground": "#b7e4c7",
+    "--muted": "#14251d",
+    "--muted-foreground": "#74c69d",
+    "--accent": "#52b788",
+    "--accent-foreground": "#05100a",
+    "--success": "#00ff66",
+    "--error": "#ff4d6d",
+    "--link": "#52b788",
+    "--scrollbar-color": "#2d5a44",
+    "--vscode-editor-background": "#050807",
+    "--vscode-foreground": "#d8f3dc"
+  }
+}
