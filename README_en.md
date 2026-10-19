@@ -29,10 +29,19 @@ The modification integrates into the application as a dedicated tab inside the s
 - **Compact Mode** — Reduces sidebar width to 220px and minimizes padding to maximize editing space.
 - **Persistent Storage** — Settings are saved locally to `agmod_settings.json` and persist across application restarts.
 
+## Download
+
+Latest release: [**AGMod v2.24.0**](https://github.com/neme23232-rgb/AGMod/releases/tag/v2.24.0)
+
+- [**AGMod-v2.24.0.zip**](https://github.com/neme23232-rgb/AGMod/releases/download/v2.24.0/AGMod-v2.24.0.zip) — standard ZIP package (1.2 MB).
+- [**AGMod-v2.24.0.7z**](https://github.com/neme23232-rgb/AGMod/releases/download/v2.24.0/AGMod-v2.24.0.7z) — ultra-compressed 7-Zip package (774 KB).
+
+Release history and changelog available in [GitHub Releases](https://github.com/neme23232-rgb/AGMod/releases).
+
 ## Quick Start
 
 1. Close Google Antigravity if the application is running.
-2. Download or clone this repository.
+2. Download and extract the release archive.
 3. Run `install.bat` (or execute `node install.js`).
 4. Launch Google Antigravity, open **Settings** (gear icon), and select the **AGMod** tab.
 
