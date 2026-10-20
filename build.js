@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const asar = require('asar');
 
-// Resolve standard Antigravity installation paths across platforms
 function getAppResourcesDir() {
   if (process.env.ANTIGRAVITY_RESOURCES && fs.existsSync(process.env.ANTIGRAVITY_RESOURCES)) {
     return process.env.ANTIGRAVITY_RESOURCES;
@@ -94,7 +93,6 @@ async function buildMod() {
   const localesCount = Object.keys(loadAllLocales()).length;
   console.log(`[*] Bundled: ${themesCount} themes, ${localesCount} languages`);
 
-  // 1. Prepare base source directory
   if (fs.existsSync(TEMP_BUILD)) {
     fs.rmSync(TEMP_BUILD, { recursive: true, force: true });
   }
@@ -144,7 +142,6 @@ async function buildMod() {
       }
     }
 
-    // Keep clean local template updated
     try {
       if (fs.existsSync(CLEAN_EXTRACT)) {
         fs.rmSync(CLEAN_EXTRACT, { recursive: true, force: true });
@@ -158,7 +155,6 @@ async function buildMod() {
     throw new Error(`Cannot find app.asar in ${RESOURCES_DIR} or clean local template. Please ensure Google Antigravity is installed.`);
   }
 
-  // Display version
   let appVersion = '2.24.0';
   const pkgPath = path.join(TEMP_BUILD, 'package.json');
   if (fs.existsSync(pkgPath)) {
@@ -169,7 +165,6 @@ async function buildMod() {
   }
   console.log(`      Target version: Antigravity v${appVersion}`);
 
-  // 2. Inject AGMod into preload.js
   console.log('[2/4] Injecting AGMod client (Themes, Localization, Settings Tab)...');
   const preloadPath = path.join(TEMP_BUILD, 'dist', 'preload.js');
   if (!fs.existsSync(preloadPath)) {
@@ -216,7 +211,6 @@ try {
     }
   }
 
-  // 3. Package into patched app.asar
   console.log('[3/4] Packaging app.asar.patched...');
   if (fs.existsSync(OUTPUT_ASAR)) {
     fs.unlinkSync(OUTPUT_ASAR);
@@ -228,7 +222,6 @@ try {
     { unpack: '{*.node,**/node_modules/chrome-devtools-mcp/**}' }
   );
 
-  // 4. Cleanup
   console.log('[4/4] Cleaning up temporary build artifacts...');
   fs.rmSync(TEMP_BUILD, { recursive: true, force: true });
 

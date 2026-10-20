@@ -1,12 +1,6 @@
 /**
- * AGMod — Unified Themes, Custom Styling & Localization Mod for Google Antigravity 2.0
- * Features:
- * - 12 Built-in Themes + Custom Theme Studio (Live Color Pickers)
- * - System Font Discovery (queryLocalFonts) + Custom Font Uploader (.woff2, .ttf, .otf)
- * - Ultra-Compact High-Density Mode (Sidebar, Tabs, Navbars, Chat, Margins)
- * - Full 7-Language Localization (RU, UK, EN, DE, FR, ES, ZH)
- * - Native Antigravity 2.0 Look & Feel with 100% Translated "Test" Settings Tab
- * - Triple Persistence: agModBridge (disk JSON), nativeStorage (app_storage.json), localStorage
+ * AGMod client runtime for Google Antigravity.
+ * https://github.com/neme23232-rgb/AGMod
  */
 (function() {
   if (window.__AG_MOD_INITIALIZED__) return;
@@ -461,7 +455,7 @@
   ];
 
   // -------------------------------------------------------------
-  // 1. STATE & STORAGE MANAGEMENT (Triple Persistence)
+  // State and storage persistence
   // -------------------------------------------------------------
   let currentLang = 'ru';
   let currentThemeId = 'catppuccin-mocha';
@@ -498,7 +492,7 @@
     }
   };
 
-  // 1.1 Read initial state: Priority: 1) Disk bridge, 2) localStorage
+  // Initial state
   try {
     if (window.agModBridge && typeof window.agModBridge.readSettings === 'function') {
       const disk = window.agModBridge.readSettings();
@@ -551,7 +545,7 @@
     }
   } catch (e) {}
 
-  // 1.2 Asynchronously verify with Antigravity nativeStorage
+  // Sync nativeStorage
   if (window.nativeStorage && typeof window.nativeStorage.getItems === 'function') {
     window.nativeStorage.getItems().then(items => {
       if (!items) return;
@@ -591,7 +585,7 @@
     }).catch(() => {});
   }
 
-  // 1.3 Persistent Saver (Saves to Disk, Native Storage, and LocalStorage)
+  // State persistence
   async function persistSettings() {
     const bundle = {
       lang: currentLang,
@@ -603,14 +597,12 @@
       customThemeConfig: customThemeConfig
     };
 
-    // 1. Preload disk bridge (agmod_settings.json)
     try {
       if (window.agModBridge && typeof window.agModBridge.saveSettings === 'function') {
         window.agModBridge.saveSettings(bundle);
       }
     } catch (e) {}
 
-    // 2. Antigravity Native Storage (app_storage.json)
     try {
       if (window.nativeStorage && typeof window.nativeStorage.updateItems === 'function') {
         await window.nativeStorage.updateItems({
@@ -625,7 +617,6 @@
       }
     } catch (e) {}
 
-    // 3. LocalStorage
     const safeSet = (key, val) => {
       try {
         if (val !== undefined && val !== null) {
@@ -652,7 +643,7 @@
   }
 
   // -------------------------------------------------------------
-  // 2. THEME & STYLING ENGINE
+  // Theme and styling engine
   // -------------------------------------------------------------
   function applyThemeStyles() {
     const target = document.head || document.documentElement;
@@ -691,7 +682,6 @@
       }
     `;
 
-    // 2.1 CSS Variables Override
     if (theme && theme.variables && Object.keys(theme.variables).length > 0) {
       const vars = Object.entries(theme.variables)
         .map(([k, v]) => `  ${k}: ${v} !important;`)
@@ -719,7 +709,6 @@ ${vars}
 `;
     }
 
-    // 2.2 Deep High-Density Compact Mode
     if (isCompact) {
       css += `
 /* Deep High-Density Compact Mode */
@@ -778,7 +767,6 @@ div[role="dialog"] {
 `;
     }
 
-    // 2.3 Custom Font & Injected Fonts
     if (customFontCSS) {
       css += `\n/* Custom Uploaded Font @font-face */\n${customFontCSS}\n`;
     }
@@ -841,7 +829,7 @@ code, pre, .font-mono {
   }
 
   // -------------------------------------------------------------
-  // 3. LOCALIZATION ENGINE
+  // Localization engine
   // -------------------------------------------------------------
   let activeDict = LOCALES[currentLang] || {};
   let sortedKeys = Object.keys(activeDict).sort((a, b) => b.length - a.length);
@@ -1018,7 +1006,7 @@ code, pre, .font-mono {
   }
 
   // -------------------------------------------------------------
-  // 4. SETTINGS "TEST" TAB INJECTION & NATIVE CONTROL CENTER
+  // Settings tab injection
   // -------------------------------------------------------------
   let isTestTabActive = false;
 
@@ -1505,19 +1493,17 @@ code, pre, .font-mono {
       </div>
     `;
 
-    // 1. Theme select listener
     const themeSelect = content.querySelector('#ag-theme-select');
     if (themeSelect) {
       themeSelect.onchange = (e) => setTheme(e.target.value);
     }
 
-    // 2. Theme reset button listener
     const themeResetBtn = content.querySelector('#ag-btn-theme-reset');
     if (themeResetBtn) {
       themeResetBtn.onclick = () => setTheme('catppuccin-mocha');
     }
 
-    // 3. Color Picker & Hex Sync helper with 60 FPS live preview & debounced disk persistence
+    // Color picker live sync
     let colorDebounceTimer = null;
     const debouncedSaveTheme = () => {
       if (colorDebounceTimer) clearTimeout(colorDebounceTimer);
@@ -1611,7 +1597,6 @@ code, pre, .font-mono {
     setupColorSync('accent', '--accent', null);
     setupColorSync('sidebar', '--sidebar', 'sidebar');
 
-    // 4. Language Select & Quick switcher listeners
     const langSelect = content.querySelector('#ag-lang-select');
     if (langSelect) {
       langSelect.onchange = (e) => setLanguage(e.target.value);
@@ -1623,7 +1608,6 @@ code, pre, .font-mono {
       };
     });
 
-    // 4.1 Quick Accent chips listener
     content.querySelectorAll('button[data-ag-quick-accent]').forEach(btn => {
       btn.onclick = () => {
         const color = btn.getAttribute('data-ag-quick-accent');
@@ -1637,7 +1621,6 @@ code, pre, .font-mono {
       };
     });
 
-    // 5. Font selector & PC scanner
     const fontSelect = content.querySelector('#ag-font-select');
     if (fontSelect) {
       fontSelect.onchange = (e) => {
@@ -1672,7 +1655,6 @@ code, pre, .font-mono {
       };
     }
 
-    // 6. Custom Font file upload
     const uploadFontBtn = content.querySelector('#ag-btn-upload-font');
     const fontFileInput = content.querySelector('#ag-font-file-input');
     if (uploadFontBtn && fontFileInput) {
@@ -1716,7 +1698,6 @@ code, pre, .font-mono {
       };
     }
 
-    // 7. Compact Mode Toggle Switch
     const compactToggle = content.querySelector('#ag-compact-toggle');
     if (compactToggle) {
       compactToggle.onclick = () => {
@@ -1724,7 +1705,6 @@ code, pre, .font-mono {
       };
     }
 
-    // 8. Copy Theme JSON listener
     const copyThemeBtn = content.querySelector('#ag-btn-copy-theme');
     if (copyThemeBtn) {
       copyThemeBtn.onclick = () => {
@@ -1744,7 +1724,6 @@ code, pre, .font-mono {
       };
     }
 
-    // 9. Reset Defaults & Reload Window
     const resetBtn = content.querySelector('#ag-btn-reset-defaults');
     if (resetBtn) {
       resetBtn.onclick = () => {
@@ -1795,24 +1774,20 @@ code, pre, .font-mono {
   function handleTestTabClick(testBtn, leftSidebar, rightPane) {
     isTestTabActive = true;
 
-    // 1. Deactivate standard nav buttons
     Array.from(leftSidebar.querySelectorAll('button')).forEach(b => {
       b.classList.remove('bg-sidebar-secondary');
       b.classList.add('hover:bg-sidebar-muted');
     });
 
-    // 2. Activate Test Tab button
     testBtn.classList.remove('hover:bg-sidebar-muted');
     testBtn.classList.add('bg-sidebar-secondary');
 
-    // 3. Hide all native panes in rightPane
     Array.from(rightPane.children).forEach(c => {
       if (c.id !== 'ag-custom-test-pane') {
         c.style.display = 'none';
       }
     });
 
-    // 4. Create or reveal custom pane
     let customPane = document.getElementById('ag-custom-test-pane');
     if (!customPane) {
       customPane = document.createElement('div');
@@ -1883,10 +1858,8 @@ code, pre, .font-mono {
     const leftSidebar = flexRoot.children[0];
     const rightPane = flexRoot.children[1];
 
-    // 1. Enforce translations of native sidebar buttons
     translateSidebarButtons(leftSidebar);
 
-    // 2. Locate target insertion point: directly after Provide Feedback (or Shortcuts) in the bottom section
     const feedbackBtn = leftSidebar.querySelector('[data-testid="settings-nav-item-Provide Feedback"]') ||
       Array.from(leftSidebar.querySelectorAll('button')).find(b => {
         const t = b.innerText.trim();
@@ -1971,7 +1944,7 @@ code, pre, .font-mono {
   }
 
   // -------------------------------------------------------------
-  // 5. SIDEBAR QUICK BUTTONS CLEANUP
+  // Sidebar buttons cleanup
   // -------------------------------------------------------------
   function cleanupSidebarButtons() {
     const oldLang = document.getElementById('ag-sidebar-lang-btn');
@@ -1985,7 +1958,7 @@ code, pre, .font-mono {
   }
 
   // -------------------------------------------------------------
-  // 6. INITIALIZATION & OBSERVERS (Lag-Free & Non-Recursive)
+  // Initialization and observer
   // -------------------------------------------------------------
   applyThemeStyles();
 

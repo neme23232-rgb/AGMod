@@ -125,17 +125,14 @@ async function main() {
     process.exit(1);
   }
 
-  // 1. Build if patched asar does not exist yet
   if (!fs.existsSync(PATCHED_ASAR)) {
     console.log('[*] app.asar.patched not found. Building now...');
     const { buildMod } = require('./build.js');
     await buildMod();
   }
 
-  // 2. Close running Antigravity instance so changes take effect
   const wasRunning = await closeRunningAntigravity();
 
-  // 3. Safe backup of original clean asar if not already backed up
   if (!fs.existsSync(BACKUP_ASAR)) {
     let isAlreadyPatched = false;
     try {
@@ -161,12 +158,10 @@ async function main() {
     console.log(`[1/3] Safe backup already exists at: ${BACKUP_ASAR}`);
   }
 
-  // 4. Install patched app.asar
   console.log(`[2/3] Installing AGMod into Antigravity...`);
   await copyWithRetry(PATCHED_ASAR, TARGET_ASAR, 10, 500);
   console.log('      Installation of app.asar completed.');
 
-  // 5. Verification
   console.log(`[3/3] Verifying installation integrity...`);
   try {
     const asar = getAsarModule();
@@ -186,7 +181,6 @@ async function main() {
   console.log('  - Quick-switch sidebar buttons for instant access');
   console.log('  - Custom font selector & compact mode');
 
-  // 6. Relaunch Antigravity
   const exePath = getAntigravityExePath();
   if (exePath) {
     console.log(`\n[*] Relaunching Google Antigravity (${exePath})...`);
