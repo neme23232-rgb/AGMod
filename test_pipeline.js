@@ -81,6 +81,8 @@ function runPipelineTests() {
     assert(clientScript.includes('ag-nav-test-btn'), 'Client script includes Test Tab injection logic');
     assert(clientScript.includes('ag-custom-test-pane'), 'Client script includes Test Settings pane logic');
     assert(clientScript.includes('cleanupSidebarButtons'), 'Client script includes sidebar buttons cleanup logic');
+    assert(clientScript.includes('ag-account-header-plate'), 'Client script includes Google Account plate logic');
+    assert(clientScript.includes('ag-accounts-drawer'), 'Client script includes Google Accounts expandable drawer logic');
 
     // Syntax validation via Node VM
     new vm.Script(clientScript);
@@ -160,6 +162,34 @@ function runPipelineTests() {
   const r1 = getCachedRegex('Chat');
   const r2 = getCachedRegex('Chat');
   assert(r1 === r2 && REGEX_CACHE.size === 1, 'REGEX_CACHE caches and reuses RegExp instances');
+
+  // 6. Test Account Manager & Profile Isolation
+  console.log('\n--- 6. Testing Google Account Manager & Profile Switcher ---');
+  const acctMgrPath = path.join(__dirname, 'account_manager.js');
+  assert(fs.existsSync(acctMgrPath), 'account_manager.js exists');
+
+  try {
+    const acctMgr = require('./account_manager.js');
+    assert(typeof acctMgr.initAccountManager === 'function', 'Exports initAccountManager function');
+    assert(typeof acctMgr.getAccountsList === 'function', 'Exports getAccountsList function');
+    assert(typeof acctMgr.saveActiveProfile === 'function', 'Exports saveActiveProfile function');
+    assert(typeof acctMgr.switchAccount === 'function', 'Exports switchAccount function');
+    assert(typeof acctMgr.addNewAccount === 'function', 'Exports addNewAccount function');
+    assert(typeof acctMgr.deleteAccount === 'function', 'Exports deleteAccount function');
+    assert(typeof acctMgr.setIsolateChats === 'function', 'Exports setIsolateChats function');
+    assert(typeof acctMgr.createBackup === 'function', 'Exports createBackup function');
+    assert(typeof acctMgr.listBackups === 'function', 'Exports listBackups function');
+    assert(typeof acctMgr.restoreBackup === 'function', 'Exports restoreBackup function');
+    assert(typeof acctMgr.registerAccountIpc === 'function', 'Exports registerAccountIpc function');
+
+    const accts = acctMgr.getAccountsList();
+    assert(accts && Array.isArray(accts.profiles) && accts.profiles.length > 0, 'getAccountsList returns initialized profiles');
+    assert(Boolean(accts.activeProfileId), `Active profile identified: ${accts.activeProfileId}`);
+    const activeProf = accts.profiles.find(p => p.id === accts.activeProfileId);
+    assert(Boolean(activeProf && activeProf.isActive), 'Active profile has isActive flag true');
+  } catch (err) {
+    assert(false, `Account manager test failed: ${err.message}`);
+  }
 
   // 5.5 Font size limit check
   const MAX_FONT_SIZE = 2 * 1024 * 1024;

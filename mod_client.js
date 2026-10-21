@@ -39,6 +39,32 @@
 
   const MOD_I18N = {
     ru: {
+      googleAccount: 'Аккаунт Google',
+      googleAccountDesc: 'Управление несколькими аккаунтами и изолированными чатами',
+      activeAccount: 'Активен',
+      currentAccountBadge: 'Текущий',
+      switchAccountBtn: 'Выбрать',
+      addAccountBtn: 'Добавить аккаунт',
+      chatsCountLabel: 'диалогов',
+      deleteAccountBtn: 'Удалить',
+      clickToExpand: 'Нажмите для выбора или добавления аккаунтов',
+      confirmAddAccount: 'Текущие диалоги и сессия будут сохранены в текущем профиле. Приложение перезапустится для входа в новый аккаунт Google. Продолжить?',
+      confirmDeleteAccount: 'Удалить этот профиль из списка сохранённых аккаунтов?',
+      dialogsBackup: 'Сохранение диалогов',
+      dialogsBackupDesc: 'Резервные копии всех чатов с защитой от сбоев и потери данных',
+      createBackupBtn: 'Создать копию',
+      backupCreatedToast: 'Резервная копия диалогов успешно сохранена!',
+      restoreBackupBtn: 'Восстановить',
+      confirmRestoreBackup: 'Восстановить диалоги из этой резервной копии? Приложение перезапустится.',
+      restoringBackupToast: 'Восстановление диалогов... Antigravity перезапускается',
+      noBackupsYet: 'Резервных копий пока нет',
+      autoBackupNotice: 'Автоматическое сохранение выполняется перед каждой сменой аккаунта',
+      syncChatsTitle: 'Общая история диалогов',
+      syncChatsDesc: 'Автосохранение и доступность чатов при переключении любого аккаунта',
+
+
+      switchingAccountToast: 'Переключение аккаунта... Antigravity перезапускается',
+      addingAccountToast: 'Подготовка к входу в новый аккаунт... Antigravity перезапускается',
       tabTitle: 'AGMod',
       tabBadge: 'MOD',
       headerTitle: 'AGMod',
@@ -426,24 +452,23 @@
   };
 
   const TG_ICONS = {
-    // TG iOS Search (ID 6032850693348399258 / 5942734685976138521)
-    search: `<svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.8" cy="6.8" r="4.8"/><line x1="10.5" y1="10.5" x2="14.5" y2="14.5"/></svg>`,
-    // TG iOS Folder / File (ID 6037475557082403885 / 6039630677182254664)
-    folder: `<svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 3.5C1.5 2.67 2.17 2 3 2h3.17c.4 0 .78.16 1.06.44l1.17 1.17c.28.28.66.44 1.06.44H13c.83 0 1.5.67 1.5 1.5V12.5c0 .83-.67 1.5-1.5 1.5H3c-.83 0-1.5-.67-1.5-1.5V3.5z"/></svg>`,
-    // TG iOS Repeat / Reset (ID 6030657343744644592)
-    repeat: `<svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5A5.5 5.5 0 1 1 3.8 11.2"/><polyline points="2.5 3.5 2.5 7.5 6.5 7.5"/></svg>`,
-    // TG iOS Lightning Bolt (ID 5884428842780594914)
-    lightning: `<svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 16 16" fill="currentColor"><path d="M8.8 1.2a.75.75 0 0 0-1.3.4l-.8 5.4H3.75a.75.75 0 0 0-.6 1.2l6.5 7a.75.75 0 0 0 1.3-.4l.8-5.4h2.95a.75.75 0 0 0 .6-1.2l-6.5-7z"/></svg>`,
-    // TG iOS Magic Wand (ID 6021792097454002931)
-    wand: `<svg class="w-4 h-4 shrink-0 text-primary" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l4 4L4.5 15.5 1 15l.5-3.5L10 2z"/><path d="M8.5 3.5l4 4"/><circle cx="3" cy="3" r=".5" fill="currentColor"/><circle cx="13" cy="13" r=".5" fill="currentColor"/><circle cx="13" cy="2" r=".5" fill="currentColor"/></svg>`,
-    // TG iOS Globe (ID 5776233299424843260)
-    globe: `<svg class="w-4 h-4 shrink-0 text-primary" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><line x1="1.5" y1="8" x2="14.5" y2="8"/><path d="M8 1.5a10 10 0 0 1 2.5 6.5 10 10 0 0 1-2.5 6.5 10 10 0 0 1-2.5-6.5 10 10 0 0 1 2.5-6.5z"/></svg>`,
-    // TG iOS Keyboard / Fonts (ID 6039404727542747508)
-    keyboard: `<svg class="w-4 h-4 shrink-0 text-primary" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3.5" width="13" height="9" rx="2"/><circle cx="4" cy="6.5" r=".75" fill="currentColor"/><circle cx="6.5" cy="6.5" r=".75" fill="currentColor"/><circle cx="9" cy="6.5" r=".75" fill="currentColor"/><circle cx="11.5" cy="6.5" r=".75" fill="currentColor"/><circle cx="4" cy="9.5" r=".75" fill="currentColor"/><line x1="6.5" y1="9.5" x2="11.5" y2="9.5"/></svg>`,
-    // TG iOS Sliders / Controls (ID 5771449289972650710)
-    sliders: `<svg class="w-4 h-4 shrink-0 text-primary" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="2" y1="4" x2="14" y2="4"/><circle cx="5" cy="4" r="2" fill="currentColor"/><line x1="2" y1="12" x2="14" y2="12"/><circle cx="11" cy="12" r="2" fill="currentColor"/></svg>`,
-    // TG iOS Copy Document (ID 6034969813032374911)
-    copy: `<svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5.5" y="5.5" width="8" height="9" rx="1.5"/><path d="M10.5 5.5V3a1.5 1.5 0 0 0-1.5-1.5H3A1.5 1.5 0 0 0 1.5 3v6.5A1.5 1.5 0 0 0 3 11h2.5"/></svg>`
+    // Google Official 4-Color Logo
+    google: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>`,
+
+    // Apple SF Symbols (Telegram iOS Icons pack) - Pixel-perfect vector icons
+    globe: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+    keyboard: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>`,
+    wand: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.49 2 2 6.49 2 12c0 4.41 3.59 8 8 8 .55 0 1-.45 1-1 0-.25-.09-.48-.24-.65-.16-.18-.26-.41-.26-.65 0-.55.45-1 1-1h1.5c4.14 0 7.5-3.36 7.5-7.5C20.5 5.82 16.68 2 12 2z"/><circle cx="7.5" cy="8.5" r="1.5" fill="currentColor"/><circle cx="12" cy="6.5" r="1.5" fill="currentColor"/><circle cx="16.5" cy="8.5" r="1.5" fill="currentColor"/><circle cx="8.5" cy="13.5" r="1.5" fill="currentColor"/></svg>`,
+    settings: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+    sliders: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>`,
+    logout: `<svg viewBox="0 0 24 24" width="15" height="15" style="width:15px;height:15px;min-width:15px;min-height:15px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`,
+    trash: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>`,
+    plus: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
+    chevronDown: `<svg viewBox="0 0 24 24" width="13" height="13" style="width:13px;height:13px;min-width:13px;min-height:13px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
+    copy: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
+    folder: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
+    profile: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+    check: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
   };
 
   const DEFAULT_FONTS = [
@@ -670,7 +695,41 @@
     const activeBg = isLightMode ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.12)';
 
     let css = `
-      /* AGMod Transitions & Global Overrides */
+      #ag-custom-test-pane, #ag-custom-test-pane * {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        letter-spacing: normal !important;
+      }
+      #ag-custom-test-pane code, #ag-custom-test-pane pre {
+        font-family: "JetBrains Mono", monospace !important;
+      }
+      
+            .ag-account-ring {
+        border-radius: 50%;
+        padding: 2.5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-sizing: border-box;
+      }
+      .ag-ring-pro {
+        background: linear-gradient(135deg, #1a73e8 0%, #4285f4 35%, #9b72cb 70%, #d946ef 100%);
+      }
+      .ag-ring-ultra {
+        background: linear-gradient(135deg, #7c3aed 0%, #c026d3 50%, #06b6d4 100%);
+      }
+      .ag-ring-one {
+        background: conic-gradient(from 45deg, #4285f4 0% 25%, #34a853 25% 50%, #fbbc05 50% 75%, #ea4335 75% 100%);
+      }
+      .ag-ring-plus {
+        background: linear-gradient(135deg, #0ea5e9, #06b6d4, #10b981);
+      }
+      .ag-ring-none {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 0;
+      }
+/* AGMod Transitions & Global Overrides */
       body, .bg-card, .bg-background, aside, header, nav, div[role="dialog"] {
         transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease !important;
       }
@@ -1044,9 +1103,14 @@ code, pre, .font-mono {
     const tabBtn = document.getElementById('ag-nav-test-btn');
     if (!tabBtn) return;
     const i18n = MOD_I18N[currentLang] || MOD_I18N['ru'];
-    const labelSpan = tabBtn.querySelector('#ag-nav-test-label') || tabBtn.children[0];
-    if (labelSpan) labelSpan.textContent = i18n.tabTitle;
-    const badgeSpan = tabBtn.querySelector('#ag-nav-test-badge') || tabBtn.children[1];
+    const labelSpan = tabBtn.querySelector('#ag-nav-test-label');
+    if (labelSpan) {
+      labelSpan.textContent = i18n.tabTitle;
+      labelSpan.style.background = 'linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%)';
+      labelSpan.style.webkitBackgroundClip = 'text';
+      labelSpan.style.webkitTextFillColor = 'transparent';
+    }
+    const badgeSpan = tabBtn.querySelector('#ag-nav-test-badge');
     if (badgeSpan) badgeSpan.textContent = i18n.tabBadge;
   }
 
@@ -1122,7 +1186,7 @@ code, pre, .font-mono {
           <div class="flex justify-between items-start gap-4 w-full bg-transparent pr-8 lg:pr-0">
             <div class="flex-1 flex flex-col gap-1 min-w-0 bg-transparent">
               <div class="flex items-center gap-2">
-                <h2 class="text-xl m-0 font-medium truncate text-foreground">${i18n.headerTitle}</h2>
+                <h2 class="text-xl m-0 font-bold truncate" style="background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${i18n.headerTitle}</h2>
                 <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/15 text-primary border border-primary/30 tracking-wider">${i18n.tabBadge}</span>
               </div>
               <div class="text-sm text-muted-foreground bg-transparent">${i18n.headerSubtitle}</div>
@@ -1131,6 +1195,73 @@ code, pre, .font-mono {
         </div>
 
         <div class="flex flex-col gap-8 w-full">
+          <!-- Section 0: Google Account (Antigravity 2.0 Native Style) -->
+          <div class="space-y-2" id="ag-section-google-account">
+            <div class="flex flex-col gap-1">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  ${TG_ICONS.google}
+                  <h3 class="m-0 text-sm font-medium text-foreground">${i18n.googleAccount}</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-card rounded-xl border border-border overflow-hidden">
+              <!-- Active Account Plate (Photo 1 Style) -->
+              <div id="ag-account-header-plate" class="py-2.5 px-3.5 w-full bg-secondary/30 hover:bg-secondary/60 transition-colors flex justify-between gap-3 items-center cursor-pointer select-none">
+                <div class="flex items-center gap-3 min-w-0 flex-1">
+                  <!-- Avatar with Authentic Google Subscription Ring (Static, No Shimmer) -->
+                  <div id="ag-account-active-ring" class="ag-account-ring ag-ring-pro" style="width: 42px; height: 42px;">
+                    <div id="ag-account-active-avatar" class="w-full h-full rounded-full bg-secondary border-2 border-card flex items-center justify-center text-foreground font-semibold text-sm">
+                      G
+                    </div>
+                  </div>
+                  <!-- User Info & Subscription Plan -->
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-2">
+                      <span id="ag-account-active-name" class="text-sm font-semibold truncate" style="background: linear-gradient(135deg, #ffffff 20%, #93c5fd 65%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Загрузка...</span>
+                      <span id="ag-account-plan-badge" class="text-[10px] font-semibold px-2 py-0.5 rounded-full" style="background: rgba(26, 115, 232, 0.18); border: 1px solid rgba(66, 133, 244, 0.45); color: #a8c7fa;">Pro</span>
+                    </div>
+                    <span id="ag-account-active-email" class="text-xs text-muted-foreground truncate">...</span>
+                  </div>
+                </div>
+
+                <!-- Chevron toggle button -->
+                <div class="shrink-0">
+                  <div id="ag-account-chevron-btn" class="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-all">
+                    <div id="ag-account-chevron" class="flex items-center justify-center transition-transform duration-200">
+                      ${TG_ICONS.chevronDown}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Drawer (Other accounts + Actions, Photo 2 Style) -->
+              <div id="ag-accounts-drawer" class="divide-y divide-border border-t border-border bg-transparent" style="display: block;">
+                <!-- Accounts List -->
+                <div id="ag-accounts-list" class="divide-y divide-border/60">
+                  <div class="p-3 text-xs text-muted-foreground text-center">Загрузка аккаунтов...</div>
+                </div>
+
+                <!-- Add Account Row -->
+                <div id="ag-btn-add-account-quick" class="py-2.5 px-3.5 w-full flex items-center gap-3 hover:bg-secondary/50 transition-colors cursor-pointer select-none text-foreground">
+                  <div class="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-foreground shrink-0">
+                    ${TG_ICONS.plus}
+                  </div>
+                  <span class="text-xs font-medium">${i18n.addAccountBtn || "Добавить аккаунт"}</span>
+                </div>
+
+                <!-- Sign out / Switch Row -->
+                <div id="ag-btn-add-account-full" class="py-2.5 px-3.5 w-full flex items-center gap-3 hover:bg-secondary/50 transition-colors cursor-pointer select-none text-muted-foreground hover:text-foreground">
+                  <div class="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-muted-foreground shrink-0">
+                    ${TG_ICONS.logout}
+                  </div>
+                  <span class="text-xs font-medium">${i18n.allAccountsLogout || "Выйти из всех аккаунтов"}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Section 1: Themes & Colors -->
           <div class="space-y-2">
             <div class="flex flex-col gap-1">
@@ -1392,7 +1523,7 @@ code, pre, .font-mono {
                   </div>
                   <div class="shrink-0 flex items-center justify-end gap-2">
                     <input type="file" id="ag-font-file-input" accept=".woff2,.woff,.ttf,.otf" class="hidden" />
-                    ${customFontFamily ? `<span class="text-xs font-mono text-primary font-medium truncate max-w-[130px]">✓ ${escapeHtml(customFontFamily)}</span>` : ''}
+                    ${customFontFamily ? `<span class="inline-flex items-center gap-1 text-xs font-mono text-primary font-medium truncate max-w-[130px]">${TG_ICONS.check} ${escapeHtml(customFontFamily)}</span>` : ''}
                     <button id="ag-btn-upload-font" style="height: 28px; padding: 0 12px; font-size: 12px;" class="inline-flex items-center gap-1.5 font-medium transition-colors select-none outline-none cursor-pointer justify-center bg-secondary text-secondary-foreground hover:text-foreground border-none rounded-md">
                       ${TG_ICONS.folder}
                       <span>${i18n.browseFile}</span>
@@ -1716,7 +1847,7 @@ code, pre, .font-mono {
             const label = content.querySelector('#ag-copy-theme-text');
             if (label) {
               const orig = label.textContent;
-              label.textContent = '✓ ' + (i18n.copied || 'Скопировано!');
+              label.textContent = (i18n.copied || 'Скопировано');
               setTimeout(() => { if (label) label.textContent = orig; }, 2000);
             }
           }).catch(() => {});
@@ -1760,6 +1891,356 @@ code, pre, .font-mono {
         window.open('https://github.com/neme23232-rgb', '_blank');
       };
     }
+
+    
+    // --- Google Account Drawer Handlers ---
+    (function setupAccountManagerUI() {
+      const headerPlate = content.querySelector('#ag-account-header-plate');
+      const drawer = content.querySelector('#ag-accounts-drawer');
+      const chevron = content.querySelector('#ag-account-chevron');
+      const emailElem = content.querySelector('#ag-account-active-email');
+      const descElem = content.querySelector('#ag-account-plate-desc');
+      const btnAddQuick = content.querySelector('#ag-btn-add-account-quick');
+      const btnAddFull = content.querySelector('#ag-btn-add-account-full');
+      let isDrawerOpen = false;
+
+      function showActionBanner(msg) {
+        let banner = document.getElementById('ag-account-action-banner');
+        if (!banner) {
+          banner = document.createElement('div');
+          banner.id = 'ag-account-action-banner';
+          banner.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:999999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px);';
+          document.body.appendChild(banner);
+        }
+        banner.innerHTML = `
+          <div style="background:var(--card,#1e1e2e);color:var(--foreground,#f0f6fc);border:1px solid var(--border,#30363d);border-radius:12px;padding:24px 32px;display:flex;flex-direction:column;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,0.5);font-size:14px;font-weight:500;">
+            <svg class="animate-spin" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
+            <span>${msg}</span>
+          </div>
+        `;
+      }
+
+      function getPlanConfig(planName) {
+        const plan = (planName || '').toLowerCase();
+        if (plan.includes('ultra')) {
+          return {
+            name: 'Ultra',
+            ringClass: 'ag-ring-ultra',
+            badgeStyle: 'background: linear-gradient(135deg, #7c3aed, #db2777); color: #ffffff; border: none; font-weight: 600;'
+          };
+        }
+        if (plan.includes('one')) {
+          return {
+            name: 'One',
+            ringClass: 'ag-ring-one',
+            badgeStyle: 'background: rgba(66, 133, 244, 0.15); border: 1px solid rgba(66, 133, 244, 0.35); color: #8ab4f8; font-weight: 600;'
+          };
+        }
+        if (plan.includes('plus')) {
+          return {
+            name: 'Plus',
+            ringClass: 'ag-ring-plus',
+            badgeStyle: 'background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.35); color: #67e8f9; font-weight: 600;'
+          };
+        }
+        if (plan.includes('free') || plan.includes('нет') || plan.includes('бесплатн')) {
+          return {
+            name: 'Нет подписки',
+            ringClass: 'ag-ring-none',
+            badgeStyle: 'background: rgba(255, 255, 255, 0.08); color: #9aa0a6; border: 1px solid rgba(255, 255, 255, 0.1); font-weight: 500;'
+          };
+        }
+        // Default is Pro (Google AI Pro / Gemini Advanced as in photos 1 & 2)
+        return {
+          name: 'Pro',
+          ringClass: 'ag-ring-pro',
+          badgeStyle: 'background: rgba(26, 115, 232, 0.18); border: 1px solid rgba(66, 133, 244, 0.45); color: #a8c7fa; font-weight: 600;'
+        };
+      }
+
+      function detectSubscriptionPlan() {
+        try {
+          const raw = (document.body && document.body.innerText) || '';
+          if (/Google AI Ultra|тариф Ultra|\bultra\b/i.test(raw)) return 'Ultra';
+          if (/Google AI Plus|тариф Plus|\bplus\b/i.test(raw)) return 'Plus';
+          if (/Google One/i.test(raw)) return 'One';
+          if (/бесплатный тариф|free plan|no subscription/i.test(raw)) return 'Нет подписки';
+          if (/Google AI Pro|тариф Pro|\bpro\b/i.test(raw)) return 'Pro';
+
+          const allBadges = document.querySelectorAll('[class*="badge"], [role="status"], span');
+          for (const b of allBadges) {
+            if (b.children.length === 0) {
+              const txt = (b.textContent || '').trim();
+              if (txt === 'Pro') return 'Pro';
+              if (txt === 'Ultra') return 'Ultra';
+              if (txt === 'Plus') return 'Plus';
+              if (txt === 'One') return 'One';
+            }
+          }
+        } catch (e) {}
+        return 'Pro';
+      }
+
+      function getGoogleAvatarColor(str) {
+        const colors = ['#1a73e8', '#ea4335', '#fbbc04', '#34a853', '#9c27b0', '#009688', '#e91e63', '#ff6d00'];
+        let hash = 0;
+        for (let i = 0; i < (str || '').length; i++) hash = (hash * 31 + str.charCodeAt(i)) & 0xffffffff;
+        return colors[Math.abs(hash) % colors.length];
+      }
+
+      async function refreshAccountsList() {
+        if (!window.agModAccounts || typeof window.agModAccounts.getAccounts !== 'function') return;
+        try {
+          const res = await window.agModAccounts.getAccounts();
+          if (!res) return;
+
+          let activeProfile = res.profiles ? res.profiles.find(p => p.isActive) : null;
+          if (!activeProfile && res.profiles && res.profiles.length > 0) {
+            activeProfile = res.profiles[0];
+          }
+
+          const activeEmail = (activeProfile && activeProfile.email) || 'Аккаунт Google';
+          let activeName = (activeProfile && activeProfile.name) || '';
+          if (!activeName || activeName === activeEmail) {
+            activeName = activeEmail.includes('@') ? activeEmail.split('@')[0] : activeEmail;
+          }
+          const activeInitial = (activeName || activeEmail).charAt(0).toUpperCase();
+
+          const nameElem = content.querySelector('#ag-account-active-name');
+          if (nameElem) nameElem.textContent = activeName;
+          const emailElem = content.querySelector('#ag-account-active-email');
+          if (emailElem) emailElem.textContent = activeEmail;
+          const avatarElem = content.querySelector('#ag-account-active-avatar');
+          if (avatarElem) avatarElem.textContent = activeInitial;
+
+          // Subscription detection and styling (Ultra, Pro, One, Plus, Нет подписки)
+          const detectedPlan = detectSubscriptionPlan();
+          const activePlanConfig = getPlanConfig(detectedPlan);
+
+          const activeRing = content.querySelector('#ag-account-active-ring');
+          if (activeRing) {
+            activeRing.className = `ag-account-ring ${activePlanConfig.ringClass}`;
+          }
+
+          const planBadge = content.querySelector('#ag-account-plan-badge');
+          if (planBadge) {
+            planBadge.textContent = activePlanConfig.name;
+            planBadge.style.cssText = activePlanConfig.badgeStyle;
+          }
+
+          const listContainer = content.querySelector('#ag-accounts-list');
+          if (!listContainer) return;
+          listContainer.innerHTML = '';
+
+          const otherProfiles = res.profiles ? res.profiles.filter(p => !p.isActive) : [];
+          if (otherProfiles.length === 0) {
+            listContainer.innerHTML = `<div class="p-3 text-xs text-muted-foreground text-center">Нет других подключённых аккаунтов</div>`;
+          } else {
+            otherProfiles.forEach((p) => {
+              const row = document.createElement('div');
+              row.className = 'py-2 px-3.5 w-full flex items-center justify-between gap-3 hover:bg-secondary/40 transition-colors cursor-pointer select-none';
+
+              const initial = (p.name || p.email || 'G').charAt(0).toUpperCase();
+              let displayName = p.name;
+              if (!displayName || displayName === p.email) {
+                displayName = p.email ? p.email.split('@')[0] : 'Аккаунт';
+              }
+              displayName = escapeHtml(displayName);
+              const email = escapeHtml(p.email);
+              const chatsCount = p.chatCount || 0;
+              const chatsLabel = `${chatsCount} ${i18n.chatsCountLabel || 'диалогов'}`;
+
+              const pPlan = getPlanConfig(p.subscription || p.plan || (p.email && p.email.includes('quiet') ? 'Pro' : 'Free'));
+              const avatarBg = p.isExpired ? '#5f6368' : getGoogleAvatarColor(p.email || p.name);
+
+              const expiredBadge = p.isExpired 
+                ? `<span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-secondary text-muted-foreground border border-border">Время сеанса истекло</span>` 
+                : `<span class="text-[10px] px-2 py-0.5 rounded-md bg-secondary text-muted-foreground font-medium">${chatsLabel}</span>`;
+
+              row.innerHTML = `
+                <div class="flex items-center gap-3 min-w-0 flex-1">
+                  <div class="ag-account-ring ${pPlan.ringClass}" style="width: 36px; height: 36px;">
+                    <div class="w-full h-full rounded-full border border-card flex items-center justify-center text-white font-semibold text-xs" style="background: ${avatarBg};">
+                      ${initial}
+                    </div>
+                  </div>
+                  <div class="flex flex-col min-w-0">
+                    <span class="text-xs font-medium text-foreground truncate">${displayName}</span>
+                    <span class="text-[11px] text-muted-foreground truncate">${email}</span>
+                  </div>
+                </div>
+                <div class="shrink-0 flex items-center gap-2">
+                  ${expiredBadge}
+                  <button class="ag-btn-delete-account p-1 rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors" data-id="${escapeHtml(p.id)}" title="${i18n.deleteAccountBtn || 'Удалить'}">
+                    ${TG_ICONS.trash}
+                  </button>
+                </div>
+              `;
+
+              row.onclick = async (ev) => {
+                if (ev.target.closest('.ag-btn-delete-account')) return;
+                showActionBanner(i18n.switchingAccountToast || 'Переключение аккаунта... Antigravity перезапускается');
+                try {
+                  await window.agModAccounts.switchAccount(p.id);
+                } catch (err) {
+                  console.error('[AGMod] Switch error:', err);
+                }
+              };
+
+              const delBtn = row.querySelector('.ag-btn-delete-account');
+              if (delBtn) {
+                delBtn.onclick = async (ev) => {
+                  ev.stopPropagation();
+                  if (confirm(i18n.confirmDeleteAccount || 'Удалить этот профиль и все сохранённые в нём диалоги?')) {
+                    try {
+                      await window.agModAccounts.deleteAccount(p.id);
+                      refreshAccountsList();
+                    } catch (err) {
+                      console.error('[AGMod] Delete error:', err);
+                    }
+                  }
+                };
+              }
+
+              listContainer.appendChild(row);
+            });
+          }
+        } catch (e) {
+          console.error('[AGMod] Failed to get accounts:', e);
+        }
+      }
+
+      function toggleDrawer() {
+        isDrawerOpen = !isDrawerOpen;
+        if (drawer) drawer.style.display = isDrawerOpen ? 'block' : 'none';
+        if (chevron) chevron.style.transform = isDrawerOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+        if (isDrawerOpen) refreshAccountsList();
+      }
+
+
+      if (headerPlate) {
+        headerPlate.onmouseenter = () => { headerPlate.style.background = '#2c2e32'; };
+        headerPlate.onmouseleave = () => { headerPlate.style.background = '#25272a'; };
+      }
+      const addQuick = content.querySelector('#ag-btn-add-account-quick');
+      if (addQuick) {
+        addQuick.onmouseenter = () => { addQuick.style.background = 'rgba(255, 255, 255, 0.06)'; };
+        addQuick.onmouseleave = () => { addQuick.style.background = 'transparent'; };
+      }
+      const addFull = content.querySelector('#ag-btn-add-account-full');
+      if (addFull) {
+        addFull.onmouseenter = () => { addFull.style.background = 'rgba(255, 255, 255, 0.06)'; };
+        addFull.onmouseleave = () => { addFull.style.background = 'transparent'; };
+      }
+      if (headerPlate) {
+        headerPlate.onclick = () => toggleDrawer();
+      }
+
+      async function triggerAddAccount(ev) {
+        if (ev) ev.stopPropagation();
+        const ok = confirm(i18n.confirmAddAccount || 'Текущие диалоги и сессия будут сохранены в текущем профиле. Приложение перезапустится для входа в новый аккаунт Google. Продолжить?');
+        if (!ok) return;
+
+        showActionBanner(i18n.addingAccountToast || 'Подготовка к входу в новый аккаунт... Antigravity перезапускается');
+        try {
+          await window.agModAccounts.addNewAccount();
+        } catch (err) {
+          console.error('[AGMod] Add account error:', err);
+        }
+      }
+
+            const toggleSync = content.querySelector('#ag-toggle-sync-chats');
+      if (toggleSync) {
+        toggleSync.onchange = async () => {
+          if (window.agModAccounts && typeof window.agModAccounts.setIsolateChats === 'function') {
+            await window.agModAccounts.setIsolateChats(!toggleSync.checked);
+            refreshAccountsList();
+          }
+        };
+      }
+
+      if (btnAddQuick) btnAddQuick.onclick = triggerAddAccount;
+      if (btnAddFull) btnAddFull.onclick = triggerAddAccount;
+
+            async function refreshBackupsList() {
+        const listContainer = content.querySelector('#ag-backups-list');
+        if (!listContainer || !window.agModAccounts || typeof window.agModAccounts.listBackups !== 'function') return;
+
+        try {
+          const backups = await window.agModAccounts.listBackups();
+          if (!backups || backups.length === 0) {
+            listContainer.innerHTML = `<div class="p-3 text-xs text-muted-foreground text-center">${i18n.noBackupsYet || 'Резервных копий пока нет'}</div>`;
+            return;
+          }
+
+          listContainer.innerHTML = '';
+          backups.forEach(b => {
+            const row = document.createElement('div');
+            row.className = 'py-2 px-3.5 flex items-center justify-between gap-3 hover:bg-secondary/20 transition-colors';
+            const sizeMb = (b.sizeBytes ? (b.sizeBytes / (1024 * 1024)).toFixed(1) + ' MB' : '');
+            row.innerHTML = `
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-6 h-6 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 text-primary">
+                  ${TG_ICONS.shield}
+                </div>
+                <div class="flex flex-col min-w-0">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-medium text-foreground truncate">${escapeHtml(b.label || 'Резервная копия')}</span>
+                    <span class="text-[10px] font-semibold px-1.5 py-0.2 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">${b.chatCount || 0} ${i18n.chatsCountLabel || 'диалогов'}</span>
+                  </div>
+                  <span class="text-[11px] text-muted-foreground truncate">${escapeHtml(b.date || '')} ${sizeMb ? '· ' + sizeMb : ''}</span>
+                </div>
+              </div>
+              <div class="shrink-0 flex items-center gap-1.5">
+                <button class="ag-btn-restore-backup text-xs font-medium px-2.5 py-1 rounded bg-secondary hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer border border-border" data-id="${escapeHtml(b.id)}">
+                  ${i18n.restoreBackupBtn || 'Восстановить'}
+                </button>
+              </div>
+            `;
+
+            const rBtn = row.querySelector('.ag-btn-restore-backup');
+            if (rBtn) {
+              rBtn.onclick = async (ev) => {
+                ev.stopPropagation();
+                if (confirm(i18n.confirmRestoreBackup || 'Восстановить диалоги из этой резервной копии? Приложение перезапустится.')) {
+                  showActionBanner(i18n.restoringBackupToast || 'Восстановление диалогов... Antigravity перезапускается');
+                  try {
+                    await window.agModAccounts.restoreBackup(b.id);
+                  } catch (err) {
+                    console.error('[AGMod] Restore backup error:', err);
+                  }
+                }
+              };
+            }
+
+            listContainer.appendChild(row);
+          });
+        } catch (e) {
+          console.error('[AGMod] Failed to list backups:', e);
+        }
+      }
+
+      const btnCreateBackup = content.querySelector('#ag-btn-create-backup');
+      if (btnCreateBackup) {
+        btnCreateBackup.onclick = async () => {
+          btnCreateBackup.disabled = true;
+          try {
+            const res = await window.agModAccounts.createBackup('Ручное сохранение');
+            if (res && res.success) {
+              refreshBackupsList();
+            }
+          } catch (e) {
+            console.error('[AGMod] Create backup error:', e);
+          } finally {
+            btnCreateBackup.disabled = false;
+          }
+        };
+      }
+
+      // Initial check
+      refreshAccountsList();
+      refreshBackupsList();
+    })();
 
     container.appendChild(content);
   }
@@ -1901,9 +2382,9 @@ code, pre, .font-mono {
       testBtn.setAttribute('type', 'button');
       testBtn.className = 'flex items-center justify-start gap-2 group mx-2 px-2 py-1 rounded-lg cursor-pointer border-none text-left transition-all outline-none hover:bg-sidebar-muted';
       testBtn.innerHTML = `
-        <span id="ag-nav-test-label" class="text-sm transition-colors select-none truncate text-secondary-foreground group-hover:text-foreground">${i18n.tabTitle}</span>
-        <span id="ag-nav-test-badge" class="text-[9px] px-1.5 py-0.5 rounded font-bold tracking-wider bg-primary/15 text-primary border border-primary/25">${i18n.tabBadge}</span>
-      `;
+            <span id="ag-nav-test-label" class="text-sm select-none truncate font-semibold" style="background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${i18n.tabTitle}</span>
+            <span id="ag-nav-test-badge" class="ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded-full" style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(129, 140, 248, 0.4); color: #38bdf8; letter-spacing: 0.5px;">${i18n.tabBadge}</span>
+          `;
 
       testBtn.onclick = (e) => {
         e.stopPropagation();
@@ -2068,3 +2549,5 @@ code, pre, .font-mono {
     window.__AG_MOD_OBSERVER__ = observer;
   }
 })();
+
+

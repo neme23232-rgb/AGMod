@@ -165,7 +165,39 @@ async function buildMod() {
   }
   console.log(`      Target version: Antigravity v${appVersion}`);
 
-  console.log('[2/4] Injecting AGMod client (Themes, Localization, Settings Tab)...');
+  console.log('[2/4] Injecting AGMod client & Account Manager...');
+
+  // Bundle account_manager.js into dist
+  const acctMgrSrc = path.join(__dirname, 'account_manager.js');
+  if (fs.existsSync(acctMgrSrc)) {
+    fs.copyFileSync(acctMgrSrc, path.join(TEMP_BUILD, 'dist', 'account_manager.js'));
+    console.log('      Bundled account_manager.js into dist/');
+  }
+
+  // Inject into dist/ipcHandlers.js
+  const ipcPath = path.join(TEMP_BUILD, 'dist', 'ipcHandlers.js');
+  if (fs.existsSync(ipcPath)) {
+    let ipcCode = fs.readFileSync(ipcPath, 'utf8');
+    if (!ipcCode.includes('// --- AGMod Account Switcher Handlers ---')) {
+      const regInjection = `
+// --- AGMod Account Switcher Handlers ---
+try {
+  const { registerAccountIpc, initAccountManager } = require('./account_manager');
+  initAccountManager();
+  registerAccountIpc(electron_1.ipcMain);
+} catch (e) {
+  console.error('[AGMod] Failed to register account IPC:', e);
+}
+// --- AGMod Account Switcher End ---
+`;
+      ipcCode = ipcCode.replace(
+        'function registerIpcHandlers(storageManager) {',
+        'function registerIpcHandlers(storageManager) {\n' + regInjection
+      );
+      fs.writeFileSync(ipcPath, ipcCode, 'utf8');
+      console.log('      Injected account IPC handlers into ipcHandlers.js');
+    }
+  }
   const preloadPath = path.join(TEMP_BUILD, 'dist', 'preload.js');
   if (!fs.existsSync(preloadPath)) {
     throw new Error(`Could not find preload.js at ${preloadPath}`);
@@ -197,6 +229,30 @@ try {
 `;
 
   preloadCode += injection;
+
+  // Expose agModAccounts API to renderer
+  const agModAccountsPreload = `
+// --- AGMod Accounts API ---
+try {
+  const agModAccountsAPI = {
+    getAccounts: () => electron_1.ipcRenderer.invoke('agmod:get-accounts'),
+    saveCurrent: (name) => electron_1.ipcRenderer.invoke('agmod:save-account', name),
+    switchAccount: (id) => electron_1.ipcRenderer.invoke('agmod:switch-account', id),
+    addNewAccount: () => electron_1.ipcRenderer.invoke('agmod:add-account'),
+    deleteAccount: (id) => electron_1.ipcRenderer.invoke('agmod:delete-account', id),
+    renameAccount: (id, name) => electron_1.ipcRenderer.invoke('agmod:rename-account', id, name),
+    setIsolateChats: (isolate) => electron_1.ipcRenderer.invoke('agmod:set-isolate-chats', isolate),
+    createBackup: (label) => electron_1.ipcRenderer.invoke('agmod:create-backup', label),
+    listBackups: () => electron_1.ipcRenderer.invoke('agmod:list-backups'),
+    restoreBackup: (id) => electron_1.ipcRenderer.invoke('agmod:restore-backup', id),
+  };
+  electron_1.contextBridge.exposeInMainWorld('agModAccounts', agModAccountsAPI);
+} catch (err) {
+  console.error('[AGMod] Failed to expose agModAccounts API:', err);
+}
+// --- AGMod Accounts API End ---
+`;
+  preloadCode += agModAccountsPreload;
   fs.writeFileSync(preloadPath, preloadCode, 'utf8');
 
   // Replace default app icon with custom AGMod icon if available

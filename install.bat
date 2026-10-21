@@ -11,5 +11,4 @@ if %ERRORLEVEL% NEQ 0 (
     pause
     exit /b %ERRORLEVEL%
 )
-echo.
-pause
+exit /b 0
