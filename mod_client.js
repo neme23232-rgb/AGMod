@@ -812,7 +812,7 @@
       .bg-sidebar-secondary {
         background-color: ${activeBg} !important;
       }
-      /* AGMod Thinking Slider & Level Controller */
+      /* AGMod Thinking Slider & Level Controller (Neutral Antigravity 2.0 Style) */
       .ag-thinking-slider-widget {
         font-family: inherit;
         color: var(--foreground, #f0f6fc);
@@ -820,11 +820,11 @@
       }
       .ag-slider-track-wrap {
         position: relative;
-        padding: 10px 4px 6px 4px;
+        padding: 8px 4px 6px 4px;
         cursor: pointer;
       }
       .ag-slider-track {
-        height: 6px;
+        height: 5px;
         border-radius: 9999px;
         background: rgba(255, 255, 255, 0.12);
         position: relative;
@@ -833,47 +833,45 @@
       .ag-slider-fill {
         height: 100%;
         border-radius: 9999px;
-        background: linear-gradient(90deg, #38bdf8 0%, #818cf8 35%, #c084fc 70%, #f43f5e 100%);
+        background: var(--primary, #88c0d0);
         position: absolute;
         top: 0;
         left: 0;
         pointer-events: none;
-        transition: width 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: width 0.12s ease;
       }
       .ag-slider-dot {
         position: absolute;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 10px;
-        height: 10px;
+        width: 9px;
+        height: 9px;
         border-radius: 50%;
-        background: #18181b;
-        border: 2px solid rgba(255, 255, 255, 0.35);
-        transition: all 0.2s ease;
+        background: var(--card, #252830);
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        transition: all 0.15s ease;
         pointer-events: none;
       }
       .ag-slider-dot.active {
-        background: #ffffff;
-        border-color: #818cf8;
-        box-shadow: 0 0 10px rgba(129, 140, 248, 0.8);
+        background: var(--primary, #88c0d0);
+        border-color: var(--primary, #88c0d0);
       }
       .ag-slider-thumb {
         position: absolute;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 18px;
-        height: 18px;
+        width: 15px;
+        height: 15px;
         border-radius: 50%;
         background: #ffffff;
-        border: 2.5px solid #818cf8;
-        box-shadow: 0 0 12px rgba(129, 140, 248, 0.7), 0 2px 4px rgba(0,0,0,0.4);
+        border: 2px solid var(--primary, #88c0d0);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
         cursor: grab;
-        transition: transform 0.12s ease, left 0.12s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease;
+        transition: transform 0.1s ease, left 0.12s ease;
         z-index: 2;
       }
       .ag-slider-thumb:hover {
         transform: translate(-50%, -50%) scale(1.15);
-        box-shadow: 0 0 16px rgba(129, 140, 248, 0.95);
       }
       .ag-slider-thumb:active {
         cursor: grabbing;
@@ -883,20 +881,19 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 6px 8px;
-        border-radius: 7px;
+        padding: 5px 8px;
+        border-radius: 6px;
         cursor: pointer;
-        transition: all 0.15s ease;
+        transition: background 0.12s ease;
         border: 1px solid transparent;
       }
       .ag-thinking-row:hover {
         background: rgba(255, 255, 255, 0.05);
       }
       .ag-thinking-row.active {
-        background: rgba(129, 140, 248, 0.15);
-        border-color: rgba(129, 140, 248, 0.4);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.12);
       }
-
     `;
 
     if (theme && theme.variables && Object.keys(theme.variables).length > 0) {
@@ -1855,8 +1852,8 @@ code, pre, .font-mono {
                       <span class="ag-settings-step-lbl" data-step="0" style="cursor: pointer;">${currentLang === 'ru' || currentLang === 'uk' ? 'Низкая' : 'Low'}</span>
                       <span class="ag-settings-step-lbl" data-step="1" style="cursor: pointer;">${currentLang === 'ru' || currentLang === 'uk' ? 'Средняя' : 'Med'}</span>
                       <span class="ag-settings-step-lbl" data-step="2" style="cursor: pointer;">${currentLang === 'ru' || currentLang === 'uk' ? 'Высокая' : 'High'}</span>
-                      <span class="ag-settings-step-lbl" data-step="3" style="cursor: pointer; color: #c084fc;">Max</span>
-                      <span class="ag-settings-step-lbl" data-step="4" style="cursor: pointer; font-weight: 600; background: linear-gradient(135deg, #38bdf8, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">UltraCode</span>
+                      <span class="ag-settings-step-lbl" data-step="3" style="cursor: pointer; color: var(--foreground, #ffffff);">Max</span>
+                      <span class="ag-settings-step-lbl" data-step="4" style="cursor: pointer; font-weight: 600; color: var(--foreground, #ffffff); font-weight: 600;">UltraCode</span>
                     </div>
                   </div>
 
@@ -3399,6 +3396,8 @@ ${p.picture ? `
   // -------------------------------------------------------------
   // AGMod: Thinking Effort Slider & Level Controller (Claude Code / Codex Style)
   // -------------------------------------------------------------
+  // AGMod: Thinking Effort Slider & Level Controller (Neutral Antigravity 2.0 Style)
+  // -------------------------------------------------------------
   const THINKING_LEVELS = [
     {
       id: 'low',
@@ -3406,8 +3405,7 @@ ${p.picture ? `
       label: 'Низкая',
       labelEn: 'Low',
       badge: 'LOW',
-      badgeColor: '#38bdf8',
-      desc: 'Быстрый ответ с минимальным рассуждением',
+      desc: 'Минимальные задержки рассуждений',
       descEn: 'Fast response with minimal reasoning latency',
       nativeTarget: 'low',
       icon: 'lightning'
@@ -3418,8 +3416,7 @@ ${p.picture ? `
       label: 'Средняя',
       labelEn: 'Medium',
       badge: 'MED',
-      badgeColor: '#60a5fa',
-      desc: 'Сбалансированное рассуждение для стандартных задач',
+      desc: 'Сбалансированное рассуждение',
       descEn: 'Balanced reasoning effort for everyday tasks',
       nativeTarget: 'med',
       icon: 'sliders'
@@ -3430,7 +3427,6 @@ ${p.picture ? `
       label: 'Высокая',
       labelEn: 'High',
       badge: 'HIGH',
-      badgeColor: '#818cf8',
       desc: 'Глубокий пошаговый анализ и проверка',
       descEn: 'Deep step-by-step thinking and rigorous verification',
       nativeTarget: 'high',
@@ -3442,7 +3438,6 @@ ${p.picture ? `
       label: 'Max',
       labelEn: 'Max',
       badge: 'MAX',
-      badgeColor: '#c084fc',
       desc: 'Максимальный бюджет токенов на рассуждения',
       descEn: 'Maximum thinking token budget for hard challenges',
       nativeTarget: 'high',
@@ -3454,7 +3449,6 @@ ${p.picture ? `
       label: 'UltraCode',
       labelEn: 'UltraCode',
       badge: 'ULTRA',
-      badgeColor: '#f43f5e',
       desc: 'Ультракод — экстремальный анализ архитектуры и кода',
       descEn: 'UltraCode — extreme architectural reasoning and deep code analysis',
       nativeTarget: 'high',
@@ -3494,44 +3488,62 @@ ${p.picture ? `
     } catch (_) {}
   }
 
+  function findThinkingSubmenu(root) {
+    const scope = root || document.body || document;
+    if (!scope.querySelectorAll) return null;
+
+    // Fast check: look for any element starting with Low / Низкая
+    const allElements = scope.querySelectorAll('*');
+    for (let i = 0; i < allElements.length; i++) {
+      const el = allElements[i];
+      const t = (el.textContent || '').trim().toLowerCase();
+      if (t === 'низкая' || t === 'low' || (t.startsWith('низкая') && t.length < 15) || (t.startsWith('low') && t.length < 15)) {
+        // Walk up parents (up to 6 levels) to find popup container
+        let cur = el.parentElement;
+        for (let depth = 0; depth < 6 && cur && cur !== document.body; depth++) {
+          const cTxt = (cur.textContent || '').toLowerCase();
+          const hasMed = cTxt.includes('средняя') || cTxt.includes('medium');
+          const hasHigh = cTxt.includes('высокая') || cTxt.includes('high');
+          const hasOther = cTxt.includes('claude') || cTxt.includes('gemini 4') || cTxt.includes('gpt-oss') || cTxt.includes('использование') || cTxt.includes('models');
+
+          if (hasMed && hasHigh && !hasOther) {
+            if (cur.dataset && cur.dataset.agThinkingEnhanced === 'true') {
+              return null; // already enhanced
+            }
+
+            // Locate specific rows for low, med, high
+            let lowEl = null, medEl = null, highEl = null;
+            const children = cur.querySelectorAll('*');
+            for (let j = 0; j < children.length; j++) {
+              const ch = children[j];
+              const chTxt = (ch.textContent || '').trim().toLowerCase();
+              if (/^(низкая|low)\b/i.test(chTxt) && chTxt.length < 25) {
+                if (!lowEl) lowEl = ch.closest('[role="menuitem"], [role="menuitemradio"], button') || ch;
+              } else if (/^(средняя|medium)\b/i.test(chTxt) && chTxt.length < 25) {
+                if (!medEl) medEl = ch.closest('[role="menuitem"], [role="menuitemradio"], button') || ch;
+              } else if (/^(высокая|high)\b/i.test(chTxt) && chTxt.length < 25) {
+                if (!highEl) highEl = ch.closest('[role="menuitem"], [role="menuitemradio"], button') || ch;
+              }
+            }
+
+            if (lowEl && medEl && highEl) {
+              const box = lowEl.closest('[role="menu"], [data-radix-menu-content], [data-radix-popper-content-wrapper]') || cur;
+              return { menu: box, lowEl, medEl, highEl };
+            }
+          }
+          cur = cur.parentElement;
+        }
+      }
+    }
+    return null;
+  }
+
   function scanAndEnhanceThinkingSubmenu(root) {
     try {
-      const menus = (root || document).querySelectorAll ?
-        (root || document).querySelectorAll('[role="menu"], [data-radix-menu-content], div.z-50') : [];
-
-      for (let m = 0; m < menus.length; m++) {
-        const menu = menus[m];
-        if (menu.dataset && menu.dataset.agThinkingEnhanced === 'true') continue;
-
-        const allTxt = (menu.textContent || '').toLowerCase();
-        if (allTxt.includes('gemini 4') || allTxt.includes('claude sonnet') || allTxt.includes('вид использование') || allTxt.includes('models')) {
-          continue;
-        }
-
-        const items = Array.from(menu.querySelectorAll('*')).filter(el => {
-          const t = (el.textContent || '').trim();
-          return t === 'Низкая' || t === 'Low' ||
-                 t === 'Средняя' || t === 'Medium' ||
-                 t === 'Высокая' || t === 'High';
-        });
-
-        let lowEl = null;
-        let medEl = null;
-        let highEl = null;
-
-        for (let i = 0; i < items.length; i++) {
-          const el = items[i];
-          const row = el.closest('[role="menuitem"], [role="menuitemradio"], button') || el;
-          const txt = (row.textContent || '').trim();
-          if (/^(низкая|low)/i.test(txt)) lowEl = row;
-          else if (/^(средняя|medium)/i.test(txt)) medEl = row;
-          else if (/^(высокая|high)/i.test(txt)) highEl = row;
-        }
-
-        if (lowEl && medEl && highEl) {
-          menu.dataset.agThinkingEnhanced = 'true';
-          renderThinkingSliderWidget(menu, lowEl, medEl, highEl);
-        }
+      const match = findThinkingSubmenu(root);
+      if (match) {
+        match.menu.dataset.agThinkingEnhanced = 'true';
+        renderThinkingSliderWidget(match.menu, match.lowEl, match.medEl, match.highEl);
       }
     } catch (err) {
       console.error('[AGMod] Thinking submenu scan error:', err);
@@ -3556,11 +3568,14 @@ ${p.picture ? `
     medEl.style.display = 'none';
     highEl.style.display = 'none';
 
-    // Style menu container to have comfortable width
-    menu.style.minWidth = '290px';
-    menu.style.maxWidth = '330px';
-    menu.style.padding = '12px';
-    menu.style.borderRadius = '14px';
+    // Style menu container to have comfortable width with neutral theme
+    menu.style.minWidth = '275px';
+    menu.style.maxWidth = '310px';
+    menu.style.padding = '10px';
+    menu.style.borderRadius = '12px';
+    menu.style.background = 'var(--card, #252830)';
+    menu.style.border = '1px solid var(--border, rgba(255, 255, 255, 0.12))';
+    menu.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.5)';
 
     const widget = document.createElement('div');
     widget.className = 'ag-thinking-slider-widget';
@@ -3570,11 +3585,11 @@ ${p.picture ? `
 
     widget.innerHTML = `
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-        <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #f0f6fc;">
-          <span style="color: #818cf8;">${TG_ICONS.brain}</span>
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--foreground, #f0f6fc);">
+          <span style="color: var(--primary, #88c0d0); opacity: 0.9;">${TG_ICONS.brain}</span>
           <span>${headerTitle}</span>
         </div>
-        <span id="ag-thinking-active-badge" style="font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 9999px; background: rgba(129, 140, 248, 0.18); border: 1px solid rgba(129, 140, 248, 0.4); color: #818cf8; letter-spacing: 0.5px;"></span>
+        <span id="ag-thinking-active-badge" style="font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 9999px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: var(--foreground, #ffffff); letter-spacing: 0.5px;"></span>
       </div>
 
       <!-- Stepped Slider Track -->
@@ -3588,35 +3603,33 @@ ${p.picture ? `
           <div class="ag-slider-dot" data-step="4" style="left: 100%;"></div>
           <div id="ag-slider-thumb" class="ag-slider-thumb" style="left: 50%;"></div>
         </div>
-        <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 10.5px; font-weight: 500; color: #94a3b8;">
+        <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 10px; font-weight: 500; color: var(--muted-foreground, #94a3b8);">
           <span class="ag-step-lbl" data-step="0" style="cursor: pointer;">${isRu ? 'Низкая' : 'Low'}</span>
           <span class="ag-step-lbl" data-step="1" style="cursor: pointer;">${isRu ? 'Средняя' : 'Med'}</span>
           <span class="ag-step-lbl" data-step="2" style="cursor: pointer;">${isRu ? 'Высокая' : 'High'}</span>
-          <span class="ag-step-lbl" data-step="3" style="cursor: pointer; color: #c084fc;">Max</span>
-          <span class="ag-step-lbl" data-step="4" style="cursor: pointer; font-weight: 600; background: linear-gradient(135deg, #38bdf8, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Ultra</span>
+          <span class="ag-step-lbl" data-step="3" style="cursor: pointer;">Max</span>
+          <span class="ag-step-lbl" data-step="4" style="cursor: pointer;">Ultra</span>
         </div>
       </div>
 
       <!-- Description Banner -->
-      <div id="ag-thinking-desc-box" style="margin-top: 8px; margin-bottom: 10px; padding: 7px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.07); font-size: 11px; line-height: 1.35; color: #cbd5e1; display: flex; align-items: center; gap: 8px;">
-        <span id="ag-thinking-desc-icon" style="color: #818cf8; shrink-0;"></span>
+      <div id="ag-thinking-desc-box" style="margin-top: 6px; margin-bottom: 8px; padding: 6px 9px; border-radius: 7px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; line-height: 1.35; color: var(--muted-foreground, #cbd5e1); display: flex; align-items: center; gap: 8px;">
+        <span id="ag-thinking-desc-icon" style="color: var(--primary, #88c0d0); shrink-0;"></span>
         <span id="ag-thinking-desc-text" style="flex: 1;"></span>
       </div>
 
       <!-- Quick List Rows -->
-      <div id="ag-thinking-rows-list" style="display: flex; flex-direction: column; gap: 3px;">
+      <div id="ag-thinking-rows-list" style="display: flex; flex-direction: column; gap: 2px;">
         ${THINKING_LEVELS.map(lvl => {
           const lTxt = isRu ? lvl.label : lvl.labelEn;
-          const isGrad = lvl.id === 'ultracode';
-          const isMaxLvl = lvl.id === 'max';
           return `
             <div class="ag-thinking-row" data-step="${lvl.index}">
               <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="color: ${lvl.badgeColor};">${TG_ICONS[lvl.icon] || ''}</span>
-                <span style="font-size: 12px; font-weight: 500; ${isGrad ? 'background: linear-gradient(135deg, #38bdf8, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600;' : isMaxLvl ? 'color: #c084fc; font-weight: 600;' : ''}">${lTxt}</span>
-                <span style="font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 4px; background: ${lvl.badgeColor}22; color: ${lvl.badgeColor}; border: 1px solid ${lvl.badgeColor}44;">${lvl.badge}</span>
+                <span style="color: var(--muted-foreground, #94a3b8);">${TG_ICONS[lvl.icon] || ''}</span>
+                <span style="font-size: 12px; font-weight: 500; color: var(--foreground, #f1f5f9);">${lTxt}</span>
+                <span style="font-size: 9px; font-weight: 600; padding: 1px 5px; border-radius: 4px; background: rgba(255, 255, 255, 0.07); color: var(--muted-foreground, #cbd5e1); border: 1px solid rgba(255, 255, 255, 0.1); letter-spacing: 0.5px;">${lvl.badge}</span>
               </div>
-              <div class="ag-thinking-check-wrap" style="color: #818cf8; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;">
+              <div class="ag-thinking-check-wrap" style="color: var(--primary, #88c0d0); width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;">
                 ${TG_ICONS.check}
               </div>
             </div>
@@ -3652,23 +3665,19 @@ ${p.picture ? `
       stepLabels.forEach((lbl, i) => {
         if (i === step) {
           lbl.style.fontWeight = '700';
-          lbl.style.color = '#ffffff';
+          lbl.style.color = 'var(--foreground, #ffffff)';
         } else {
           lbl.style.fontWeight = '500';
-          lbl.style.color = i === 3 ? '#c084fc' : i === 4 ? '#f43f5e' : '#94a3b8';
+          lbl.style.color = 'var(--muted-foreground, #94a3b8)';
         }
       });
 
       if (badge) {
         badge.textContent = lvl.badge;
-        badge.style.color = lvl.badgeColor;
-        badge.style.borderColor = lvl.badgeColor + '66';
-        badge.style.background = lvl.badgeColor + '22';
       }
 
       if (descIcon) {
         descIcon.innerHTML = TG_ICONS[lvl.icon] || '';
-        descIcon.style.color = lvl.badgeColor;
       }
       if (descText) {
         descText.textContent = isRu ? lvl.desc : lvl.descEn;
@@ -3829,6 +3838,14 @@ ${p.picture ? `
     });
 
     window.__AG_MOD_OBSERVER__ = observer;
+
+    // ag-pointerover-thinking-listener
+    document.addEventListener('pointerover', (e) => {
+      if (e.target && e.target.closest && e.target.closest('[role="menuitem"], button, [data-state="open"]')) {
+        scanAndEnhanceThinkingSubmenu();
+      }
+    }, { capture: true, passive: true });
+
   }
 })();
 
