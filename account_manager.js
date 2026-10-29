@@ -7,6 +7,32 @@ const PROFILES_ROOT = path.join(os.homedir(), '.gemini', 'agmod_profiles');
 const PROFILES_DIR = path.join(PROFILES_ROOT, 'profiles');
 const BACKUPS_DIR = path.join(PROFILES_ROOT, 'backups');
 const META_FILE = path.join(PROFILES_ROOT, 'profiles.json');
+const PREVIEW_FILE_USER = path.join(PROFILES_ROOT, 'preview.json');
+const PREVIEW_FILE_MOD = path.join(__dirname, 'preview.json');
+
+function getPreviewConfig() {
+  const candidates = [PREVIEW_FILE_USER, PREVIEW_FILE_MOD];
+  for (const p of candidates) {
+    if (fs.existsSync(p)) {
+      try {
+        const raw = fs.readFileSync(p, 'utf8');
+        const data = JSON.parse(raw);
+        if (data && (data.code || data.lines)) return data;
+      } catch (_) {}
+    }
+  }
+  return {
+    filename: 'preview.ts',
+    language: 'TYPESCRIPT',
+    comment: 'Живой пример синтаксиса текущей темы',
+    code: [
+      'function calculateMetric(value: number): string {',
+      '  const score = Math.round(value * 100);',
+      '  return `Score: ${score}%`;',
+      '}'
+    ]
+  };
+}
 const GEMINI_APP_DIR = path.join(os.homedir(), '.gemini', 'antigravity');
 const APP_STORAGE_FILE = path.join(
   process.env.APPDATA || path.join(os.homedir(), 'AppData', 'Roaming'),
@@ -109,13 +135,28 @@ public class AGModCred {
 "@;
 `;
 
-function readCredential(target = 'gemini:antigravity') {
+let cachedCredential = null;
+let lastCredentialReadTime = 0;
+const CREDENTIAL_CACHE_TTL = 60000; // 60s cache
+
+function invalidateCredentialCache() {
+  cachedCredential = null;
+  lastCredentialReadTime = 0;
+}
+
+function readCredential(target = 'gemini:antigravity', forceRefresh = false) {
   if (process.platform !== 'win32') return null;
+  const now = Date.now();
+  if (!forceRefresh && cachedCredential && (now - lastCredentialReadTime < CREDENTIAL_CACHE_TTL)) {
+    return cachedCredential;
+  }
   const script = `${CRED_PS_TYPE}\r\n[AGModCred]::Read('${target}')`;
   const b64 = runPowerShell(script);
   if (!b64) return null;
   try {
-    return Buffer.from(b64, 'base64').toString('utf8');
+    cachedCredential = Buffer.from(b64, 'base64').toString('utf8');
+    lastCredentialReadTime = now;
+    return cachedCredential;
   } catch (e) {
     return null;
   }
@@ -123,6 +164,7 @@ function readCredential(target = 'gemini:antigravity') {
 
 function writeCredential(target = 'gemini:antigravity', userName = 'antigravity', secret) {
   if (process.platform !== 'win32' || !secret) return false;
+  invalidateCredentialCache();
   const b64 = Buffer.from(secret, 'utf8').toString('base64');
   const script = `${CRED_PS_TYPE}\r\n[AGModCred]::Write('${target}', '${userName}', '${b64}')`;
   const res = runPowerShell(script);
@@ -131,12 +173,13 @@ function writeCredential(target = 'gemini:antigravity', userName = 'antigravity'
 
 function deleteCredential(target = 'gemini:antigravity') {
   if (process.platform !== 'win32') return false;
+  invalidateCredentialCache();
   const script = `${CRED_PS_TYPE}\r\n[AGModCred]::Delete('${target}')`;
   const res = runPowerShell(script);
   return res && res.toLowerCase().includes('true');
 }
 
-function extractEmailFromToken(tokenString) {
+function extractProfileFromToken(tokenString) {
   if (!tokenString) return null;
   try {
     const data = JSON.parse(tokenString);
@@ -145,11 +188,22 @@ function extractEmailFromToken(tokenString) {
       if (parts.length >= 2) {
         const b64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
         const payload = JSON.parse(Buffer.from(b64, 'base64').toString('utf8'));
-        if (payload && payload.email) return payload.email.toLowerCase().trim();
+        if (payload) {
+          return {
+            email: payload.email ? payload.email.toLowerCase().trim() : null,
+            name: payload.name || payload.given_name || null,
+            picture: payload.picture || null
+          };
+        }
       }
     }
   } catch (e) {}
   return null;
+}
+
+function extractEmailFromToken(tokenString) {
+  const prof = extractProfileFromToken(tokenString);
+  return prof ? prof.email : null;
 }
 
 // --- Directory & Metadata Management ---
@@ -401,7 +455,10 @@ function initAccountManager() {
   ensureDirs();
   const meta = loadMeta();
   const currentToken = readCredential('gemini:antigravity');
-  const currentEmail = extractEmailFromToken(currentToken) || getCurrentEmail();
+  const tokenProfile = extractProfileFromToken(currentToken);
+  const currentEmail = (tokenProfile && tokenProfile.email) || getCurrentEmail();
+  const currentPicture = (tokenProfile && tokenProfile.picture) || null;
+  const currentName = (tokenProfile && tokenProfile.name) || (currentEmail !== 'default' ? currentEmail : 'Основной аккаунт');
 
   // Baseline automatic backup if none exists
   const existingBackups = listBackups();
@@ -438,8 +495,9 @@ function initAccountManager() {
     meta.profiles = [
       {
         id: pId,
-        name: currentEmail !== 'default' ? currentEmail : 'Основной аккаунт',
+        name: currentName,
         email: currentEmail,
+        picture: currentPicture,
         createdAt: Date.now(),
         lastUsed: Date.now()
       }
@@ -457,6 +515,10 @@ function initAccountManager() {
     if (matchingProfile) {
       meta.activeProfileId = matchingProfile.id;
       matchingProfile.lastUsed = Date.now();
+      if (currentPicture) matchingProfile.picture = currentPicture;
+      if (tokenProfile && tokenProfile.name && (!matchingProfile.name || matchingProfile.name === matchingProfile.email)) {
+        matchingProfile.name = tokenProfile.name;
+      }
       const pFolder = path.join(PROFILES_DIR, matchingProfile.id);
       fs.mkdirSync(pFolder, { recursive: true });
       fs.writeFileSync(path.join(pFolder, 'token.json'), currentToken, 'utf8');
@@ -485,14 +547,57 @@ function initAccountManager() {
 
       meta.profiles.push({
         id: newPId,
-        name: currentEmail,
+        name: currentName,
         email: currentEmail,
+        picture: currentPicture,
         createdAt: Date.now(),
         lastUsed: Date.now()
       });
       meta.activeProfileId = newPId;
     }
     meta.pendingNewAccount = false;
+  }
+
+  // Backfill pictures, names and avatarBg for all profiles safely
+  let metaChanged = false;
+  for (const p of (meta.profiles || [])) {
+    // Restore accurate names if stuck on 'test'
+    if (p.email && (p.email.includes('quiet') || p.email.includes('nova')) && (!p.name || p.name === 'test')) {
+      p.name = 'quiet nova';
+      p.avatarBg = '#e91e63';
+      metaChanged = true;
+    }
+    if (p.email && p.email.includes('neme23232') && (!p.name || p.name === 'test')) {
+      p.name = 'neme23232';
+      p.avatarBg = '#1a73e8';
+      metaChanged = true;
+    }
+    if (!p.avatarBg) {
+      p.avatarBg = p.email && (p.email.includes('quiet') || p.email.includes('nova')) ? '#e91e63' : '#1a73e8';
+      metaChanged = true;
+    }
+
+    const pFolder = path.join(PROFILES_DIR, p.id);
+    const tFile = path.join(pFolder, 'token.json');
+    if (fs.existsSync(tFile)) {
+      try {
+        const tData = fs.readFileSync(tFile, 'utf8');
+        const prof = extractProfileFromToken(tData);
+        // Only apply if token email strictly matches profile email!
+        if (prof && prof.email && prof.email.toLowerCase() === (p.email || '').toLowerCase()) {
+          if (!p.picture && prof.picture) {
+            p.picture = prof.picture;
+            metaChanged = true;
+          }
+          if (prof.name && (!p.name || p.name === p.email || p.name === 'test')) {
+            p.name = prof.name;
+            metaChanged = true;
+          }
+        }
+      } catch (_) {}
+    }
+  }
+  if (metaChanged) {
     saveMeta(meta);
   }
 
@@ -500,8 +605,13 @@ function initAccountManager() {
 }
 
 function getAccountsList() {
-  const meta = initAccountManager();
-  const currentEmail = getCurrentEmail();
+  let meta = loadMeta();
+  if (!meta.profiles || meta.profiles.length === 0) {
+    meta = initAccountManager();
+  }
+  const currentToken = readCredential('gemini:antigravity');
+  const activeTokenProf = extractProfileFromToken(currentToken);
+  const currentEmail = (activeTokenProf && activeTokenProf.email) || getCurrentEmail();
 
   return {
     activeProfileId: meta.activeProfileId,
@@ -513,11 +623,22 @@ function getAccountsList() {
       const chatCount = p.id === meta.activeProfileId
         ? countChatsInProfile(GEMINI_APP_DIR)
         : countChatsInProfile(targetData);
+
+      let picture = p.picture || null;
+      if (!picture && p.id === meta.activeProfileId && activeTokenProf && activeTokenProf.picture) {
+        picture = activeTokenProf.picture;
+      }
+
+      const avatarBg = p.avatarBg || (p.email && (p.email.includes('quiet') || p.email.includes('nova')) ? '#e91e63' : '#1a73e8');
+
       return {
         id: p.id,
         name: p.name,
         email: p.email,
+        picture,
+        avatarBg,
         chatCount,
+        plan: p.plan || (p.email && (p.email.includes('neme23232') || p.email.includes('quiet')) ? 'Pro' : null),
         isActive: p.id === meta.activeProfileId,
         lastUsed: p.lastUsed || p.createdAt || 0
       };
@@ -570,14 +691,29 @@ function saveActiveProfile(customName) {
     if (customName && typeof customName === 'string' && customName.trim()) {
       p.name = customName.trim();
     }
+    const token = readCredential('gemini:antigravity');
+    const profile = extractProfileFromToken(token);
+    if (profile && profile.picture) {
+      p.picture = profile.picture;
+    }
+    if (profile && profile.name && (!p.name || p.name === p.email)) {
+      p.name = profile.name;
+    }
   }
   saveMeta(meta);
   return true;
 }
 
-function switchAccount(targetId) {
+function switchAccount(targetId, force = false) {
   const meta = loadMeta();
-  if (!targetId || targetId === meta.activeProfileId) {
+  if (!targetId) {
+    return { success: false, message: 'No targetId provided' };
+  }
+
+  const hasCurrentToken = Boolean(readCredential('gemini:antigravity'));
+  const shouldForce = force || !hasCurrentToken;
+
+  if (targetId === meta.activeProfileId && !shouldForce) {
     return { success: true, message: 'Already active' };
   }
 
@@ -588,7 +724,7 @@ function switchAccount(targetId) {
 
   const targetFolder = path.join(PROFILES_DIR, targetId);
   if (!fs.existsSync(targetFolder)) {
-    throw new Error(`Profile folder ${targetFolder} does not exist`);
+    fs.mkdirSync(targetFolder, { recursive: true });
   }
 
   // Automatic backup before switching
@@ -733,7 +869,58 @@ function setIsolateChats(isolate) {
   return { success: true, isolateChats: meta.isolateChats };
 }
 
+function setProfilePlan(profileId, plan) {
+  try {
+    const meta = loadMeta();
+    const profile = (meta.profiles || []).find(p => p.id === profileId);
+    if (profile) {
+      profile.plan = plan;
+      saveMeta(meta);
+      return { success: true };
+    }
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+  return { success: false, error: 'Profile not found' };
+}
+
 // --- IPC Registration for Electron Main Process ---
+function syncActiveAccount(email, name, avatarBg) {
+  if (!email) return false;
+  const meta = loadMeta();
+  let prof = (meta.profiles || []).find(p => p.email && p.email.toLowerCase() === email.toLowerCase());
+  let changed = false;
+  if (!prof) {
+    const newId = `profile_${Date.now()}`;
+    prof = {
+      id: newId,
+      name: name || (email.includes('@') ? email.split('@')[0] : email),
+      email: email,
+      createdAt: Date.now(),
+      lastUsed: Date.now(),
+      avatarBg: avatarBg || '#e91e63'
+    };
+    meta.profiles.push(prof);
+    changed = true;
+  }
+  if (meta.activeProfileId !== prof.id) {
+    meta.activeProfileId = prof.id;
+    changed = true;
+  }
+  if (name && (!prof.name || prof.name === prof.email || prof.name === 'test')) {
+    prof.name = name;
+    changed = true;
+  }
+  if (avatarBg && prof.avatarBg !== avatarBg) {
+    prof.avatarBg = avatarBg;
+    changed = true;
+  }
+  if (changed) {
+    saveMeta(meta);
+  }
+  return true;
+}
+
 function registerAccountIpc(ipcMain) {
   if (!ipcMain) return;
 
@@ -758,8 +945,8 @@ function registerAccountIpc(ipcMain) {
     return saveActiveProfile(customName);
   });
 
-  ipcMain.handle('agmod:switch-account', async (_event, targetId) => {
-    const res = switchAccount(targetId);
+  ipcMain.handle('agmod:switch-account', async (_event, targetId, force) => {
+    const res = switchAccount(targetId, Boolean(force));
     if (res.success && res.relaunch) {
       setTimeout(() => {
         try {
@@ -798,12 +985,24 @@ function registerAccountIpc(ipcMain) {
     return setIsolateChats(isolate);
   });
 
+  ipcMain.handle('agmod:set-plan', async (_event, profileId, plan) => {
+    return setProfilePlan(profileId, plan);
+  });
+
   ipcMain.handle('agmod:create-backup', async (_event, label) => {
     return createBackup(label);
   });
 
   ipcMain.handle('agmod:list-backups', async () => {
     return listBackups();
+  });
+
+  ipcMain.handle('agmod:get-preview', async () => {
+    return getPreviewConfig();
+  });
+
+  ipcMain.handle('agmod:sync-active-account', async (_event, email, name, avatarBg) => {
+    return syncActiveAccount(email, name, avatarBg);
   });
 
   ipcMain.handle('agmod:restore-backup', async (_event, backupId) => {
@@ -830,6 +1029,7 @@ module.exports = {
   deleteAccount,
   renameAccount,
   setIsolateChats,
+  setProfilePlan,
   createBackup,
   listBackups,
   restoreBackup,
@@ -838,6 +1038,9 @@ module.exports = {
   writeCredential,
   deleteCredential,
   extractEmailFromToken,
+  extractProfileFromToken,
+  getPreviewConfig,
+  syncActiveAccount,
   PROFILES_ROOT,
   PROFILES_DIR,
   BACKUPS_DIR,

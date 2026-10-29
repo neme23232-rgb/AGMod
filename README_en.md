@@ -27,6 +27,7 @@ The modification integrates into the application as a dedicated tab inside the s
 - **Typography** — Discover installed Windows fonts and upload local font files (.woff2, .woff, .ttf, .otf).
 - **Localization** — Full translation across interface, settings, dialogs, and actions. 7 languages supported: Russian (1700+ phrases), Ukrainian (1700+ phrases), English, German, French, Spanish, and Chinese.
 - **Google Account Switcher** — Fast profile switching with automatic tier detection (Ultra, Pro, One, Plus), native Google gradient indicators, and isolated session storage.
+- **Thinking Effort Slider** — Stepped reasoning depth slider (Low, Medium, High, Max, UltraCode) styled after Claude Code and Codex.
 - **Compact Mode** — Reduces sidebar width to 220px and minimizes padding to maximize editing space.
 - **Persistent Storage** — Settings are saved locally to `agmod_settings.json` and persist across application restarts.
 

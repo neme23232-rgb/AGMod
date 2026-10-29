@@ -83,6 +83,8 @@ function runPipelineTests() {
     assert(clientScript.includes('cleanupSidebarButtons'), 'Client script includes sidebar buttons cleanup logic');
     assert(clientScript.includes('ag-account-header-plate'), 'Client script includes Google Account plate logic');
     assert(clientScript.includes('ag-accounts-drawer'), 'Client script includes Google Accounts expandable drawer logic');
+    assert(clientScript.includes('ag-thinking-slider-widget'), 'Client script includes Thinking Slider logic');
+    assert(clientScript.includes('THINKING_LEVELS'), 'Client script includes Thinking Levels model');
 
     // Syntax validation via Node VM
     new vm.Script(clientScript);
@@ -180,6 +182,7 @@ function runPipelineTests() {
     assert(typeof acctMgr.createBackup === 'function', 'Exports createBackup function');
     assert(typeof acctMgr.listBackups === 'function', 'Exports listBackups function');
     assert(typeof acctMgr.restoreBackup === 'function', 'Exports restoreBackup function');
+    assert(typeof acctMgr.setProfilePlan === 'function', 'Exports setProfilePlan function');
     assert(typeof acctMgr.registerAccountIpc === 'function', 'Exports registerAccountIpc function');
 
     const accts = acctMgr.getAccountsList();

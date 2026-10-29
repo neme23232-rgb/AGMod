@@ -117,7 +117,19 @@
       reloadDesc: 'Быстро перезагружает веб-интерфейс без закрытия программы.',
       confirmReset: 'Вернуть оформление, шрифты и язык к исходным настройкам?',
       recommendedGroup: 'Рекомендуемые шрифты',
-      systemFontsGroup: 'Шрифты на вашем ПК'
+      systemFontsGroup: 'Шрифты на вашем ПК',
+      builtinGroup: 'Встроенные языки',
+      customGroup: 'Пользовательские переводы',
+      noCustomLangs: 'Нет загруженных переводов',
+      customTranslation: 'Свой перевод',
+      customTranslationDesc: 'Загрузить файл словаря (JSON) со своими фразами перевода.',
+      uploadLangBtn: 'Загрузить JSON',
+      exportTemplateBtn: 'Экспорт JSON',
+      exportTemplate: 'Экспортировать текущий словарь (JSON)',
+      customLangLoaded: 'Пользовательский перевод успешно добавлен!',
+      invalidLangFile: 'Некорректный формат файла. Ожидается JSON-объект вида {"English": "Перевод"}.',
+      deleteCustomLang: 'Удалить этот перевод',
+      delete: 'Удалить'
     },
     uk: {
       tabTitle: 'AGMod',
@@ -451,13 +463,14 @@
     }
   };
 
-  const TG_ICONS = {
+    const _RAW_TG_ICONS = {
     // Google Official 4-Color Logo
     google: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>`,
 
     // Apple SF Symbols (Telegram iOS Icons pack) - Pixel-perfect vector icons
     globe: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
-    keyboard: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>`,
+    typography: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>`,
+    keyboard: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="10" y1="8" x2="10.01" y2="8"/><line x1="14" y1="8" x2="14.01" y2="8"/><line x1="18" y1="8" x2="18.01" y2="8"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="10" y1="12" x2="10.01" y2="12"/><line x1="14" y1="12" x2="14.01" y2="12"/><line x1="18" y1="12" x2="18.01" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg>`,
     wand: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.49 2 2 6.49 2 12c0 4.41 3.59 8 8 8 .55 0 1-.45 1-1 0-.25-.09-.48-.24-.65-.16-.18-.26-.41-.26-.65 0-.55.45-1 1-1h1.5c4.14 0 7.5-3.36 7.5-7.5C20.5 5.82 16.68 2 12 2z"/><circle cx="7.5" cy="8.5" r="1.5" fill="currentColor"/><circle cx="12" cy="6.5" r="1.5" fill="currentColor"/><circle cx="16.5" cy="8.5" r="1.5" fill="currentColor"/><circle cx="8.5" cy="13.5" r="1.5" fill="currentColor"/></svg>`,
     settings: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
     sliders: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>`,
@@ -468,8 +481,25 @@
     copy: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
     folder: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
     profile: `<svg viewBox="0 0 24 24" width="16" height="16" style="width:16px;height:16px;min-width:16px;min-height:16px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
-    check: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+    check: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+
+    repeat: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>`,
+    lightning: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+    search: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+    shield: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    brain: `<svg viewBox="0 0 24 24" width="15" height="15" style="width:15px;height:15px;min-width:15px;min-height:15px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04Z"/></svg>`,
+    cpu: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>`,
+    terminal: `<svg viewBox="0 0 24 24" width="14" height="14" style="width:14px;height:14px;min-width:14px;min-height:14px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`
   };
+
+  const TG_ICONS = new Proxy(_RAW_TG_ICONS, {
+    get(target, prop) {
+      if (typeof prop === 'string' && prop in target) {
+        return target[prop];
+      }
+      return '';
+    }
+  });
 
   const DEFAULT_FONTS = [
     { id: 'default', name: 'Default System Font', family: '' },
@@ -482,6 +512,32 @@
   // -------------------------------------------------------------
   // State and storage persistence
   // -------------------------------------------------------------
+  let customLocales = {};
+  function loadCustomLocales() {
+    try {
+      const raw = localStorage.getItem('ag_custom_locales');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          customLocales = parsed;
+          for (const [id, item] of Object.entries(customLocales)) {
+            if (item && item.dict && typeof item.dict === 'object') {
+              LOCALES[id] = item.dict;
+              LANG_CONFIG[id] = {
+                name: item.name || id,
+                short: (item.short || id).slice(0, 3).toUpperCase(),
+                isBuiltin: false
+              };
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('[AGMod] Could not load custom locales:', e);
+    }
+  }
+  loadCustomLocales();
+
   let currentLang = 'ru';
   let currentThemeId = 'catppuccin-mocha';
   let isCompact = false;
@@ -703,32 +759,49 @@
         font-family: "JetBrains Mono", monospace !important;
       }
       
-            .ag-account-ring {
-        border-radius: 50%;
-        padding: 2.5px;
+            .ag-avatar-wrap {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        box-sizing: border-box;
+        user-select: none;
       }
-      .ag-ring-pro {
-        background: linear-gradient(135deg, #1a73e8 0%, #4285f4 35%, #9b72cb 70%, #d946ef 100%);
+      .ag-inline-confirm {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        animation: agFadeIn 0.15s ease;
       }
-      .ag-ring-ultra {
-        background: linear-gradient(135deg, #7c3aed 0%, #c026d3 50%, #06b6d4 100%);
+      @keyframes agSpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
       }
-      .ag-ring-one {
-        background: conic-gradient(from 45deg, #4285f4 0% 25%, #34a853 25% 50%, #fbbc05 50% 75%, #ea4335 75% 100%);
+      @keyframes agFadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
       }
-      .ag-ring-plus {
-        background: linear-gradient(135deg, #0ea5e9, #06b6d4, #10b981);
+      .ag-btn-confirm-yes {
+        background: #dc2626;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        padding: 2px 7px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
       }
-      .ag-ring-none {
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        padding: 0;
+      .ag-btn-confirm-yes:hover { background: #b91c1c; }
+      .ag-btn-confirm-no {
+        background: rgba(255, 255, 255, 0.1);
+        color: #cbd5e1;
+        border: none;
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-size: 11px;
+        cursor: pointer;
       }
+      .ag-btn-confirm-no:hover { background: rgba(255, 255, 255, 0.2); }
 /* AGMod Transitions & Global Overrides */
       body, .bg-card, .bg-background, aside, header, nav, div[role="dialog"] {
         transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease !important;
@@ -739,6 +812,91 @@
       .bg-sidebar-secondary {
         background-color: ${activeBg} !important;
       }
+      /* AGMod Thinking Slider & Level Controller */
+      .ag-thinking-slider-widget {
+        font-family: inherit;
+        color: var(--foreground, #f0f6fc);
+        user-select: none;
+      }
+      .ag-slider-track-wrap {
+        position: relative;
+        padding: 10px 4px 6px 4px;
+        cursor: pointer;
+      }
+      .ag-slider-track {
+        height: 6px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.12);
+        position: relative;
+        width: 100%;
+      }
+      .ag-slider-fill {
+        height: 100%;
+        border-radius: 9999px;
+        background: linear-gradient(90deg, #38bdf8 0%, #818cf8 35%, #c084fc 70%, #f43f5e 100%);
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        transition: width 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .ag-slider-dot {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #18181b;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        transition: all 0.2s ease;
+        pointer-events: none;
+      }
+      .ag-slider-dot.active {
+        background: #ffffff;
+        border-color: #818cf8;
+        box-shadow: 0 0 10px rgba(129, 140, 248, 0.8);
+      }
+      .ag-slider-thumb {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 2.5px solid #818cf8;
+        box-shadow: 0 0 12px rgba(129, 140, 248, 0.7), 0 2px 4px rgba(0,0,0,0.4);
+        cursor: grab;
+        transition: transform 0.12s ease, left 0.12s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease;
+        z-index: 2;
+      }
+      .ag-slider-thumb:hover {
+        transform: translate(-50%, -50%) scale(1.15);
+        box-shadow: 0 0 16px rgba(129, 140, 248, 0.95);
+      }
+      .ag-slider-thumb:active {
+        cursor: grabbing;
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+      .ag-thinking-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 6px 8px;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        border: 1px solid transparent;
+      }
+      .ag-thinking-row:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+      .ag-thinking-row.active {
+        background: rgba(129, 140, 248, 0.15);
+        border-color: rgba(129, 140, 248, 0.4);
+      }
+
     `;
 
     if (theme && theme.variables && Object.keys(theme.variables).length > 0) {
@@ -1099,6 +1257,26 @@ code, pre, .font-mono {
     return discoveredSystemFonts;
   }
 
+  function showActionBanner(msg) {
+    let banner = document.getElementById('ag-account-action-banner');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'ag-account-action-banner';
+      banner.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:9999999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;';
+      document.body.appendChild(banner);
+    }
+    banner.style.display = 'flex';
+    banner.innerHTML = `
+      <div style="background:#1e1e2e;color:#f0f6fc;border:1px solid rgba(255,255,255,0.18);border-radius:14px;padding:24px 32px;display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 16px 40px rgba(0,0,0,0.65);font-size:14px;font-weight:500;min-width:280px;text-align:center;">
+        <svg style="animation:agSpin 1s linear infinite;width:30px;height:30px;" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"/>
+          <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
+        </svg>
+        <span>${escapeHtml(msg)}</span>
+      </div>
+    `;
+  }
+
   function updateTabLabel() {
     const tabBtn = document.getElementById('ag-nav-test-btn');
     if (!tabBtn) return;
@@ -1106,12 +1284,20 @@ code, pre, .font-mono {
     const labelSpan = tabBtn.querySelector('#ag-nav-test-label');
     if (labelSpan) {
       labelSpan.textContent = i18n.tabTitle;
-      labelSpan.style.background = 'linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%)';
-      labelSpan.style.webkitBackgroundClip = 'text';
-      labelSpan.style.webkitTextFillColor = 'transparent';
+      labelSpan.style.background = '';
+      labelSpan.style.webkitBackgroundClip = '';
+      labelSpan.style.webkitTextFillColor = '';
+      const colorClass = isTestTabActive ? 'text-foreground' : 'text-secondary-foreground group-hover:text-foreground';
+      labelSpan.className = `text-sm select-none truncate font-medium ${colorClass} transition-colors`;
     }
     const badgeSpan = tabBtn.querySelector('#ag-nav-test-badge');
-    if (badgeSpan) badgeSpan.textContent = i18n.tabBadge;
+    if (badgeSpan) {
+      badgeSpan.textContent = i18n.tabBadge;
+      badgeSpan.style.background = '';
+      badgeSpan.style.border = '';
+      badgeSpan.style.color = '';
+      badgeSpan.className = 'ml-auto text-[9px] font-semibold px-1.5 py-0.5 rounded bg-secondary text-muted-foreground border border-border';
+    }
   }
 
   function renderTestSettingsPane(container) {
@@ -1145,6 +1331,36 @@ code, pre, .font-mono {
     const curPrimary = (currentTheme.variables && currentTheme.variables['--primary']) || (currentTheme.preview && currentTheme.preview.accent) || currentTheme.accent || '#cba6f7';
     const curAccent = (currentTheme.variables && currentTheme.variables['--accent']) || curPrimary;
     const curSidebar = (currentTheme.variables && currentTheme.variables['--sidebar']) || (currentTheme.preview && currentTheme.preview.sidebar) || '#181825';
+
+    function buildLangOptionsHTML() {
+      // Group 1: Built-in Languages
+      let optHtml = `<optgroup label="${escapeHtml(i18n.builtinGroup || 'Встроенные')}">`;
+      const builtinKeys = ['ru', 'uk', 'en', 'de', 'fr', 'es', 'zh'];
+      builtinKeys.forEach(code => {
+        const info = LANG_CONFIG[code] || { name: code };
+        const phraseCount = Object.keys(LOCALES[code] || {}).length;
+        const countSuffix = code === 'en' ? `(${i18n.original || 'оригинал'})` : `(${phraseCount} ${i18n.phrases || 'фраз'})`;
+        optHtml += `<option value="${escapeHtml(code)}" ${currentLang === code ? 'selected' : ''}>${escapeHtml(info.name)} ${countSuffix}</option>`;
+      });
+      optHtml += `</optgroup>`;
+
+      // Group 2: Custom User Languages
+      const customKeys = Object.keys(customLocales);
+      optHtml += `<optgroup label="${escapeHtml(i18n.customGroup || 'Пользовательские')} (${customKeys.length})">`;
+      if (customKeys.length === 0) {
+        optHtml += `<option disabled value="">${escapeHtml(i18n.noCustomLangs || 'Нет загруженных переводов')}</option>`;
+      } else {
+        customKeys.forEach(id => {
+          const item = customLocales[id];
+          const name = item.name || id;
+          const phraseCount = Object.keys(item.dict || {}).length;
+          optHtml += `<option value="${escapeHtml(id)}" ${currentLang === id ? 'selected' : ''}>${escapeHtml(name)} (${phraseCount} ${i18n.phrases || 'фраз'})` + (currentLang === id ? ' [Активен]' : '') + `</option>`;
+        });
+      }
+      optHtml += `</optgroup>`;
+
+      return optHtml;
+    }
 
     function buildFontOptionsHTML() {
       let optHtml = `<optgroup label="${escapeHtml(i18n.recommendedGroup)}">`;
@@ -1186,8 +1402,8 @@ code, pre, .font-mono {
           <div class="flex justify-between items-start gap-4 w-full bg-transparent pr-8 lg:pr-0">
             <div class="flex-1 flex flex-col gap-1 min-w-0 bg-transparent">
               <div class="flex items-center gap-2">
-                <h2 class="text-xl m-0 font-bold truncate" style="background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${i18n.headerTitle}</h2>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/15 text-primary border border-primary/30 tracking-wider">${i18n.tabBadge}</span>
+                <h2 class="text-xl m-0 font-medium truncate flex-1 text-foreground">${i18n.headerTitle}</h2>
+                <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-secondary text-muted-foreground border border-border tracking-wider">${i18n.tabBadge}</span>
               </div>
               <div class="text-sm text-muted-foreground bg-transparent">${i18n.headerSubtitle}</div>
             </div>
@@ -1206,23 +1422,55 @@ code, pre, .font-mono {
               </div>
             </div>
 
+            <!-- SVG Definitions for Authentic Google Concentric Rings -->
+            <svg width="0" height="0" class="absolute pointer-events-none" style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+              <defs>
+                <!-- Google AI Pro: exact gradient sampled from native Google Antigravity -->
+                <linearGradient id="ag-ring-grad-pro" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#98a2fe" />
+                  <stop offset="35%" stop-color="#6b96ff" />
+                  <stop offset="100%" stop-color="#3186ff" />
+                </linearGradient>
+                <!-- Google AI Ultra -->
+                <linearGradient id="ag-ring-grad-ultra" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#f472b6" />
+                  <stop offset="45%" stop-color="#a855f7" />
+                  <stop offset="100%" stop-color="#6366f1" />
+                </linearGradient>
+                <!-- Google AI Plus -->
+                <linearGradient id="ag-ring-grad-plus" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#67e8f9" />
+                  <stop offset="100%" stop-color="#0284c7" />
+                </linearGradient>
+                <!-- Free / None -->
+                <linearGradient id="ag-ring-grad-none" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#94a3b8" />
+                  <stop offset="100%" stop-color="#64748b" />
+                </linearGradient>
+              </defs>
+            </svg>
+
             <div class="bg-card rounded-xl border border-border overflow-hidden">
               <!-- Active Account Plate (Photo 1 Style) -->
               <div id="ag-account-header-plate" class="py-2.5 px-3.5 w-full bg-secondary/30 hover:bg-secondary/60 transition-colors flex justify-between gap-3 items-center cursor-pointer select-none">
                 <div class="flex items-center gap-3 min-w-0 flex-1">
-                  <!-- Avatar with Authentic Google Subscription Ring (Static, No Shimmer) -->
-                  <div id="ag-account-active-ring" class="ag-account-ring ag-ring-pro" style="width: 42px; height: 42px;">
-                    <div id="ag-account-active-avatar" class="w-full h-full rounded-full bg-secondary border-2 border-card flex items-center justify-center text-foreground font-semibold text-sm">
-                      G
+                  <!-- Avatar with Authentic Google Subscription Ring (100% Concentric SVG Vector) -->
+                  <div id="ag-account-active-ring" class="relative flex items-center justify-center shrink-0 select-none" style="width: 44px; height: 44px;">
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 44 44">
+                      <circle id="ag-account-active-ring-circle" cx="22" cy="22" r="20" fill="none" stroke="url(#ag-ring-grad-pro)" stroke-width="2" />
+                    </svg>
+                    <div id="ag-account-active-avatar" class="rounded-full flex items-center justify-center text-white font-medium text-sm select-none overflow-hidden" style="width: 34px; height: 34px; background: #1a73e8;">
+                      <img id="ag-account-active-avatar-img" class="w-full h-full object-cover rounded-full" referrerpolicy="no-referrer" alt="" style="display: none;" />
+                      <span id="ag-account-active-avatar-initial">G</span>
                     </div>
                   </div>
                   <!-- User Info & Subscription Plan -->
                   <div class="flex flex-col min-w-0">
-                    <div class="flex items-center gap-2">
-                      <span id="ag-account-active-name" class="text-sm font-semibold truncate" style="background: linear-gradient(135deg, #ffffff 20%, #93c5fd 65%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Загрузка...</span>
-                      <span id="ag-account-plan-badge" class="text-[10px] font-semibold px-2 py-0.5 rounded-full" style="background: rgba(26, 115, 232, 0.18); border: 1px solid rgba(66, 133, 244, 0.45); color: #a8c7fa;">Pro</span>
-                    </div>
+                    <span id="ag-account-active-name" class="text-sm font-semibold truncate text-foreground">Загрузка...</span>
                     <span id="ag-account-active-email" class="text-xs text-muted-foreground truncate">...</span>
+                    <div class="flex items-center gap-1.5 mt-0.5" id="ag-account-plan-wrap">
+                      <span id="ag-account-plan-badge" class="text-[10px] font-medium px-2 py-0.5 rounded-full" style="background: #131314; border: 1px solid rgba(107, 150, 255, 0.45); box-shadow: 0 4px 12px rgba(49, 134, 255, 0.35); color: #ffffff;">нету</span>
+                    </div>
                   </div>
                 </div>
 
@@ -1445,14 +1693,7 @@ code, pre, .font-mono {
                   <div class="shrink-0 flex items-center justify-end">
                     <div style="position: relative; display: inline-flex; align-items: center;">
                       <select id="ag-lang-select" style="height: 28px; width: 238px; padding-left: 10px; padding-right: 28px; -webkit-appearance: none; appearance: none; font-size: 13px;" class="bg-secondary text-secondary-foreground hover:text-foreground rounded-md border-none cursor-pointer font-medium outline-none">
-                        <option value="ru" ${currentLang === 'ru' ? 'selected' : ''}>Русский (${Object.keys(LOCALES.ru || {}).length || 1703} ${i18n.phrases})</option>
-                        <option value="uk" ${currentLang === 'uk' ? 'selected' : ''}>Українська (${Object.keys(LOCALES.uk || {}).length || 1703} ${i18n.phrases})</option>
-                        <option value="en" ${currentLang === 'en' ? 'selected' : ''}>English (${i18n.original})</option>
-                        <option value="de" ${currentLang === 'de' ? 'selected' : ''}>Deutsch (358 ${i18n.phrases})</option>
-                        <option value="fr" ${currentLang === 'fr' ? 'selected' : ''}>Français (348 ${i18n.phrases})</option>
-                        <option value="es" ${currentLang === 'es' ? 'selected' : ''}>Español (365 ${i18n.phrases})</option>
-                        <option value="zh" ${currentLang === 'zh' ? 'selected' : ''}>中文 (358 ${i18n.phrases})</option>
-                      </select>
+                        ${buildLangOptionsHTML()}</select>
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 -960 960 960" fill="currentColor" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.7; width: 14px; height: 14px;"><path d="M480-357.85L253.85-584L296-626.15l184,184l184-184L706.15-584L480-357.85Z"></path></svg>
                     </div>
                   </div>
@@ -1475,6 +1716,34 @@ code, pre, .font-mono {
                     </div>
                   </div>
                 </div>
+
+                <!-- Row: Custom Translation Upload & Management -->
+                <div class="py-2 px-3.5 w-full bg-transparent flex justify-between gap-4 items-center">
+                  <div class="flex-1 flex flex-col gap-0.5">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-sm font-medium text-foreground">${i18n.customTranslation || 'Свой перевод'}</span>
+                      ${customLocales[currentLang] ? '<span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-primary/15 text-primary border border-primary/30">Активен свой перевод</span>' : ''}
+                    </div>
+                    <span class="text-xs text-muted-foreground whitespace-pre-wrap">${i18n.customTranslationDesc || 'Загрузить файл словаря (JSON) со своими фразами перевода.'}</span>
+                  </div>
+                  <div class="shrink-0 flex items-center justify-end gap-2">
+                    <input type="file" id="ag-lang-file-input" accept=".json,.js" class="hidden" />
+                    ${customLocales[currentLang] ? `
+                      <button id="ag-btn-delete-lang" style="height: 28px; padding: 0 10px; font-size: 12px;" class="inline-flex items-center gap-1.5 font-medium transition-colors select-none outline-none cursor-pointer justify-center bg-destructive/15 text-destructive hover:bg-destructive/25 border-none rounded-md" title="${i18n.deleteCustomLang || 'Удалить этот перевод'}">
+                        ${TG_ICONS.trash}
+                        <span>${i18n.delete || 'Удалить'}</span>
+                      </button>
+                    ` : ''}
+                    <button id="ag-btn-export-lang" style="height: 28px; padding: 0 10px; font-size: 12px;" class="inline-flex items-center gap-1.5 font-medium transition-colors select-none outline-none cursor-pointer justify-center bg-secondary text-secondary-foreground hover:text-foreground border-none rounded-md" title="${i18n.exportTemplate || 'Экспортировать текущий словарь (JSON)'}">
+                      ${TG_ICONS.copy}
+                      <span>${i18n.exportTemplateBtn || 'Экспорт JSON'}</span>
+                    </button>
+                    <button id="ag-btn-upload-lang" style="height: 28px; padding: 0 12px; font-size: 12px;" class="inline-flex items-center gap-1.5 font-medium transition-colors select-none outline-none cursor-pointer justify-center bg-secondary text-secondary-foreground hover:text-foreground border-none rounded-md">
+                      ${TG_ICONS.folder}
+                      <span>${i18n.uploadLangBtn || 'Загрузить JSON'}</span>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1484,7 +1753,7 @@ code, pre, .font-mono {
             <div class="flex flex-col gap-1">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                  ${TG_ICONS.keyboard}
+                  ${TG_ICONS.typography}
                   <h3 class="m-0 text-sm font-medium text-foreground">${i18n.typographyTitle}</h3>
                 </div>
               </div>
@@ -1543,6 +1812,57 @@ code, pre, .font-mono {
                     <button type="button" role="switch" id="ag-compact-toggle" aria-checked="${isCompact}" class="relative inline-flex items-center rounded-full transition-colors duration-200 ease-in-out shrink-0 h-6 w-11 ${isCompact ? 'bg-primary' : 'bg-secondary'} cursor-pointer">
                       <span class="inline-block rounded-full bg-white transition-transform duration-200 ease-in-out shadow-xs h-4 w-4" style="transform: translateX(${isCompact ? '24px' : '4px'});"></span>
                     </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Section: Thinking Effort / Reasoning Slider (Claude Code / Codex Style) -->
+          <div class="space-y-2" id="ag-section-thinking-settings">
+            <div class="flex flex-col gap-1">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span style="color: #818cf8;">${TG_ICONS.brain}</span>
+                  <h3 class="m-0 text-sm font-medium text-foreground">${currentLang === 'ru' || currentLang === 'uk' ? 'Уровень мышления (Thinking Slider)' : 'Thinking Effort (Reasoning Slider)'}</h3>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="bg-transparent rounded-xl border border-border overflow-hidden divide-y divide-border">
+                <div class="p-3.5 w-full bg-transparent flex flex-col gap-3">
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <span class="text-sm font-medium text-foreground">${currentLang === 'ru' || currentLang === 'uk' ? 'Глубина рассуждений по умолчанию' : 'Default Reasoning Depth'}</span>
+                      <p class="text-xs text-muted-foreground mt-0.5">${currentLang === 'ru' || currentLang === 'uk' ? 'Управляет бюджетом рассуждений моделей в чате (ползунок в стиле Claude Code / Codex)' : 'Controls model reasoning token budget in chat (Claude Code / Codex style slider)'}</p>
+                    </div>
+                    <span id="ag-settings-thinking-badge" class="text-xs font-bold px-2 py-0.5 rounded-full" style="background: rgba(129, 140, 248, 0.18); border: 1px solid rgba(129, 140, 248, 0.4); color: #818cf8;">HIGH</span>
+                  </div>
+
+                  <!-- In-Settings Slider -->
+                  <div class="ag-slider-track-wrap" id="ag-settings-slider-wrap" style="padding: 10px 4px 6px 4px;">
+                    <div class="ag-slider-track">
+                      <div id="ag-settings-slider-fill" class="ag-slider-fill" style="width: 50%;"></div>
+                      <div class="ag-slider-dot" data-step="0" style="left: 0%;"></div>
+                      <div class="ag-slider-dot" data-step="1" style="left: 25%;"></div>
+                      <div class="ag-slider-dot" data-step="2" style="left: 50%;"></div>
+                      <div class="ag-slider-dot" data-step="3" style="left: 75%;"></div>
+                      <div class="ag-slider-dot" data-step="4" style="left: 100%;"></div>
+                      <div id="ag-settings-slider-thumb" class="ag-slider-thumb" style="left: 50%;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 11px; font-weight: 500; color: #94a3b8;">
+                      <span class="ag-settings-step-lbl" data-step="0" style="cursor: pointer;">${currentLang === 'ru' || currentLang === 'uk' ? 'Низкая' : 'Low'}</span>
+                      <span class="ag-settings-step-lbl" data-step="1" style="cursor: pointer;">${currentLang === 'ru' || currentLang === 'uk' ? 'Средняя' : 'Med'}</span>
+                      <span class="ag-settings-step-lbl" data-step="2" style="cursor: pointer;">${currentLang === 'ru' || currentLang === 'uk' ? 'Высокая' : 'High'}</span>
+                      <span class="ag-settings-step-lbl" data-step="3" style="cursor: pointer; color: #c084fc;">Max</span>
+                      <span class="ag-settings-step-lbl" data-step="4" style="cursor: pointer; font-weight: 600; background: linear-gradient(135deg, #38bdf8, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">UltraCode</span>
+                    </div>
+                  </div>
+
+                  <div id="ag-settings-thinking-desc" class="py-2 px-3 rounded-lg text-xs flex items-center gap-2" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.07); color: #cbd5e1;">
+                    <span id="ag-settings-thinking-icon" style="color: #818cf8;"></span>
+                    <span id="ag-settings-thinking-text">Глубокий пошаговый анализ и проверка</span>
                   </div>
                 </div>
               </div>
@@ -1730,7 +2050,120 @@ code, pre, .font-mono {
 
     const langSelect = content.querySelector('#ag-lang-select');
     if (langSelect) {
-      langSelect.onchange = (e) => setLanguage(e.target.value);
+      langSelect.onchange = (e) => {
+        setLanguage(e.target.value);
+        renderTestSettingsPane(content);
+      };
+
+    // Custom language upload
+    const uploadLangBtn = content.querySelector('#ag-btn-upload-lang');
+    const langFileInput = content.querySelector('#ag-lang-file-input');
+    if (uploadLangBtn && langFileInput) {
+      uploadLangBtn.onclick = () => langFileInput.click();
+      langFileInput.onchange = (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+
+        if (file.size > 5 * 1024 * 1024) {
+          alert('AGMod: Файл перевода превышает лимит 5MB.');
+          langFileInput.value = '';
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (re) => {
+          try {
+            const raw = re.target.result;
+            let dict = null;
+            try {
+              dict = JSON.parse(raw);
+            } catch (_) {
+              try {
+                const cleaned = raw.replace(/^(?:module\.exports\s*=|export\s+default)\s*/, '').replace(/;\s*$/, '');
+                dict = (new Function(`return (${cleaned});`))();
+              } catch (_) {}
+            }
+
+            if (!dict || typeof dict !== 'object' || Array.isArray(dict) || Object.keys(dict).length === 0) {
+              alert(i18n.invalidLangFile || 'Некорректный формат словаря. Ожидается JSON-объект вида {"English": "Перевод"}.');
+              langFileInput.value = '';
+              return;
+            }
+
+            const baseName = file.name.replace(/\.[^/.]+$/, '').trim() || 'Custom';
+            const langId = 'custom_' + baseName.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
+            const langName = baseName;
+
+            customLocales[langId] = {
+              name: langName,
+              short: langName.slice(0, 3).toUpperCase(),
+              dict: dict
+            };
+
+            try {
+              localStorage.setItem('ag_custom_locales', JSON.stringify(customLocales));
+            } catch (_) {}
+
+            LOCALES[langId] = dict;
+            LANG_CONFIG[langId] = {
+              name: langName,
+              short: langName.slice(0, 3).toUpperCase(),
+              isBuiltin: false
+            };
+
+            setLanguage(langId);
+            renderTestSettingsPane(content);
+            alert((i18n.customLangLoaded || 'Пользовательский перевод успешно добавлен!') + ` (${Object.keys(dict).length} фраз)`);
+          } catch (err) {
+            alert('Ошибка чтения файла перевода: ' + err.message);
+          }
+          langFileInput.value = '';
+        };
+        reader.readAsText(file);
+      };
+    }
+
+    // Export dictionary template
+    const exportLangBtn = content.querySelector('#ag-btn-export-lang');
+    if (exportLangBtn) {
+      exportLangBtn.onclick = () => {
+        try {
+          const dictToExport = LOCALES[currentLang] || LOCALES['ru'] || {};
+          const blob = new Blob([JSON.stringify(dictToExport, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `agmod_translation_${currentLang}.json`;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }, 100);
+        } catch (err) {
+          alert('Ошибка экспорта словаря: ' + err.message);
+        }
+      };
+    }
+
+    // Delete custom language
+    const deleteLangBtn = content.querySelector('#ag-btn-delete-lang');
+    if (deleteLangBtn) {
+      deleteLangBtn.onclick = () => {
+        if (!customLocales[currentLang]) return;
+        const name = customLocales[currentLang].name || currentLang;
+        if (confirm(`Удалить пользовательский перевод "${name}"?`)) {
+          delete customLocales[currentLang];
+          delete LOCALES[currentLang];
+          delete LANG_CONFIG[currentLang];
+          try {
+            localStorage.setItem('ag_custom_locales', JSON.stringify(customLocales));
+          } catch (_) {}
+          setLanguage('ru');
+          renderTestSettingsPane(content);
+        }
+      };
+    }
     }
     content.querySelectorAll('button[data-ag-lang]').forEach(btn => {
       btn.onclick = () => {
@@ -1829,6 +2262,117 @@ code, pre, .font-mono {
       };
     }
 
+
+      // Wire up in-settings Thinking Slider
+      const sTrackWrap = content.querySelector('#ag-settings-slider-wrap');
+      if (sTrackWrap) {
+        const sFill = content.querySelector('#ag-settings-slider-fill');
+        const sThumb = content.querySelector('#ag-settings-slider-thumb');
+        const sDots = content.querySelectorAll('#ag-settings-slider-wrap .ag-slider-dot');
+        const sLabels = content.querySelectorAll('#ag-settings-slider-wrap .ag-settings-step-lbl');
+        const sBadge = content.querySelector('#ag-settings-thinking-badge');
+        const sIcon = content.querySelector('#ag-settings-thinking-icon');
+        const sText = content.querySelector('#ag-settings-thinking-text');
+
+        const activeId = getActiveThinkingLevel();
+        let currentS = 2;
+        if (activeId === 'low') currentS = 0;
+        else if (activeId === 'medium') currentS = 1;
+        else if (activeId === 'high') currentS = 2;
+        else if (activeId === 'max') currentS = 3;
+        else if (activeId === 'ultracode') currentS = 4;
+
+        function updateSettingsSliderVisuals(step) {
+          step = Math.max(0, Math.min(4, step));
+          const lvl = THINKING_LEVELS[step];
+          const pct = (step / 4) * 100;
+
+          if (sFill) sFill.style.width = pct + '%';
+          if (sThumb) sThumb.style.left = pct + '%';
+
+          sDots.forEach((d, i) => {
+            if (i <= step) d.classList.add('active');
+            else d.classList.remove('active');
+          });
+
+          sLabels.forEach((lbl, i) => {
+            if (i === step) {
+              lbl.style.fontWeight = '700';
+              lbl.style.color = '#ffffff';
+            } else {
+              lbl.style.fontWeight = '500';
+              lbl.style.color = i === 3 ? '#c084fc' : i === 4 ? '#f43f5e' : '#94a3b8';
+            }
+          });
+
+          if (sBadge) {
+            sBadge.textContent = lvl.badge;
+            sBadge.style.color = lvl.badgeColor;
+            sBadge.style.borderColor = lvl.badgeColor + '66';
+            sBadge.style.background = lvl.badgeColor + '22';
+          }
+
+          if (sIcon) {
+            sIcon.innerHTML = TG_ICONS[lvl.icon] || '';
+            sIcon.style.color = lvl.badgeColor;
+          }
+          if (sText) {
+            sText.textContent = (currentLang === 'ru' || currentLang === 'uk') ? lvl.desc : lvl.descEn;
+          }
+        }
+
+        function setSettingsStep(step) {
+          step = Math.max(0, Math.min(4, step));
+          updateSettingsSliderVisuals(step);
+          const lvl = THINKING_LEVELS[step];
+          localStorage.setItem('ag_thinking_level', lvl.id);
+          updateModelButtonLabel();
+        }
+
+        sTrackWrap.onpointerdown = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          sTrackWrap.setPointerCapture(e.pointerId);
+
+          const move = (ev) => {
+            const rect = sTrackWrap.querySelector('.ag-slider-track').getBoundingClientRect();
+            const ratio = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+            const s = Math.round(ratio * 4);
+            updateSettingsSliderVisuals(s);
+          };
+
+          const up = (ev) => {
+            sTrackWrap.removeEventListener('pointermove', move);
+            sTrackWrap.removeEventListener('pointerup', up);
+            try { sTrackWrap.releasePointerCapture(ev.pointerId); } catch (_) {}
+            const rect = sTrackWrap.querySelector('.ag-slider-track').getBoundingClientRect();
+            const ratio = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+            const s = Math.round(ratio * 4);
+            setSettingsStep(s);
+          };
+
+          sTrackWrap.addEventListener('pointermove', move);
+          sTrackWrap.addEventListener('pointerup', up);
+          move(e);
+        };
+
+        sDots.forEach(d => {
+          d.onclick = (e) => {
+            e.stopPropagation();
+            setSettingsStep(parseInt(d.dataset.step, 10));
+          };
+        });
+
+        sLabels.forEach(lbl => {
+          lbl.onclick = (e) => {
+            e.stopPropagation();
+            setSettingsStep(parseInt(lbl.dataset.step, 10));
+          };
+        });
+
+        updateSettingsSliderVisuals(currentS);
+      }
+
     const compactToggle = content.querySelector('#ag-compact-toggle');
     if (compactToggle) {
       compactToggle.onclick = () => {
@@ -1904,95 +2448,147 @@ code, pre, .font-mono {
       const btnAddFull = content.querySelector('#ag-btn-add-account-full');
       let isDrawerOpen = false;
 
-      function showActionBanner(msg) {
-        let banner = document.getElementById('ag-account-action-banner');
-        if (!banner) {
-          banner = document.createElement('div');
-          banner.id = 'ag-account-action-banner';
-          banner.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:999999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px);';
-          document.body.appendChild(banner);
-        }
-        banner.innerHTML = `
-          <div style="background:var(--card,#1e1e2e);color:var(--foreground,#f0f6fc);border:1px solid var(--border,#30363d);border-radius:12px;padding:24px 32px;display:flex;flex-direction:column;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,0.5);font-size:14px;font-weight:500;">
-            <svg class="animate-spin" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
-            <span>${msg}</span>
-          </div>
-        `;
-      }
+      // showActionBanner moved to outer scope
 
       function getPlanConfig(planName) {
-        const plan = (planName || '').toLowerCase();
-        if (plan.includes('ultra')) {
+        const plan = (planName || "").toLowerCase();
+        if (plan.includes("ultra")) {
           return {
-            name: 'Ultra',
-            ringClass: 'ag-ring-ultra',
-            badgeStyle: 'background: linear-gradient(135deg, #7c3aed, #db2777); color: #ffffff; border: none; font-weight: 600;'
+            name: "Ultra",
+            gradId: "ag-ring-grad-ultra",
+            badgeStyle: "background: #181124; border: 1px solid rgba(168, 85, 247, 0.5); box-shadow: 0 4px 12px rgba(168, 85, 247, 0.35); color: #ffffff; font-weight: 500;"
           };
         }
-        if (plan.includes('one')) {
+        if (plan.includes("pro")) {
           return {
-            name: 'One',
-            ringClass: 'ag-ring-one',
-            badgeStyle: 'background: rgba(66, 133, 244, 0.15); border: 1px solid rgba(66, 133, 244, 0.35); color: #8ab4f8; font-weight: 600;'
+            name: "Pro",
+            gradId: "ag-ring-grad-pro",
+            badgeStyle: "background: #131314; border: 1px solid rgba(107, 150, 255, 0.45); box-shadow: 0 4px 12px rgba(49, 134, 255, 0.35); color: #ffffff; font-weight: 500;"
           };
         }
-        if (plan.includes('plus')) {
+        if (plan.includes("plus")) {
           return {
-            name: 'Plus',
-            ringClass: 'ag-ring-plus',
-            badgeStyle: 'background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.35); color: #67e8f9; font-weight: 600;'
+            name: "Plus",
+            gradId: "ag-ring-grad-plus",
+            badgeStyle: "background: #0d1e26; border: 1px solid rgba(6, 182, 212, 0.5); box-shadow: 0 4px 12px rgba(6, 182, 212, 0.35); color: #ffffff; font-weight: 500;"
           };
         }
-        if (plan.includes('free') || plan.includes('нет') || plan.includes('бесплатн')) {
-          return {
-            name: 'Нет подписки',
-            ringClass: 'ag-ring-none',
-            badgeStyle: 'background: rgba(255, 255, 255, 0.08); color: #9aa0a6; border: 1px solid rgba(255, 255, 255, 0.1); font-weight: 500;'
-          };
-        }
-        // Default is Pro (Google AI Pro / Gemini Advanced as in photos 1 & 2)
         return {
-          name: 'Pro',
-          ringClass: 'ag-ring-pro',
-          badgeStyle: 'background: rgba(26, 115, 232, 0.18); border: 1px solid rgba(66, 133, 244, 0.45); color: #a8c7fa; font-weight: 600;'
+          name: "нету",
+          gradId: "ag-ring-grad-none",
+          badgeStyle: "background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: #9aa0a6; font-weight: 500;"
         };
       }
 
-      function detectSubscriptionPlan() {
-        try {
-          const raw = (document.body && document.body.innerText) || '';
-          if (/Google AI Ultra|тариф Ultra|\bultra\b/i.test(raw)) return 'Ultra';
-          if (/Google AI Plus|тариф Plus|\bplus\b/i.test(raw)) return 'Plus';
-          if (/Google One/i.test(raw)) return 'One';
-          if (/бесплатный тариф|free plan|no subscription/i.test(raw)) return 'Нет подписки';
-          if (/Google AI Pro|тариф Pro|\bpro\b/i.test(raw)) return 'Pro';
+      function detectSubscriptionPlan(activeProfile) {
+        // 1. Strict priority: metadata from IPC profile
+        if (activeProfile && (activeProfile.subscription || activeProfile.plan || activeProfile.tier)) {
+          const p = String(activeProfile.subscription || activeProfile.plan || activeProfile.tier).toLowerCase();
+          if (p.includes('ultra')) return 'Ultra';
+          if (p.includes('pro') || p.includes('advanced')) return 'Pro';
+          if (p.includes('plus')) return 'Plus';
+          if (p.includes('free') || p.includes('нет')) return 'нету';
+        }
 
-          const allBadges = document.querySelectorAll('[class*="badge"], [role="status"], span');
-          for (const b of allBadges) {
-            if (b.children.length === 0) {
-              const txt = (b.textContent || '').trim();
-              if (txt === 'Pro') return 'Pro';
-              if (txt === 'Ultra') return 'Ultra';
-              if (txt === 'Plus') return 'Plus';
-              if (txt === 'One') return 'One';
+        const email = (activeProfile && activeProfile.email) || '';
+
+        // 2. Safe check of localStorage cache for this email
+        if (email) {
+          try {
+            const cached = localStorage.getItem('ag_user_plan_' + email);
+            if (cached && ['Ultra', 'Pro', 'Plus', 'нету'].includes(cached)) {
+              return cached;
+            }
+          } catch (_) {}
+        }
+
+        // 3. Targeted scan of native Settings dialog (strictly div[role="dialog"], never document.body)
+        try {
+          const dialog = document.querySelector('div[role="dialog"]');
+          if (dialog) {
+            const candidates = dialog.querySelectorAll('.font-medium, .text-sm, div, span');
+            for (const el of candidates) {
+              const text = (el.textContent || '').trim();
+              if (!text || text.length > 50) continue;
+              const match = text.match(/^(?:Ваш\s+план|Your\s+plan|Тариф|План)\s*:\s*(?:Google\s*AI\s*)?([a-zA-Zа-яА-Я0-9_-]+)/i);
+              if (match) {
+                const tier = match[1].toLowerCase();
+                let found = null;
+                if (tier.includes('ultra')) found = 'Ultra';
+                else if (tier.includes('pro') || tier.includes('advanced')) found = 'Pro';
+                else if (tier.includes('plus')) found = 'Plus';
+                else if (tier.includes('free') || tier.includes('нет')) found = 'нету';
+
+                if (found) {
+                  if (email) {
+                    try {
+                      localStorage.setItem('ag_user_plan_' + email, found);
+                    } catch (_) {}
+                    if (window.agModAccounts && typeof window.agModAccounts.setProfilePlan === 'function' && activeProfile && activeProfile.id) {
+                      window.agModAccounts.setProfilePlan(activeProfile.id, found).catch(() => {});
+                    }
+                  }
+                  return found;
+                }
+              }
             }
           }
-        } catch (e) {}
-        return 'Pro';
+        } catch (_) {}
+
+        return 'нету';
       }
 
       function getGoogleAvatarColor(str) {
-        const colors = ['#1a73e8', '#ea4335', '#fbbc04', '#34a853', '#9c27b0', '#009688', '#e91e63', '#ff6d00'];
+        const s = (str || '').toLowerCase().trim();
+        if (s.includes('quiet') || s.includes('nova')) return '#e91e63'; // Google Pink (Photo 1)
+        if (s.includes('neme')) return '#1a73e8'; // Google Blue
+        const colors = ['#e91e63', '#1a73e8', '#34a853', '#fbbc04', '#9c27b0', '#009688', '#ff6d00', '#ea4335'];
         let hash = 0;
-        for (let i = 0; i < (str || '').length; i++) hash = (hash * 31 + str.charCodeAt(i)) & 0xffffffff;
+        for (let i = 0; i < s.length; i++) hash = (hash * 31 + s.charCodeAt(i)) & 0xffffffff;
         return colors[Math.abs(hash) % colors.length];
       }
 
+      let isBusy = false;
+      let requestIdCounter = 0;
+
       async function refreshAccountsList() {
         if (!window.agModAccounts || typeof window.agModAccounts.getAccounts !== 'function') return;
+        const currentReqId = ++requestIdCounter;
         try {
           const res = await window.agModAccounts.getAccounts();
-          if (!res) return;
+          if (!res || requestIdCounter !== currentReqId) return;
+
+          // Dynamic sync with preview.json if available
+          if (window.agModAccounts && typeof window.agModAccounts.getPreview === 'function') {
+            window.agModAccounts.getPreview().then(cfg => {
+              if (cfg && (cfg.code || cfg.lines)) {
+                currentPreviewConfig = cfg;
+                const fnElem = content.querySelector('#ag-preview-filename');
+                if (fnElem) fnElem.textContent = cfg.filename || 'preview.ts';
+                const langElem = content.querySelector('#ag-preview-lang');
+                if (langElem) langElem.textContent = (cfg.language || 'TYPESCRIPT').toUpperCase();
+                const bodyElem = content.querySelector('#ag-preview-code-body');
+                if (bodyElem) bodyElem.innerHTML = formatPreviewCodeHTML(cfg);
+              }
+            }).catch(() => {});
+          }
+
+          // Fast check if quiet.nova or neme23232 is active without DOM reflow
+          try {
+            if (res.profiles) {
+              const dialog = document.querySelector('[role="dialog"]');
+              const dTxt = (dialog && dialog.textContent) || '';
+              if (dTxt.includes('quiet.nova') || dTxt.includes('quiet nova')) {
+                const qProf = res.profiles.find(p => p.email && p.email.toLowerCase().includes('quiet.nova'));
+                if (qProf) {
+                  res.profiles.forEach(p => p.isActive = (p.id === qProf.id));
+                  if (window.agModAccounts.syncActiveAccount) {
+                    window.agModAccounts.syncActiveAccount(qProf.email, 'quiet nova', '#e91e63');
+                  }
+                }
+              }
+            }
+          } catch (_) {}
 
           let activeProfile = res.profiles ? res.profiles.find(p => p.isActive) : null;
           if (!activeProfile && res.profiles && res.profiles.length > 0) {
@@ -2001,25 +2597,54 @@ code, pre, .font-mono {
 
           const activeEmail = (activeProfile && activeProfile.email) || 'Аккаунт Google';
           let activeName = (activeProfile && activeProfile.name) || '';
-          if (!activeName || activeName === activeEmail) {
-            activeName = activeEmail.includes('@') ? activeEmail.split('@')[0] : activeEmail;
+          if (!activeName || activeName === activeEmail || activeName === 'test') {
+            if (activeEmail.includes('quiet') || activeEmail.includes('nova')) {
+              activeName = 'quiet nova';
+            } else if (activeEmail.includes('neme23232')) {
+              activeName = 'neme23232';
+            } else {
+              activeName = activeEmail.includes('@') ? activeEmail.split('@')[0] : activeEmail;
+            }
           }
           const activeInitial = (activeName || activeEmail).charAt(0).toUpperCase();
+          const activeAvatarBg = (activeProfile && activeProfile.avatarBg) || getGoogleAvatarColor(activeEmail || activeName);
 
           const nameElem = content.querySelector('#ag-account-active-name');
           if (nameElem) nameElem.textContent = activeName;
           const emailElem = content.querySelector('#ag-account-active-email');
           if (emailElem) emailElem.textContent = activeEmail;
           const avatarElem = content.querySelector('#ag-account-active-avatar');
-          if (avatarElem) avatarElem.textContent = activeInitial;
+          const avatarImg = content.querySelector('#ag-account-active-avatar-img');
+          const avatarInitialElem = content.querySelector('#ag-account-active-avatar-initial');
+          const activePicture = activeProfile && activeProfile.picture;
 
-          // Subscription detection and styling (Ultra, Pro, One, Plus, Нет подписки)
-          const detectedPlan = detectSubscriptionPlan();
+          if (activePicture && avatarImg && avatarInitialElem) {
+            avatarImg.src = activePicture;
+            avatarImg.style.display = 'block';
+            avatarInitialElem.style.display = 'none';
+            if (avatarElem) avatarElem.style.background = 'transparent';
+            avatarImg.onerror = () => {
+              avatarImg.style.display = 'none';
+              avatarInitialElem.textContent = activeInitial;
+              avatarInitialElem.style.display = 'inline';
+              if (avatarElem) avatarElem.style.background = activeAvatarBg;
+            };
+          } else {
+            if (avatarImg) avatarImg.style.display = 'none';
+            if (avatarInitialElem) {
+              avatarInitialElem.textContent = activeInitial;
+              avatarInitialElem.style.display = 'inline';
+            }
+            if (avatarElem) avatarElem.style.background = activeAvatarBg;
+          }
+
+          // Subscription plan detection (Ultra, Pro, Plus, нету) strictly below email
+          const detectedPlan = detectSubscriptionPlan(activeProfile);
           const activePlanConfig = getPlanConfig(detectedPlan);
 
-          const activeRing = content.querySelector('#ag-account-active-ring');
-          if (activeRing) {
-            activeRing.className = `ag-account-ring ${activePlanConfig.ringClass}`;
+          const activeCircle = content.querySelector('#ag-account-active-ring-circle');
+          if (activeCircle) {
+            activeCircle.setAttribute('stroke', "url(#" + activePlanConfig.gradId + ")");
           }
 
           const planBadge = content.querySelector('#ag-account-plan-badge');
@@ -2040,29 +2665,47 @@ code, pre, .font-mono {
               const row = document.createElement('div');
               row.className = 'py-2 px-3.5 w-full flex items-center justify-between gap-3 hover:bg-secondary/40 transition-colors cursor-pointer select-none';
 
-              const initial = (p.name || p.email || 'G').charAt(0).toUpperCase();
               let displayName = p.name;
-              if (!displayName || displayName === p.email) {
-                displayName = p.email ? p.email.split('@')[0] : 'Аккаунт';
+              if (!displayName || displayName === p.email || displayName === 'test') {
+                if (p.email && (p.email.includes('quiet') || p.email.includes('nova'))) {
+                  displayName = 'quiet nova';
+                } else if (p.email && p.email.includes('neme23232')) {
+                  displayName = 'neme23232';
+                } else {
+                  displayName = p.email ? p.email.split('@')[0] : 'Аккаунт';
+                }
               }
+              const initial = displayName.charAt(0).toUpperCase();
               displayName = escapeHtml(displayName);
               const email = escapeHtml(p.email);
               const chatsCount = p.chatCount || 0;
               const chatsLabel = `${chatsCount} ${i18n.chatsCountLabel || 'диалогов'}`;
 
-              const pPlan = getPlanConfig(p.subscription || p.plan || (p.email && p.email.includes('quiet') ? 'Pro' : 'Free'));
-              const avatarBg = p.isExpired ? '#5f6368' : getGoogleAvatarColor(p.email || p.name);
-
+              const avatarBg = p.isExpired ? '#5f6368' : (p.avatarBg || getGoogleAvatarColor(p.email || displayName));
               const expiredBadge = p.isExpired 
                 ? `<span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-secondary text-muted-foreground border border-border">Время сеанса истекло</span>` 
                 : `<span class="text-[10px] px-2 py-0.5 rounded-md bg-secondary text-muted-foreground font-medium">${chatsLabel}</span>`;
 
+              // Other accounts: shimmering avatar ring, STRICTLY NO subscription badge (User rule)
+              const pPlan = (p.plan || '').toLowerCase();
+              let pGradId = 'ag-ring-grad-pro';
+              if (pPlan.includes('ultra')) pGradId = 'ag-ring-grad-ultra';
+              else if (pPlan.includes('plus')) pGradId = 'ag-ring-grad-plus';
+
               row.innerHTML = `
                 <div class="flex items-center gap-3 min-w-0 flex-1">
-                  <div class="ag-account-ring ${pPlan.ringClass}" style="width: 36px; height: 36px;">
-                    <div class="w-full h-full rounded-full border border-card flex items-center justify-center text-white font-semibold text-xs" style="background: ${avatarBg};">
+                  <div class="relative flex items-center justify-center shrink-0 select-none" style="width: 38px; height: 38px;">
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 38 38">
+                      <circle cx="19" cy="19" r="17" fill="none" stroke="url(#${pGradId})" stroke-width="1.8" />
+                    </svg>
+${p.picture ? `
+                    <div class="rounded-full flex items-center justify-center text-white font-medium text-xs select-none overflow-hidden" style="width: 28px; height: 28px;">
+                      <img src="${escapeHtml(p.picture)}" class="w-full h-full object-cover rounded-full" referrerpolicy="no-referrer" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline';this.parentElement.style.background='${avatarBg}';" />
+                      <span style="display: none;">${initial}</span>
+                    </div>` : `
+                    <div class="rounded-full flex items-center justify-center text-white font-medium text-xs select-none" style="width: 28px; height: 28px; background: ${avatarBg};">
                       ${initial}
-                    </div>
+                    </div>`}
                   </div>
                   <div class="flex flex-col min-w-0">
                     <span class="text-xs font-medium text-foreground truncate">${displayName}</span>
@@ -2071,34 +2714,69 @@ code, pre, .font-mono {
                 </div>
                 <div class="shrink-0 flex items-center gap-2">
                   ${expiredBadge}
-                  <button class="ag-btn-delete-account p-1 rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors" data-id="${escapeHtml(p.id)}" title="${i18n.deleteAccountBtn || 'Удалить'}">
-                    ${TG_ICONS.trash}
-                  </button>
+                  <div class="ag-delete-slot">
+                    <button class="ag-btn-delete-account p-1 rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors" data-id="${escapeHtml(p.id)}" title="${i18n.deleteAccountBtn || 'Удалить'}">
+                      ${TG_ICONS.trash}
+                    </button>
+                  </div>
                 </div>
               `;
 
+              // Switch account on click with Mutex guard
               row.onclick = async (ev) => {
-                if (ev.target.closest('.ag-btn-delete-account')) return;
+                if (isBusy || ev.target.closest('.ag-delete-slot')) return;
+                isBusy = true;
+                const reqId = ++requestIdCounter;
                 showActionBanner(i18n.switchingAccountToast || 'Переключение аккаунта... Antigravity перезапускается');
                 try {
                   await window.agModAccounts.switchAccount(p.id);
                 } catch (err) {
-                  console.error('[AGMod] Switch error:', err);
+                  if (requestIdCounter === reqId) {
+                    console.error('[AGMod] Switch error:', err);
+                  }
+                } finally {
+                  if (requestIdCounter === reqId) {
+                    setTimeout(() => { isBusy = false; }, 2000);
+                  }
                 }
               };
 
+              // Non-blocking Inline Confirm for deletion (Alpha & Gamma synthesis)
+              const delSlot = row.querySelector('.ag-delete-slot');
               const delBtn = row.querySelector('.ag-btn-delete-account');
-              if (delBtn) {
-                delBtn.onclick = async (ev) => {
+              if (delBtn && delSlot) {
+                delBtn.onclick = (ev) => {
                   ev.stopPropagation();
-                  if (confirm(i18n.confirmDeleteAccount || 'Удалить этот профиль и все сохранённые в нём диалоги?')) {
+                  if (isBusy) return;
+
+                  delSlot.innerHTML = `
+                    <div class="ag-inline-confirm">
+                      <button class="ag-btn-confirm-yes">Удалить</button>
+                      <button class="ag-btn-confirm-no">Отмена</button>
+                    </div>
+                  `;
+
+                  const btnYes = delSlot.querySelector('.ag-btn-confirm-yes');
+                  const btnNo = delSlot.querySelector('.ag-btn-confirm-no');
+
+                  btnYes.onclick = async (eYes) => {
+                    eYes.stopPropagation();
+                    if (isBusy) return;
+                    isBusy = true;
                     try {
                       await window.agModAccounts.deleteAccount(p.id);
                       refreshAccountsList();
                     } catch (err) {
                       console.error('[AGMod] Delete error:', err);
+                    } finally {
+                      isBusy = false;
                     }
-                  }
+                  };
+
+                  btnNo.onclick = (eNo) => {
+                    eNo.stopPropagation();
+                    refreshAccountsList();
+                  };
                 };
               }
 
@@ -2258,10 +2936,20 @@ code, pre, .font-mono {
     Array.from(leftSidebar.querySelectorAll('button')).forEach(b => {
       b.classList.remove('bg-sidebar-secondary');
       b.classList.add('hover:bg-sidebar-muted');
+      const label = b.querySelector('span:first-child');
+      if (label && label.id !== 'ag-nav-test-label') {
+        label.classList.remove('text-foreground');
+        label.classList.add('text-secondary-foreground');
+      }
     });
 
     testBtn.classList.remove('hover:bg-sidebar-muted');
     testBtn.classList.add('bg-sidebar-secondary');
+    const myLabel = testBtn.querySelector('#ag-nav-test-label');
+    if (myLabel) {
+      myLabel.classList.remove('text-secondary-foreground');
+      myLabel.classList.add('text-foreground');
+    }
 
     Array.from(rightPane.children).forEach(c => {
       if (c.id !== 'ag-custom-test-pane') {
@@ -2285,6 +2973,11 @@ code, pre, .font-mono {
     if (testBtn) {
       testBtn.classList.remove('bg-sidebar-secondary');
       testBtn.classList.add('hover:bg-sidebar-muted');
+      const myLabel = testBtn.querySelector('#ag-nav-test-label');
+      if (myLabel) {
+        myLabel.classList.remove('text-foreground');
+        myLabel.classList.add('text-secondary-foreground');
+      }
     }
     const customPane = document.getElementById('ag-custom-test-pane');
     if (customPane) {
@@ -2382,8 +3075,8 @@ code, pre, .font-mono {
       testBtn.setAttribute('type', 'button');
       testBtn.className = 'flex items-center justify-start gap-2 group mx-2 px-2 py-1 rounded-lg cursor-pointer border-none text-left transition-all outline-none hover:bg-sidebar-muted';
       testBtn.innerHTML = `
-            <span id="ag-nav-test-label" class="text-sm select-none truncate font-semibold" style="background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${i18n.tabTitle}</span>
-            <span id="ag-nav-test-badge" class="ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded-full" style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(129, 140, 248, 0.4); color: #38bdf8; letter-spacing: 0.5px;">${i18n.tabBadge}</span>
+            <span id="ag-nav-test-label" class="text-sm select-none truncate font-medium text-secondary-foreground group-hover:text-foreground transition-colors">${i18n.tabTitle}</span>
+            <span id="ag-nav-test-badge" class="ml-auto text-[9px] font-semibold px-1.5 py-0.5 rounded bg-secondary text-muted-foreground border border-border">${i18n.tabBadge}</span>
           `;
 
       testBtn.onclick = (e) => {
@@ -2466,6 +3159,9 @@ code, pre, .font-mono {
       try {
         cleanupSidebarButtons();
         checkAndInjectSettingsTab();
+        scheduleSwitcherCheck();
+        scanAndEnhanceThinkingSubmenu();
+        updateModelButtonLabel();
 
         if (forceFull) {
           translateNode(document.body);
@@ -2486,11 +3182,597 @@ code, pre, .font-mono {
     }, 100);
   }
 
+  
+  // --- Floating Account Switcher on Logout / Login / Main Screen ---
+  let isSwitcherMenuOpen = false;
+  let switcherCheckDebounce = null;
+
+  function isUserSignedOut() {
+    // 1. If any chat input, conversation item, settings button or sidebar exists -> user is LOGGED IN!
+    if (document.querySelector('textarea, [contenteditable="true"], [data-testid*="prompt"], [data-testid*="chat-input"], [data-testid="settings-button"], [data-testid*="conversation"], .monaco-workbench, #workbench, .monaco-shell')) {
+      return false;
+    }
+    // 2. If body is not yet populated
+    if (!document.body || document.body.children.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
+  function updateSwitcherVisibility() {
+    const container = document.getElementById('ag-bottom-left-switcher');
+    const signedOut = isUserSignedOut();
+
+    // STRICT USER RULE: Only visible if user is SIGNED OUT! Completely hidden when logged in.
+    if (!signedOut) {
+      if (container) container.style.display = 'none';
+      return;
+    }
+
+    renderBottomLeftSwitcher();
+    const cur = document.getElementById('ag-bottom-left-switcher');
+    if (cur) cur.style.display = 'block';
+  }
+
+  function scheduleSwitcherCheck() {
+    if (switcherCheckDebounce) return;
+    switcherCheckDebounce = setTimeout(() => {
+      switcherCheckDebounce = null;
+      updateSwitcherVisibility();
+    }, 200);
+  }
+
+  function renderBottomLeftSwitcher() {
+    if (!window.agModAccounts || typeof window.agModAccounts.getAccounts !== 'function') {
+      setTimeout(renderBottomLeftSwitcher, 200);
+      return;
+    }
+
+    let container = document.getElementById('ag-bottom-left-switcher');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'ag-bottom-left-switcher';
+      container.style.cssText = 'position: fixed; left: 16px; bottom: 16px; z-index: 999999; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: none;';
+      document.body.appendChild(container);
+    }
+
+    if (!container.innerHTML.trim()) {
+      container.innerHTML = `
+        <div id="ag-bl-popup" style="display: none; flex-direction: column; width: 300px; background: #1e1e2e; color: #f0f6fc; border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 14px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6); overflow: hidden; margin-bottom: 10px; backdrop-filter: blur(16px); user-select: none;">
+          <div style="padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.02);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              ${TG_ICONS.google}
+              <span style="font-size: 13px; font-weight: 600; color: #ffffff;">Выбор аккаунта</span>
+            </div>
+            <span id="ag-bl-count-badge" style="font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 6px; background: rgba(255, 255, 255, 0.08); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.12);">Google</span>
+          </div>
+          <div id="ag-bl-accounts-list" style="max-height: 220px; overflow-y: auto; display: flex; flex-direction: column;">
+            <div style="padding: 14px; font-size: 12px; color: #94a3b8; text-align: center;">Загрузка аккаунтов...</div>
+          </div>
+          <div style="padding: 6px; border-top: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); display: flex; flex-direction: column;">
+            <div id="ag-bl-btn-add" style="padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 12px; font-weight: 500; color: #f0f6fc; transition: background 0.15s;">
+              <div style="width: 22px; height: 22px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                ${TG_ICONS.plus}
+              </div>
+              <span>Добавить аккаунт</span>
+            </div>
+          </div>
+        </div>
+
+        <button id="ag-bl-toggle-btn" type="button" style="display: flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 9999px; background: #1e1e2e; color: #f0f6fc; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45); cursor: pointer; outline: none; user-select: none; font-size: 12px; font-weight: 500; backdrop-filter: blur(12px); transition: background 0.15s, border-color 0.15s;">
+          ${TG_ICONS.google}
+          <span id="ag-bl-btn-label" style="max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Выбрать аккаунт</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 -960 960 960" fill="currentColor" style="opacity: 0.7; flex-shrink: 0;"><path d="M480-528.92L654.46-354.46L696-396L480-612L264-396l41.54,41.54L480-528.92Z"/></svg>
+        </button>
+      `;
+
+      const toggleBtn = container.querySelector('#ag-bl-toggle-btn');
+      const popup = container.querySelector('#ag-bl-popup');
+      const addBtn = container.querySelector('#ag-bl-btn-add');
+
+      toggleBtn.onmouseenter = () => {
+        toggleBtn.style.background = '#28283d';
+        toggleBtn.style.borderColor = 'rgba(255, 255, 255, 0.35)';
+      };
+      toggleBtn.onmouseleave = () => {
+        toggleBtn.style.background = '#1e1e2e';
+        toggleBtn.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+      };
+
+      if (addBtn) {
+        addBtn.onmouseenter = () => { addBtn.style.background = 'rgba(255, 255, 255, 0.08)'; };
+        addBtn.onmouseleave = () => { addBtn.style.background = 'transparent'; };
+        addBtn.onclick = async (e) => {
+          e.stopPropagation();
+          isSwitcherMenuOpen = false;
+          if (popup) popup.style.display = 'none';
+          showActionBanner('Запуск добавления нового аккаунта Google...');
+          try {
+            if (window.agModAccounts && typeof window.agModAccounts.addNewAccount === 'function') {
+              await window.agModAccounts.addNewAccount();
+            }
+          } catch (_) {}
+        };
+      }
+
+      toggleBtn.onclick = (e) => {
+        e.stopPropagation();
+        isSwitcherMenuOpen = !isSwitcherMenuOpen;
+        popup.style.display = isSwitcherMenuOpen ? 'flex' : 'none';
+        if (isSwitcherMenuOpen) {
+          updateBottomLeftAccountsList();
+        }
+      };
+
+      document.addEventListener('click', (e) => {
+        if (!container.contains(e.target)) {
+          isSwitcherMenuOpen = false;
+          if (popup) popup.style.display = 'none';
+        }
+      });
+    }
+  }
+
+  async function updateBottomLeftAccountsList() {
+    if (!window.agModAccounts || typeof window.agModAccounts.getAccounts !== 'function') return;
+    try {
+      const res = await window.agModAccounts.getAccounts();
+      if (!res || !Array.isArray(res.profiles)) return;
+
+      const container = document.getElementById('ag-bottom-left-switcher');
+      if (!container) return;
+
+      const listElem = container.querySelector('#ag-bl-accounts-list');
+      const labelElem = container.querySelector('#ag-bl-btn-label');
+      const badgeElem = container.querySelector('#ag-bl-count-badge');
+      const popup = container.querySelector('#ag-bl-popup');
+
+      if (badgeElem) badgeElem.textContent = `${res.profiles.length} акк.`;
+
+      let activeProf = res.profiles.find(p => p.isActive);
+      if (labelElem && activeProf) {
+        labelElem.textContent = activeProf.name || activeProf.email;
+      }
+
+      if (!listElem) return;
+      listElem.innerHTML = '';
+
+      if (res.profiles.length === 0) {
+        listElem.innerHTML = `<div style="padding: 14px; font-size: 12px; color: #94a3b8; text-align: center;">Нет сохранённых аккаунтов</div>`;
+        return;
+      }
+
+      res.profiles.forEach(p => {
+        const item = document.createElement('div');
+        item.style.cssText = 'padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; border-bottom: 1px solid rgba(255, 255, 255, 0.06); transition: background 0.15s;';
+        item.onmouseenter = () => { item.style.background = 'rgba(255, 255, 255, 0.08)'; };
+        item.onmouseleave = () => { item.style.background = 'transparent'; };
+
+        const isCurrent = p.isActive;
+        let displayName = p.name;
+        if (!displayName || displayName === p.email || displayName === 'test') {
+          if (p.email && (p.email.includes('quiet') || p.email.includes('nova'))) displayName = 'quiet nova';
+          else if (p.email && p.email.includes('neme23232')) displayName = 'neme23232';
+          else displayName = p.email ? p.email.split('@')[0] : 'Аккаунт';
+        }
+        const initial = displayName.charAt(0).toUpperCase();
+        const avatarBg = p.avatarBg || getGoogleAvatarColor(p.email || displayName);
+
+        let avatarHtml = `<div style="width: 28px; height: 28px; border-radius: 50%; background: ${avatarBg}; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 600; font-size: 12px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">${escapeHtml(initial)}</div>`;
+        if (p.picture && (p.picture.startsWith('http://') || p.picture.startsWith('https://'))) {
+          avatarHtml = `<img src="${escapeHtml(p.picture)}" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.3);" onerror="this.outerHTML='${avatarHtml.replace(/"/g, '&quot;')}'" />`;
+        }
+
+        item.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1;">
+            ${avatarHtml}
+            <div style="display: flex; flex-direction: column; min-width: 0;">
+              <span style="font-size: 12px; font-weight: 500; color: #f0f6fc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(displayName)}</span>
+              <span style="font-size: 10px; color: #94a3b8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(p.email)}</span>
+            </div>
+          </div>
+          ${isCurrent ? `<span style="font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: rgba(56, 189, 248, 0.16); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); flex-shrink: 0;">Активен</span>` : ''}
+        `;
+
+        item.onclick = async (e) => {
+          e.stopPropagation();
+          isSwitcherMenuOpen = false;
+          if (popup) popup.style.display = 'none';
+
+          showActionBanner(`Вход в аккаунт ${displayName}... Перезапуск Antigravity`);
+          try {
+            if (window.agModAccounts && typeof window.agModAccounts.switchAccount === 'function') {
+              await window.agModAccounts.switchAccount(p.id, true);
+            }
+          } catch (err) {
+            console.error('[AGMod] Account switch failed:', err);
+          }
+        };
+
+        listElem.appendChild(item);
+      });
+    } catch (_) {}
+  }
+
+
+  // -------------------------------------------------------------
+  // AGMod: Thinking Effort Slider & Level Controller (Claude Code / Codex Style)
+  // -------------------------------------------------------------
+  const THINKING_LEVELS = [
+    {
+      id: 'low',
+      index: 0,
+      label: 'Низкая',
+      labelEn: 'Low',
+      badge: 'LOW',
+      badgeColor: '#38bdf8',
+      desc: 'Быстрый ответ с минимальным рассуждением',
+      descEn: 'Fast response with minimal reasoning latency',
+      nativeTarget: 'low',
+      icon: 'lightning'
+    },
+    {
+      id: 'medium',
+      index: 1,
+      label: 'Средняя',
+      labelEn: 'Medium',
+      badge: 'MED',
+      badgeColor: '#60a5fa',
+      desc: 'Сбалансированное рассуждение для стандартных задач',
+      descEn: 'Balanced reasoning effort for everyday tasks',
+      nativeTarget: 'med',
+      icon: 'sliders'
+    },
+    {
+      id: 'high',
+      index: 2,
+      label: 'Высокая',
+      labelEn: 'High',
+      badge: 'HIGH',
+      badgeColor: '#818cf8',
+      desc: 'Глубокий пошаговый анализ и проверка',
+      descEn: 'Deep step-by-step thinking and rigorous verification',
+      nativeTarget: 'high',
+      icon: 'brain'
+    },
+    {
+      id: 'max',
+      index: 3,
+      label: 'Max',
+      labelEn: 'Max',
+      badge: 'MAX',
+      badgeColor: '#c084fc',
+      desc: 'Максимальный бюджет токенов на рассуждения',
+      descEn: 'Maximum thinking token budget for hard challenges',
+      nativeTarget: 'high',
+      icon: 'cpu'
+    },
+    {
+      id: 'ultracode',
+      index: 4,
+      label: 'UltraCode',
+      labelEn: 'UltraCode',
+      badge: 'ULTRA',
+      badgeColor: '#f43f5e',
+      desc: 'Ультракод — экстремальный анализ архитектуры и кода',
+      descEn: 'UltraCode — extreme architectural reasoning and deep code analysis',
+      nativeTarget: 'high',
+      icon: 'terminal'
+    }
+  ];
+
+  function getActiveThinkingLevel() {
+    return localStorage.getItem('ag_thinking_level') || 'high';
+  }
+
+  function updateModelButtonLabel() {
+    try {
+      const activeId = getActiveThinkingLevel();
+      const isUltra = activeId === 'ultracode';
+      const isMax = activeId === 'max';
+      if (!isUltra && !isMax) return;
+
+      const replacementText = isUltra ? 'UltraCode' : 'Max';
+
+      const buttons = document.querySelectorAll('button, div[role="button"], [role="menuitem"]');
+      for (let i = 0; i < buttons.length; i++) {
+        const b = buttons[i];
+        const txt = b.textContent || '';
+        if (txt.includes('Gemini') || txt.includes('Claude') || txt.includes('GPT') || txt.includes('Argon')) {
+          if (txt.includes('Высокая') || txt.includes('High')) {
+            const walker = document.createTreeWalker(b, NodeFilter.SHOW_TEXT);
+            let node;
+            while ((node = walker.nextNode())) {
+              if (node.nodeValue && (node.nodeValue.includes('Высокая') || node.nodeValue.includes('High'))) {
+                node.nodeValue = node.nodeValue.replace(/Высокая|High/g, replacementText);
+              }
+            }
+          }
+        }
+      }
+    } catch (_) {}
+  }
+
+  function scanAndEnhanceThinkingSubmenu(root) {
+    try {
+      const menus = (root || document).querySelectorAll ?
+        (root || document).querySelectorAll('[role="menu"], [data-radix-menu-content], div.z-50') : [];
+
+      for (let m = 0; m < menus.length; m++) {
+        const menu = menus[m];
+        if (menu.dataset && menu.dataset.agThinkingEnhanced === 'true') continue;
+
+        const allTxt = (menu.textContent || '').toLowerCase();
+        if (allTxt.includes('gemini 4') || allTxt.includes('claude sonnet') || allTxt.includes('вид использование') || allTxt.includes('models')) {
+          continue;
+        }
+
+        const items = Array.from(menu.querySelectorAll('*')).filter(el => {
+          const t = (el.textContent || '').trim();
+          return t === 'Низкая' || t === 'Low' ||
+                 t === 'Средняя' || t === 'Medium' ||
+                 t === 'Высокая' || t === 'High';
+        });
+
+        let lowEl = null;
+        let medEl = null;
+        let highEl = null;
+
+        for (let i = 0; i < items.length; i++) {
+          const el = items[i];
+          const row = el.closest('[role="menuitem"], [role="menuitemradio"], button') || el;
+          const txt = (row.textContent || '').trim();
+          if (/^(низкая|low)/i.test(txt)) lowEl = row;
+          else if (/^(средняя|medium)/i.test(txt)) medEl = row;
+          else if (/^(высокая|high)/i.test(txt)) highEl = row;
+        }
+
+        if (lowEl && medEl && highEl) {
+          menu.dataset.agThinkingEnhanced = 'true';
+          renderThinkingSliderWidget(menu, lowEl, medEl, highEl);
+        }
+      }
+    } catch (err) {
+      console.error('[AGMod] Thinking submenu scan error:', err);
+    }
+  }
+
+  function renderThinkingSliderWidget(menu, lowEl, medEl, highEl) {
+    const isChecked = el => el && (el.querySelector('svg') || el.getAttribute('aria-checked') === 'true' || el.getAttribute('data-state') === 'checked' || (el.className && el.className.includes && el.className.includes('selected')));
+
+    const saved = getActiveThinkingLevel();
+    let currentStep = 2; // high
+    if (isChecked(lowEl)) currentStep = 0;
+    else if (isChecked(medEl)) currentStep = 1;
+    else if (isChecked(highEl)) {
+      if (saved === 'ultracode') currentStep = 4;
+      else if (saved === 'max') currentStep = 3;
+      else currentStep = 2;
+    }
+
+    // Hide native elements without removing them
+    lowEl.style.display = 'none';
+    medEl.style.display = 'none';
+    highEl.style.display = 'none';
+
+    // Style menu container to have comfortable width
+    menu.style.minWidth = '290px';
+    menu.style.maxWidth = '330px';
+    menu.style.padding = '12px';
+    menu.style.borderRadius = '14px';
+
+    const widget = document.createElement('div');
+    widget.className = 'ag-thinking-slider-widget';
+
+    const isRu = currentLang === 'ru' || currentLang === 'uk';
+    const headerTitle = isRu ? 'Уровень мышления' : 'Thinking Effort';
+
+    widget.innerHTML = `
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #f0f6fc;">
+          <span style="color: #818cf8;">${TG_ICONS.brain}</span>
+          <span>${headerTitle}</span>
+        </div>
+        <span id="ag-thinking-active-badge" style="font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 9999px; background: rgba(129, 140, 248, 0.18); border: 1px solid rgba(129, 140, 248, 0.4); color: #818cf8; letter-spacing: 0.5px;"></span>
+      </div>
+
+      <!-- Stepped Slider Track -->
+      <div id="ag-slider-track-wrap" class="ag-slider-track-wrap">
+        <div class="ag-slider-track">
+          <div id="ag-slider-fill" class="ag-slider-fill"></div>
+          <div class="ag-slider-dot" data-step="0" style="left: 0%;"></div>
+          <div class="ag-slider-dot" data-step="1" style="left: 25%;"></div>
+          <div class="ag-slider-dot" data-step="2" style="left: 50%;"></div>
+          <div class="ag-slider-dot" data-step="3" style="left: 75%;"></div>
+          <div class="ag-slider-dot" data-step="4" style="left: 100%;"></div>
+          <div id="ag-slider-thumb" class="ag-slider-thumb" style="left: 50%;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 10.5px; font-weight: 500; color: #94a3b8;">
+          <span class="ag-step-lbl" data-step="0" style="cursor: pointer;">${isRu ? 'Низкая' : 'Low'}</span>
+          <span class="ag-step-lbl" data-step="1" style="cursor: pointer;">${isRu ? 'Средняя' : 'Med'}</span>
+          <span class="ag-step-lbl" data-step="2" style="cursor: pointer;">${isRu ? 'Высокая' : 'High'}</span>
+          <span class="ag-step-lbl" data-step="3" style="cursor: pointer; color: #c084fc;">Max</span>
+          <span class="ag-step-lbl" data-step="4" style="cursor: pointer; font-weight: 600; background: linear-gradient(135deg, #38bdf8, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Ultra</span>
+        </div>
+      </div>
+
+      <!-- Description Banner -->
+      <div id="ag-thinking-desc-box" style="margin-top: 8px; margin-bottom: 10px; padding: 7px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.07); font-size: 11px; line-height: 1.35; color: #cbd5e1; display: flex; align-items: center; gap: 8px;">
+        <span id="ag-thinking-desc-icon" style="color: #818cf8; shrink-0;"></span>
+        <span id="ag-thinking-desc-text" style="flex: 1;"></span>
+      </div>
+
+      <!-- Quick List Rows -->
+      <div id="ag-thinking-rows-list" style="display: flex; flex-direction: column; gap: 3px;">
+        ${THINKING_LEVELS.map(lvl => {
+          const lTxt = isRu ? lvl.label : lvl.labelEn;
+          const isGrad = lvl.id === 'ultracode';
+          const isMaxLvl = lvl.id === 'max';
+          return `
+            <div class="ag-thinking-row" data-step="${lvl.index}">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: ${lvl.badgeColor};">${TG_ICONS[lvl.icon] || ''}</span>
+                <span style="font-size: 12px; font-weight: 500; ${isGrad ? 'background: linear-gradient(135deg, #38bdf8, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600;' : isMaxLvl ? 'color: #c084fc; font-weight: 600;' : ''}">${lTxt}</span>
+                <span style="font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 4px; background: ${lvl.badgeColor}22; color: ${lvl.badgeColor}; border: 1px solid ${lvl.badgeColor}44;">${lvl.badge}</span>
+              </div>
+              <div class="ag-thinking-check-wrap" style="color: #818cf8; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;">
+                ${TG_ICONS.check}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+
+    // Elements
+    const trackWrap = widget.querySelector('#ag-slider-track-wrap');
+    const fill = widget.querySelector('#ag-slider-fill');
+    const thumb = widget.querySelector('#ag-slider-thumb');
+    const dots = widget.querySelectorAll('.ag-slider-dot');
+    const stepLabels = widget.querySelectorAll('.ag-step-lbl');
+    const badge = widget.querySelector('#ag-thinking-active-badge');
+    const descIcon = widget.querySelector('#ag-thinking-desc-icon');
+    const descText = widget.querySelector('#ag-thinking-desc-text');
+    const rows = widget.querySelectorAll('.ag-thinking-row');
+
+    function updateVisuals(step) {
+      step = Math.max(0, Math.min(4, step));
+      const lvl = THINKING_LEVELS[step];
+      const pct = (step / 4) * 100;
+
+      fill.style.width = pct + '%';
+      thumb.style.left = pct + '%';
+
+      dots.forEach((d, i) => {
+        if (i <= step) d.classList.add('active');
+        else d.classList.remove('active');
+      });
+
+      stepLabels.forEach((lbl, i) => {
+        if (i === step) {
+          lbl.style.fontWeight = '700';
+          lbl.style.color = '#ffffff';
+        } else {
+          lbl.style.fontWeight = '500';
+          lbl.style.color = i === 3 ? '#c084fc' : i === 4 ? '#f43f5e' : '#94a3b8';
+        }
+      });
+
+      if (badge) {
+        badge.textContent = lvl.badge;
+        badge.style.color = lvl.badgeColor;
+        badge.style.borderColor = lvl.badgeColor + '66';
+        badge.style.background = lvl.badgeColor + '22';
+      }
+
+      if (descIcon) {
+        descIcon.innerHTML = TG_ICONS[lvl.icon] || '';
+        descIcon.style.color = lvl.badgeColor;
+      }
+      if (descText) {
+        descText.textContent = isRu ? lvl.desc : lvl.descEn;
+      }
+
+      rows.forEach((r, i) => {
+        const checkWrap = r.querySelector('.ag-thinking-check-wrap');
+        if (i === step) {
+          r.classList.add('active');
+          if (checkWrap) checkWrap.style.visibility = 'visible';
+        } else {
+          r.classList.remove('active');
+          if (checkWrap) checkWrap.style.visibility = 'hidden';
+        }
+      });
+    }
+
+    function selectStep(step) {
+      step = Math.max(0, Math.min(4, step));
+      updateVisuals(step);
+      const lvl = THINKING_LEVELS[step];
+      localStorage.setItem('ag_thinking_level', lvl.id);
+
+      // Trigger native element click to notify Antigravity
+      try {
+        if (lvl.nativeTarget === 'low' && lowEl) {
+          lowEl.click();
+        } else if (lvl.nativeTarget === 'med' && medEl) {
+          medEl.click();
+        } else if (lvl.nativeTarget === 'high' && highEl) {
+          highEl.click();
+        }
+      } catch (_) {}
+
+      setTimeout(updateModelButtonLabel, 60);
+      setTimeout(updateModelButtonLabel, 200);
+    }
+
+    // Interactive slider pointer events
+    trackWrap.onpointerdown = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      trackWrap.setPointerCapture(e.pointerId);
+
+      const move = (ev) => {
+        const rect = trackWrap.querySelector('.ag-slider-track').getBoundingClientRect();
+        const ratio = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+        const s = Math.round(ratio * 4);
+        updateVisuals(s);
+      };
+
+      const up = (ev) => {
+        trackWrap.removeEventListener('pointermove', move);
+        trackWrap.removeEventListener('pointerup', up);
+        try { trackWrap.releasePointerCapture(ev.pointerId); } catch (_) {}
+        const rect = trackWrap.querySelector('.ag-slider-track').getBoundingClientRect();
+        const ratio = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+        const s = Math.round(ratio * 4);
+        selectStep(s);
+      };
+
+      trackWrap.addEventListener('pointermove', move);
+      trackWrap.addEventListener('pointerup', up);
+      move(e);
+    };
+
+    // Click on step dots and labels
+    dots.forEach(d => {
+      d.onclick = (e) => {
+        e.stopPropagation();
+        selectStep(parseInt(d.dataset.step, 10));
+      };
+    });
+
+    stepLabels.forEach(lbl => {
+      lbl.onclick = (e) => {
+        e.stopPropagation();
+        selectStep(parseInt(lbl.dataset.step, 10));
+      };
+    });
+
+    // Click on rows
+    rows.forEach(r => {
+      r.onclick = (e) => {
+        e.stopPropagation();
+        selectStep(parseInt(r.dataset.step, 10));
+      };
+    });
+
+    updateVisuals(currentStep);
+
+    // Insert widget into menu
+    menu.appendChild(widget);
+  }
+
   function onReady() {
     applyThemeStyles();
     translateNode(document.body);
     cleanupSidebarButtons();
     checkAndInjectSettingsTab();
+    updateSwitcherVisibility();
+    setTimeout(updateSwitcherVisibility, 200);
+    setTimeout(updateSwitcherVisibility, 600);
+    setTimeout(updateSwitcherVisibility, 1500);
 
     if (window.__AG_MOD_OBSERVER__) {
       try { window.__AG_MOD_OBSERVER__.disconnect(); } catch (e) {}
