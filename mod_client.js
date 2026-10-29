@@ -3070,7 +3070,15 @@ ${p.picture ? `
       testBtn.id = 'ag-nav-test-btn';
       testBtn.setAttribute('data-testid', 'settings-nav-item-AGMod');
       testBtn.setAttribute('type', 'button');
-      testBtn.className = 'flex items-center justify-start gap-2 group mx-2 px-2 py-1 rounded-lg cursor-pointer border-none text-left transition-all outline-none hover:bg-sidebar-muted';
+      const refBtn = feedbackBtn || shortcutsBtn;
+      if (refBtn && refBtn.className) {
+        testBtn.className = refBtn.className;
+      } else {
+        testBtn.className = 'w-full flex items-center justify-between px-3 py-1.5 rounded-md text-sm cursor-pointer border-none text-left transition-colors outline-none hover:bg-sidebar-muted';
+      }
+      testBtn.style.margin = '0';
+      testBtn.style.width = '100%';
+      testBtn.style.boxSizing = 'border-box';
       testBtn.innerHTML = `
             <span id="ag-nav-test-label" class="text-sm select-none truncate font-medium text-secondary-foreground group-hover:text-foreground transition-colors">${i18n.tabTitle}</span>
             <span id="ag-nav-test-badge" class="ml-auto text-[9px] font-semibold px-1.5 py-0.5 rounded bg-secondary text-muted-foreground border border-border">${i18n.tabBadge}</span>
@@ -3394,9 +3402,9 @@ ${p.picture ? `
 
 
   // -------------------------------------------------------------
-  // AGMod: Thinking Effort Slider & Level Controller (Claude Code / Codex Style)
+  
   // -------------------------------------------------------------
-  // AGMod: Thinking Effort Slider & Level Controller (Neutral Antigravity 2.0 Style)
+  // AGMod: Thinking Effort Slider & Level Controller (Neutral Style)
   // -------------------------------------------------------------
   const THINKING_LEVELS = [
     {
@@ -3488,50 +3496,60 @@ ${p.picture ? `
     } catch (_) {}
   }
 
+  const isLowItem = t => {
+    const s = (t || '').trim().toLowerCase();
+    return (s === 'низкая' || s === 'low' || s.startsWith('низкая') || s.startsWith('low')) && s.length < 25;
+  };
+  const isMedItem = t => {
+    const s = (t || '').trim().toLowerCase();
+    return (s === 'средняя' || s === 'medium' || s.startsWith('средняя') || s.startsWith('medium')) && s.length < 25;
+  };
+  const isHighItem = t => {
+    const s = (t || '').trim().toLowerCase();
+    return (s === 'высокая' || s === 'high' || s.startsWith('высокая') || s.startsWith('high')) && s.length < 25;
+  };
+
   function findThinkingSubmenu(root) {
     const scope = root || document.body || document;
     if (!scope.querySelectorAll) return null;
 
-    // Fast check: look for any element starting with Low / Низкая
-    const allElements = scope.querySelectorAll('*');
-    for (let i = 0; i < allElements.length; i++) {
-      const el = allElements[i];
-      const t = (el.textContent || '').trim().toLowerCase();
-      if (t === 'низкая' || t === 'low' || (t.startsWith('низкая') && t.length < 15) || (t.startsWith('low') && t.length < 15)) {
-        // Walk up parents (up to 6 levels) to find popup container
-        let cur = el.parentElement;
-        for (let depth = 0; depth < 6 && cur && cur !== document.body; depth++) {
-          const cTxt = (cur.textContent || '').toLowerCase();
-          const hasMed = cTxt.includes('средняя') || cTxt.includes('medium');
-          const hasHigh = cTxt.includes('высокая') || cTxt.includes('high');
-          const hasOther = cTxt.includes('claude') || cTxt.includes('gemini 4') || cTxt.includes('gpt-oss') || cTxt.includes('использование') || cTxt.includes('models');
+    const candidates = scope.querySelectorAll('*');
+    for (let i = 0; i < candidates.length; i++) {
+      const el = candidates[i];
+      if (el.children.length > 2) continue;
+      if (isLowItem(el.textContent)) {
+        let p = el.parentElement;
+        for (let depth = 0; depth < 5 && p && p !== document.body; depth++) {
+          const pTxt = (p.textContent || '').toLowerCase();
+          const hasMed = pTxt.includes('средняя') || pTxt.includes('medium');
+          const hasHigh = pTxt.includes('высокая') || pTxt.includes('high');
+          const isMainMenu = pTxt.includes('gemini 4') || pTxt.includes('claude sonnet') || pTxt.includes('gpt-oss') || pTxt.includes('использование');
 
-          if (hasMed && hasHigh && !hasOther) {
-            if (cur.dataset && cur.dataset.agThinkingEnhanced === 'true') {
-              return null; // already enhanced
+          if (hasMed && hasHigh && !isMainMenu) {
+            if (p.dataset && p.dataset.agThinkingEnhanced === 'true') {
+              return null;
             }
 
-            // Locate specific rows for low, med, high
             let lowEl = null, medEl = null, highEl = null;
-            const children = cur.querySelectorAll('*');
-            for (let j = 0; j < children.length; j++) {
-              const ch = children[j];
-              const chTxt = (ch.textContent || '').trim().toLowerCase();
-              if (/^(низкая|low)\b/i.test(chTxt) && chTxt.length < 25) {
-                if (!lowEl) lowEl = ch.closest('[role="menuitem"], [role="menuitemradio"], button') || ch;
-              } else if (/^(средняя|medium)\b/i.test(chTxt) && chTxt.length < 25) {
-                if (!medEl) medEl = ch.closest('[role="menuitem"], [role="menuitemradio"], button') || ch;
-              } else if (/^(высокая|high)\b/i.test(chTxt) && chTxt.length < 25) {
-                if (!highEl) highEl = ch.closest('[role="menuitem"], [role="menuitemradio"], button') || ch;
+            const pItems = p.querySelectorAll('*');
+            for (let j = 0; j < pItems.length; j++) {
+              const item = pItems[j];
+              const t = item.textContent || '';
+              if (isLowItem(t)) {
+                if (!lowEl) lowEl = item.closest('[role="menuitem"], [role="menuitemradio"], button') || item;
+              } else if (isMedItem(t)) {
+                if (!medEl) medEl = item.closest('[role="menuitem"], [role="menuitemradio"], button') || item;
+              } else if (isHighItem(t)) {
+                if (!highEl) highEl = item.closest('[role="menuitem"], [role="menuitemradio"], button') || item;
               }
             }
 
             if (lowEl && medEl && highEl) {
-              const box = lowEl.closest('[role="menu"], [data-radix-menu-content], [data-radix-popper-content-wrapper]') || cur;
-              return { menu: box, lowEl, medEl, highEl };
+              const menuBox = lowEl.closest('[role="menu"], [data-radix-menu-content], [data-radix-popper-content-wrapper]') || p;
+              return { menu: menuBox, lowEl, medEl, highEl };
             }
           }
-          cur = cur.parentElement;
+          p = p.parentElement;
         }
       }
     }
@@ -3551,7 +3569,13 @@ ${p.picture ? `
   }
 
   function renderThinkingSliderWidget(menu, lowEl, medEl, highEl) {
-    const isChecked = el => el && (el.querySelector('svg') || el.getAttribute('aria-checked') === 'true' || el.getAttribute('data-state') === 'checked' || (el.className && el.className.includes && el.className.includes('selected')));
+    const isChecked = el => el && (
+      el.querySelector('svg') ||
+      el.getAttribute('aria-checked') === 'true' ||
+      el.getAttribute('data-state') === 'checked' ||
+      (el.textContent && el.textContent.includes('\u2713')) ||
+      (el.className && el.className.includes && el.className.includes('selected'))
+    );
 
     const saved = getActiveThinkingLevel();
     let currentStep = 2; // high
@@ -3638,7 +3662,6 @@ ${p.picture ? `
       </div>
     `;
 
-    // Elements
     const trackWrap = widget.querySelector('#ag-slider-track-wrap');
     const fill = widget.querySelector('#ag-slider-fill');
     const thumb = widget.querySelector('#ag-slider-thumb');
@@ -3701,7 +3724,6 @@ ${p.picture ? `
       const lvl = THINKING_LEVELS[step];
       localStorage.setItem('ag_thinking_level', lvl.id);
 
-      // Trigger native element click to notify Antigravity
       try {
         if (lvl.nativeTarget === 'low' && lowEl) {
           lowEl.click();
@@ -3716,7 +3738,6 @@ ${p.picture ? `
       setTimeout(updateModelButtonLabel, 200);
     }
 
-    // Interactive slider pointer events
     trackWrap.onpointerdown = (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -3744,7 +3765,6 @@ ${p.picture ? `
       move(e);
     };
 
-    // Click on step dots and labels
     dots.forEach(d => {
       d.onclick = (e) => {
         e.stopPropagation();
@@ -3759,7 +3779,6 @@ ${p.picture ? `
       };
     });
 
-    // Click on rows
     rows.forEach(r => {
       r.onclick = (e) => {
         e.stopPropagation();
@@ -3768,8 +3787,6 @@ ${p.picture ? `
     });
 
     updateVisuals(currentStep);
-
-    // Insert widget into menu
     menu.appendChild(widget);
   }
 
@@ -3841,6 +3858,10 @@ ${p.picture ? `
 
     // ag-pointerover-thinking-listener
     document.addEventListener('pointerover', (e) => {
+        scanAndEnhanceThinkingSubmenu();
+        setTimeout(scanAndEnhanceThinkingSubmenu, 40);
+        setTimeout(scanAndEnhanceThinkingSubmenu, 80);
+        setTimeout(scanAndEnhanceThinkingSubmenu, 150);
       if (e.target && e.target.closest && e.target.closest('[role="menuitem"], button, [data-state="open"]')) {
         scanAndEnhanceThinkingSubmenu();
       }
